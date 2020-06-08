@@ -10,6 +10,7 @@ import com.google.common.collect.Iterables;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.research.CardEvaluator;
+import forge.game.research.CreatureEval;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.collect.FCollection;
@@ -31,10 +32,14 @@ public class PlayerCollection extends FCollection<Player> {
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
             for(Card card : p.getCardsIn(ZoneType.Hand)){
-                CardEvaluator evaluator = new CardEvaluator();
-                System.out.print(card.getName());
-                System.out.print(": ");
-                System.out.println(evaluator.evaluate(card));
+                //ignores cards that are not creatures -- research
+                if (card.isCreature() == true) {
+                    CardEvaluator evaluator = new CreatureEval();
+                    System.out.print(card.getName());
+                    System.out.print(": ");
+                    System.out.println(evaluator.evaluate(card));
+                    System.out.print(card.getType());
+                }
             }
         }
         return result;
