@@ -9,12 +9,10 @@ import com.google.common.collect.Iterables;
 
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
+import forge.game.research.CardEvaluator;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.collect.FCollection;
-
-//research code
-import forge.game.research.*;
 
 public class PlayerCollection extends FCollection<Player> {
 
@@ -32,18 +30,12 @@ public class PlayerCollection extends FCollection<Player> {
         CardCollection result = new CardCollection();
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
-
-            //research code
             for(Card card : p.getCardsIn(ZoneType.Hand)){
-                evaluateValue evaluator = new evaluateValue();
-                System.out.println(card.getName());
-                System.out.println(evaluator.evalVal(card));
-                if(p.getCardsIn(ZoneType.Hand).iterator().hasNext()){
-                    //System.out.println((p.getCardsIn(ZoneType.Hand).iterator().next().getName()));
-                    //System.out.println(evaluator.evalVal(p.getCardsIn(ZoneType.Hand).iterator().next()));
-                }
+                CardEvaluator evaluator = new CardEvaluator();
+                System.out.print(card.getName());
+                System.out.print(": ");
+                System.out.println(evaluator.evaluate(card));
             }
-
         }
         return result;
     }
