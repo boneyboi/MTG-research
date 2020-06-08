@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/forge-master/forge-ai/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-game/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-android/filters" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-android/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-desktop/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-ios/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-mobile-dev/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui-mobile/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forge-master/forge-gui/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

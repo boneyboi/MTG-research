@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge.iml" filepath="$PROJECT_DIR$/forge-master/forge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-ai/forge-ai.iml" filepath="$PROJECT_DIR$/forge-master/forge-ai/forge-ai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-core/forge-core.iml" filepath="$PROJECT_DIR$/forge-master/forge-core/forge-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-game/forge-game.iml" filepath="$PROJECT_DIR$/forge-master/forge-game/forge-game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui/forge-gui.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui/forge-gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui-android/forge-gui-android.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui-android/forge-gui-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui-desktop/forge-gui-desktop.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui-desktop/forge-gui-desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui-ios/forge-gui-ios.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui-ios/forge-gui-ios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui-mobile/forge-gui-mobile.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui-mobile/forge-gui-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forge-master/forge-gui-mobile-dev/forge-gui-mobile-dev.iml" filepath="$PROJECT_DIR$/forge-master/forge-gui-mobile-dev/forge-gui-mobile-dev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/forge-master.iml" filepath="$PROJECT_DIR$/.idea/forge-master.iml" />
+    </modules>
+  </component>
+</project>
