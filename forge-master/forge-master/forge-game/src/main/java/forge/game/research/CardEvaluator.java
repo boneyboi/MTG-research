@@ -7,7 +7,7 @@
  */
 package forge.game.research;
 
-import forge.card.mana.ManaCostShard;
+
 import forge.game.card.Card;
 
 public interface CardEvaluator {
