@@ -8,7 +8,6 @@
 
 package forge.game.research;
 
-import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.zone.ZoneType;
 
@@ -54,8 +53,4 @@ public class CreatureEval extends CardEvaluator {
     public double getToughnessChange (Card card){
         return card.getCurrentToughness() - card.getBaseToughness();
     }
-
-
-
-
 }
