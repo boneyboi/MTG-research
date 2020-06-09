@@ -8,7 +8,7 @@ package forge.game.research; /**
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 
-public class EnchantmentEval implements CardEvaluator {
+public class EnchantmentEval extends CardEvaluator {
     public static final double MYTHICMULTIPLIER = 1.5;
     public static final double RAREMULTIPLIER = 1.3;
     public static final double UNCOMMONMULTIPLIER = 1.1;

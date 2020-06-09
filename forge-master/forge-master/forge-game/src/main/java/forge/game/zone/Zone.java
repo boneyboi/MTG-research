@@ -192,6 +192,16 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         return cardList; // Non-Battlefield PlayerZones don't care about the filter
     }
 
+    public int getNumLandsIn() {
+        int lands = 0;
+        for (Card card: this) {
+            if (card.isLand()) {
+                lands++;
+            }
+        }
+        return lands;
+    }
+
     public final boolean isEmpty() {
         return cardList.isEmpty();
     }

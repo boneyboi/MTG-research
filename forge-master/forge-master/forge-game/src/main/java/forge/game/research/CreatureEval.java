@@ -10,8 +10,9 @@ package forge.game.research;
 
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
+import forge.game.zone.ZoneType;
 
-public class CreatureEval implements CardEvaluator {
+public class CreatureEval extends CardEvaluator {
 
     //constants - first four are rarity
     public static final double MYTHICMULTIPLIER = 1.5;
@@ -31,8 +32,15 @@ public class CreatureEval implements CardEvaluator {
      */
     @Override
     public final double evaluate (Card card) {
-        double value = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card));
-        return (value) * getRareMultiplier(card);
+        double Cardvalue = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card));
+        double value = (Cardvalue) * getRareMultiplier(card);
+        // If the card is in our hand, lower its value if we need to draw more lands to play it.
+        if (card.isInZone(ZoneType.Hand) && card.getController().getLandsAvaliable() < card.getCMC()) {
+            double temp1 = card.getController().getLandsAvaliable();
+            double temp2 = card.getCMC();
+            value = value*temp1/temp2;
+        }
+        return value;
     }
 
 
@@ -71,8 +79,14 @@ public class CreatureEval implements CardEvaluator {
      @return rareValue - the multiplier associated with the card's rarity.
      */
     public double getRareMultiplier (Card card){
-        double rareValue = COMMONMULTIPLIER;
+        double rareValue = 0;
         switch(card.getRarity().toString()){
+            case("L"):
+                rareValue = COMMONMULTIPLIER;
+                break;
+            case("C"):
+                rareValue = COMMONMULTIPLIER;
+                break;
             case("U"):
                 rareValue = UNCOMMONMULTIPLIER;
                 break;
@@ -83,7 +97,9 @@ public class CreatureEval implements CardEvaluator {
                 rareValue = MYTHICMULTIPLIER;
                 break;
             default:
-                System.err.println("Unexpected Rarity Found");
+                if (rareValue == 0) {
+                    System.err.println("Unexpected Rarity Found");
+                }
                 break;
         }
         return rareValue;

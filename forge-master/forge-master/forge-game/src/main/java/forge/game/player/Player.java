@@ -1837,6 +1837,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         return !adjustLandPlaysInfinite.isEmpty();
     }
 
+    public int getLandsAvaliable() {
+        return this.getZone(ZoneType.Hand).getNumLandsIn() + this.getLandsInPlay().size();
+    }
+
     public final ManaPool getManaPool() {
         return manaPool;
     }
