@@ -10,7 +10,7 @@ public class EvaluatorStrategy {
     }
 
     /**
-    allow the specific strategy choosen to evaluate the value of a card
+    allow the specific strategy chosen to evaluate the value of a card
      @param card: Card object
      @return: value of a card as a double
      */
