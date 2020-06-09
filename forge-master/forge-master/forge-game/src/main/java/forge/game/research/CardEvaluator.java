@@ -23,8 +23,12 @@ public abstract class CardEvaluator {
     public static final double COLORVALUE = .25;
 
     /**
-     * A card's value depends on its rarity, number of colors, number of colored mana symbols in its cost,
-     * it's CMC and a base value.
+     * A card's value depends on its:
+     *  rarity
+     *  number of colors
+     *  number of colored mana symbols in its cost
+     *  CMC
+     *  base value (.5 to account for 0-cost creatures)
      * @return the value of the card
      */
     public CardEvaluator() {
@@ -36,7 +40,8 @@ public abstract class CardEvaluator {
         }
 
         public double getStatChange (Card card){
-            return this.getPowerChange(card) + this.getToughnessChange(card);
+            return this.getPowerChange(card)
+                    + this.getToughnessChange(card);
         }
 
         public double getPowerChange (Card card){
@@ -54,13 +59,17 @@ public abstract class CardEvaluator {
          @return rareValue - the multiplier associated with the card's rarity.
          */
         public double getRareMultiplier (Card card){
-            double rareValue = COMMONMULTIPLIER;
-            if (card.getRarity().toString().equals("U")) {
-                rareValue = UNCOMMONMULTIPLIER;
-            } else if (card.getRarity().toString().equals("R")) {
-                rareValue = RAREMULTIPLIER;
-            } else if (card.getRarity().toString().equals("M")) {
-                rareValue = MYTHICMULTIPLIER;
+            double rareValue = COMMONMULTIPLIER; 
+            //TODO: replace this with switch statement
+            switch(card.getRarity().toString()){
+                case("U"):
+                    rareValue = UNCOMMONMULTIPLIER;
+                case("R"):
+                    rareValue = RAREMULTIPLIER;
+                case("M"):
+                    rareValue = MYTHICMULTIPLIER;
+                default:
+                    System.err.println("Unexpected Rarity Found");
             }
             return rareValue;
         }
@@ -70,11 +79,11 @@ public abstract class CardEvaluator {
          @param card - card object
          @return the number of colors
          */
-        public double getNumColors (Card card){
-            double colors = 0.0;
+        public int getNumColors (Card card){
+            int colors = 0;
             for (ManaCostShard m : ManaCostShard.values()) {
                 if (card.getManaCost().getShardCount(m) != 0 && m != ManaCostShard.GENERIC) {
-                    colors += (1);
+                    colors++;
                 }
             }
             return colors;
@@ -85,8 +94,8 @@ public abstract class CardEvaluator {
          @param card - card object
          @return the number of colored mana symbols in the card.
          */
-        public double getShardCount (Card card){
-            double shardcount = 0.0;
+        public int getShardCount (Card card){
+            int shardcount = 0;
             for (ManaCostShard m : ManaCostShard.values()) {
                 if (m != ManaCostShard.GENERIC) {
                     shardcount += (card.getManaCost().getShardCount(m));
@@ -94,7 +103,8 @@ public abstract class CardEvaluator {
             }
             return shardcount;
         }
-
+        
+        
         public double getColorValue (Card card){
             return getNumColors(card) * COLORVALUE + getShardCount(card) * SHARDVALUE;
         }
