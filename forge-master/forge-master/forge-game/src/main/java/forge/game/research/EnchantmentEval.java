@@ -1,19 +1,14 @@
-/**
+package forge.game.research; /**
  * Description
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 09, 2020
  */
-
-package forge.game.research;
-
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 
-public class CreatureEval implements CardEvaluator {
-
-    //constants - first four are rarity
+public class EnchantmentEval implements CardEvaluator {
     public static final double MYTHICMULTIPLIER = 1.5;
     public static final double RAREMULTIPLIER = 1.3;
     public static final double UNCOMMONMULTIPLIER = 1.1;
@@ -25,43 +20,22 @@ public class CreatureEval implements CardEvaluator {
     public static final double BASE = .5;
 
     /**
-     * Description
-     * @param card
-     * @return value of card
-     */
-    @Override
-    public final double evaluate (Card card) {
-        double value = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card));
-        return (value) * getRareMultiplier(card);
-    }
-
-
-    /**
      * A card's value depends on its:
      *  rarity
      *  number of colors
      *  number of colored mana symbols in its cost
      *  CMC
      *  base value (.5 to account for 0-cost creatures)
+     * @param card - card object
      * @return the value of the card
      */
+    public final double evaluate(Card card) {
+        //TODO: Add an evaluation statement
+        return 0.0;
+    }
 
     public double getCMCValue (Card card){
         return card.getCMC() * CMCVALUE;
-    }
-
-    public double getStatChange (Card card){
-        return this.getPowerChange(card)
-                + this.getToughnessChange(card);
-    }
-
-    public double getPowerChange (Card card){
-        return card.getCurrentPower() - card.getBasePower();
-    }
-
-
-    public double getToughnessChange (Card card){
-        return card.getCurrentToughness() - card.getBaseToughness();
     }
 
     /**
@@ -83,7 +57,6 @@ public class CreatureEval implements CardEvaluator {
                 break;
             default:
                 System.err.println("Unexpected Rarity Found");
-                break;
         }
         return rareValue;
     }
@@ -118,8 +91,13 @@ public class CreatureEval implements CardEvaluator {
         return shardcount;
     }
 
-    //TODO: add docstring here
+    /**
+     This totals the value of a card's colors and colored mana symbols in its cost.
+     @param card - card object
+     @return the total value of the card's color and devotion
+     */
     public double getColorValue (Card card){
         return getNumColors(card) * COLORVALUE + getShardCount(card) * SHARDVALUE;
     }
+
 }
