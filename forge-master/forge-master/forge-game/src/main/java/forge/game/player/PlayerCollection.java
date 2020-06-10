@@ -31,6 +31,8 @@ public class PlayerCollection extends FCollection<Player> {
         CardCollection result = new CardCollection();
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
+
+            //This was our test code, now its in player line 1750ish
             //ZoneEvaluator eval = new DeckEval(p);
             //System.out.print(p);
             //System.out.print("'s library is worth: ");

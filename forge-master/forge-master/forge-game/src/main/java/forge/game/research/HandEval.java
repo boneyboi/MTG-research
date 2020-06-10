@@ -6,7 +6,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 public class HandEval extends ZoneEvaluator {
-    
+
 
     //constants
     /**
@@ -33,10 +33,13 @@ public class HandEval extends ZoneEvaluator {
                 double multiplier = Math.pow(landsHad / cardCMC, 2);
                 value = value * multiplier;
             }
+
+            //Accounts for the multiple ways you can play certain cards.
             double count = .8;
             for (SpellAbility s: card.getSpellAbilities()) {
                 if (s.getRestrictions().canPlay(card,s)) {
                     count+=.2;
+                    //s.getPayCosts().getTotalMana().getCMC()
                 }
             }
             value = value*(count);
