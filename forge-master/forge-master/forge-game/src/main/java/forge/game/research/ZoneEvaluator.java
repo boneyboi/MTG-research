@@ -9,11 +9,26 @@ public abstract class ZoneEvaluator {
 
     protected static ZoneType zone;
     protected static Player p;
+    protected static double multiplier;
 
-    public ZoneEvaluator(ZoneType zone, Player p){
+    public ZoneEvaluator(ZoneType zone, Player p, double multiplier){
         this.zone = zone;
         this.p = p;
+        this.multiplier = multiplier;
     }
 
-    public abstract double evaluateZone();
+    public double evaluateCard(){
+        //evaluate card * this.multiplier;
+        return 0;
+    }
+
+    public double evaluateZone(){
+        double result = 0;
+        //EvaluateCard for all cards in the zone
+        for(Card c: p.getCardsIn(zone)){
+            Front frontC = new Front(c);
+            result += frontC.chooser();
+        }
+        return result;
+    }
 }

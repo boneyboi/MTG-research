@@ -7,9 +7,10 @@ import forge.game.zone.ZoneType;
 public class HandEval extends ZoneEvaluator {
 
     public HandEval(Player p) {
-        super(ZoneType.Hand, p);
+        super(ZoneType.Hand, p, 1.5);
     }
 
+    @Override
     public double evaluateZone(){
         double result = 0;
         for(Card c: p.getCardsIn(zone)){
@@ -26,4 +27,4 @@ public class HandEval extends ZoneEvaluator {
         return result;
     }
 
-    }
+}
