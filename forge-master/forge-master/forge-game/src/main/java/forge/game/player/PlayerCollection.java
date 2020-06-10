@@ -11,6 +11,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.research.BattlefieldEval;
 import forge.game.research.Front;
+import forge.game.research.HandEval;
 import forge.game.research.ZoneEvaluator;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
@@ -32,9 +33,10 @@ public class PlayerCollection extends FCollection<Player> {
         CardCollection result = new CardCollection();
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
-            //ZoneEvaluator evaluator = new ZoneEvaluator(ZoneType.Hand, p);
-            ZoneEvaluator eval = new BattlefieldEval(p);
-            eval.evaluateZone();
+            ZoneEvaluator eval = new HandEval(p);
+            System.out.print(p);
+            System.out.print("'s hand is worth: ");
+            System.out.println(eval.evaluateZone());
         }
         return result;
     }
