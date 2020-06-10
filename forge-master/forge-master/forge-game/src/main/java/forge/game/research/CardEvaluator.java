@@ -19,6 +19,11 @@ public abstract class CardEvaluator {
     public static final double UNCOMMONMULTIPLIER = 1.1;
     public static final double COMMONMULTIPLIER = 1.0;
 
+    /**
+     * SHARDVALUE - value of individual mana symbols (this is the same for generic and colored)
+     * CMCVALUE - converted mana cost's value
+     * COLORVALUE - how much colored mana symbols is valued in comparison to generic mana
+     */
     public static final double SHARDVALUE = .75;
     public static final double CMCVALUE = 2;
     public static final double COLORVALUE = .25;
@@ -41,6 +46,8 @@ public abstract class CardEvaluator {
      */
     public double getRareMultiplier (Card card){
         double rareValue = 0;
+
+        //sets multiplier depending on the rarity of the card
         switch(card.getRarity().toString()){
             case("L"):
                 rareValue = COMMONMULTIPLIER;
@@ -73,6 +80,8 @@ public abstract class CardEvaluator {
      */
     public int getNumColors (Card card){
         int colors = 0;
+
+        //iterates through every mana shard
         for (ManaCostShard m : ManaCostShard.values()) {
             if (card.getManaCost().getShardCount(m) != 0 && m != ManaCostShard.GENERIC) {
                 colors++;
@@ -102,6 +111,8 @@ public abstract class CardEvaluator {
      @return the total value of the card's color and devotion
      */
     public double getColorValue (Card card){
+
+        //number of colors * COLORVALUE + how many colored mana symbols does a card have * SHARDVALUE
         return getNumColors(card) * COLORVALUE + getShardCount(card) * SHARDVALUE;
     }
 

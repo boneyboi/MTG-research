@@ -6,10 +6,20 @@ import forge.game.zone.ZoneType;
 
 public class HandEval extends ZoneEvaluator {
 
+    //constants
+    /**
+     * HANDMUL = For comparing zones to other zones
+     */
+    public static final double HANDMUL = 1;
+
     public HandEval(Player p) {
-        super(ZoneType.Hand, p, 1.5);
+        super(ZoneType.Hand, p, HANDMUL);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double evaluateZone(){
         double result = 0;

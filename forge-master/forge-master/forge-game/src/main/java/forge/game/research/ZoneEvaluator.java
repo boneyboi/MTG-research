@@ -1,8 +1,15 @@
+/**
+ * Description
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since June 10 2020
+ */
+
 package forge.game.research;
 
 import forge.game.card.Card;
 import forge.game.player.Player;
-import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
 public abstract class ZoneEvaluator {
@@ -11,23 +18,41 @@ public abstract class ZoneEvaluator {
     protected static Player p;
     protected static double multiplier;
 
+    /**
+     *
+     * @param zone
+     * @param p
+     * @param multiplier
+     */
     public ZoneEvaluator(ZoneType zone, Player p, double multiplier){
         this.zone = zone;
         this.p = p;
         this.multiplier = multiplier;
     }
 
-    public double evaluateCard(){
+    /**
+     *
+     * @param c
+     * @return
+     */
+    public double evaluateCard(Card c){
+        double result = 0;
         //evaluate card * this.multiplier;
-        return 0;
+        Front frontC = new Front(c);
+        result += frontC.chooser();
+
+        return result;
     }
 
+    /**
+     *
+     * @return
+     */
     public double evaluateZone(){
         double result = 0;
         //EvaluateCard for all cards in the zone
         for(Card c: p.getCardsIn(zone)){
-            Front frontC = new Front(c);
-            result += frontC.chooser();
+            result += evaluateCard(c);
         }
         return result;
     }
