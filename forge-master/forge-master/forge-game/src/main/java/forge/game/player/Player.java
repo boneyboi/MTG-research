@@ -44,6 +44,8 @@ import forge.game.phase.PhaseType;
 import forge.game.replacement.ReplacementHandler;
 import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
+import forge.game.research.HandEval;
+import forge.game.research.ZoneEvaluator;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbility;
 import forge.game.trigger.Trigger;
@@ -1745,6 +1747,20 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         // play a sound
         game.fireEvent(new GameEventLandPlayed(this, land));
+
+        //This is our code here.
+        ZoneEvaluator hand = new HandEval(game.getPhaseHandler().getPlayerTurn());
+        for (Card card: game.getPhaseHandler().getPlayerTurn().getZone(ZoneType.Hand)) {
+            System.out.print(card);
+            System.out.print("'s value is: ");
+            System.out.println(hand.evaluateCard(card));
+        }
+        System.out.print("And the hand value is: ");
+        System.out.println(hand.evaluateZone());
+
+
+
+
 
         // Run triggers
         game.getTriggerHandler().runTrigger(TriggerType.LandPlayed, AbilityKey.mapFromCard(land), false);
