@@ -11,6 +11,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.research.CardEvaluator;
 import forge.game.research.CreatureEval;
+import forge.game.research.Front;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.collect.FCollection;
@@ -33,13 +34,8 @@ public class PlayerCollection extends FCollection<Player> {
             result.addAll(p.getCardsIn(zone));
             for(Card card : p.getCardsIn(ZoneType.Hand)){
                 //ignores cards that are not creatures -- research
-                if (card.isCreature() == true) {
-                    CardEvaluator evaluator = new CreatureEval();
-                    System.out.print(card.getName());
-                    System.out.print(": ");
-                    System.out.println(evaluator.evaluate(card));
-                    System.out.print(card.getType());
-                }
+                Front frontC = new Front(card);
+                frontC.chooser();
             }
         }
         return result;

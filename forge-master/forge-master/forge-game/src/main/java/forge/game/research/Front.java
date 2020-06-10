@@ -3,9 +3,21 @@ package forge.game.research;
 import forge.game.card.Card;
 import forge.game.research.*;
 public class Front {
+
+    private Card card;
+    private EvaluatorStrategy evaluator;
+
     public Front(Card card){
-        //choose a strategy
-        EvaluatorStrategy evaluator;
+        this.card = card;
+    }
+
+    /**
+     * Chooses a 'strategy' or what evaluator to do use
+     * @return value - value of a card
+     */
+    public double chooser () {
+
+        //choose a strategy based on card 'type'
         if(card.isCreature()){
             evaluator = new EvaluatorStrategy(new CreatureEval());
         } else if(card.isEnchantment()){
@@ -13,7 +25,14 @@ public class Front {
         } else { //default - can be changed
             evaluator = new EvaluatorStrategy(new CreatureEval());
         }
-        System.out.println(evaluator.evaluate(card));
+        //evaluation
+        double value = evaluator.evaluate(card);
+
+        //just to see results
+        System.out.println(card.getName());
+        System.out.println(value);
+
+        return value;
     }
     
 }
