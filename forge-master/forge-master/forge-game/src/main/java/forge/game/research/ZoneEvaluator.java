@@ -33,7 +33,7 @@ public abstract class ZoneEvaluator {
     /**
      *
      * @param c
-     * @return
+     * @return the value of an individual card
      */
     public double evaluateCard(Card c){
         double result = 0;
@@ -45,8 +45,8 @@ public abstract class ZoneEvaluator {
     }
 
     /**
-     *
-     * @return
+     * Description
+     * @return the value of the zone
      */
     public double evaluateZone(){
         double result = 0;

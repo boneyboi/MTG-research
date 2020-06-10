@@ -12,6 +12,10 @@ public class HandEval extends ZoneEvaluator {
      */
     public static final double HANDMUL = 1;
 
+    /**
+     * Description
+     * @param p the player
+     */
     public HandEval(Player p) {
         super(ZoneType.Hand, p, HANDMUL);
     }
