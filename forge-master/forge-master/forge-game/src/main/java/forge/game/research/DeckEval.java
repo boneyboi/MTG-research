@@ -11,8 +11,7 @@ public class DeckEval extends ZoneEvaluator{
         super(ZoneType.Library, p, DECKMUL);
     }
 
-    @Override
-    public double evaluateZone() {
+    public double evaluateDeck() {
         double numLands = p.getZone(ZoneType.Library).getNumLandsIn();
         double cardNum = p.getZone(ZoneType.Library).size();
         return numLands/cardNum;
