@@ -10,6 +10,7 @@ package forge.game.research;
 
 import forge.game.card.Card;
 import forge.game.zone.ZoneType;
+import java.lang.Math;
 
 public class CreatureEval extends CardEvaluator {
 
@@ -33,9 +34,10 @@ public class CreatureEval extends CardEvaluator {
         double value = (Cardvalue) * getRareMultiplier(card);
         // If the card is in our hand, lower its value if we need to draw more lands to play it.
         if (card.isInZone(ZoneType.Hand) && card.getController().getLandsAvaliable() < card.getCMC()) {
-            double temp1 = card.getController().getLandsAvaliable();
-            double temp2 = card.getCMC();
-            value = value*temp1/temp2;
+            double landsHad = card.getController().getLandsAvaliable();
+            double CardCMC = card.getCMC();
+            double landsPercent = landsHad/CardCMC;
+            value = value*Math.pow(landsPercent, landsPercent);
         }
         return value;
     }
