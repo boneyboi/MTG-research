@@ -37,7 +37,8 @@ public class CreatureEval extends CardEvaluator {
             double landsHad = card.getController().getLandsAvaliable();
             double CardCMC = card.getCMC();
             double landsPercent = landsHad/CardCMC;
-            value = value*Math.pow(landsPercent, landsPercent);
+            double multiplier = Math.pow(landsPercent, 2);
+            value = value*multiplier;
         }
         return value;
     }
