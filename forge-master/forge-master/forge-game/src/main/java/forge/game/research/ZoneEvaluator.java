@@ -7,8 +7,9 @@ import forge.game.zone.ZoneType;
 
 public abstract class ZoneEvaluator {
 
-    private static ZoneType zone;
-    private static Player p;
+    protected static ZoneType zone;
+    protected static Player p;
+
 
     public ZoneEvaluator(ZoneType zone, Player p){
         this.zone = zone;
@@ -21,6 +22,7 @@ public abstract class ZoneEvaluator {
             Front frontC = new Front(c);
             result += frontC.chooser();
         }
+        System.out.println("Total: " + result);
         return result;
     }
 }
