@@ -17,17 +17,19 @@ public abstract class ZoneEvaluator {
         this.multiplier = multiplier;
     }
 
-    public double evaluateCard(){
+    public double evaluateCard(Card c){
         //evaluate card * this.multiplier;
-        return 0;
+        double result = 0;
+        Front frontC = new Front(c);
+        result += frontC.chooser();
+        return result;
     }
 
     public double evaluateZone(){
         double result = 0;
         //EvaluateCard for all cards in the zone
         for(Card c: p.getCardsIn(zone)){
-            Front frontC = new Front(c);
-            result += frontC.chooser();
+            result += evaluateCard(c);
         }
         return result;
     }

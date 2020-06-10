@@ -7,7 +7,7 @@ import forge.game.zone.ZoneType;
 public class BattlefieldEval extends ZoneEvaluator {
 
     public BattlefieldEval(Player p) {
-        super(ZoneType.Battlefield, p);
+        super(ZoneType.Battlefield, p, 1);
     }
 
     public double evaluateZone(){
