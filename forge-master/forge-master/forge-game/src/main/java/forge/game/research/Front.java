@@ -29,8 +29,8 @@ public class Front {
         double value = evaluator.evaluate(card);
 
         //just to see results
-        System.out.println(card.getName());
-        System.out.println(value);
+        //System.out.println(card.getName());
+        //System.out.println(value);
 
         return value;
     }
