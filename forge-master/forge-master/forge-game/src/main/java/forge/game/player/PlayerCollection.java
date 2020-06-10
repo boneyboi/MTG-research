@@ -9,8 +9,7 @@ import com.google.common.collect.Iterables;
 
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
-import forge.game.research.CardEvaluator;
-import forge.game.research.CreatureEval;
+import forge.game.research.BattlefieldEval;
 import forge.game.research.Front;
 import forge.game.research.ZoneEvaluator;
 import forge.game.zone.ZoneType;
@@ -34,11 +33,8 @@ public class PlayerCollection extends FCollection<Player> {
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
             //ZoneEvaluator evaluator = new ZoneEvaluator(ZoneType.Hand, p);
-            for(Card card : p.getCardsIn(ZoneType.Hand)){
-                //ignores cards that are not creatures -- research
-                Front frontC = new Front(card);
-                frontC.chooser();
-            }
+            ZoneEvaluator eval = new BattlefieldEval(p);
+            eval.evaluateZone();
         }
         return result;
     }
