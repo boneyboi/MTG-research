@@ -32,14 +32,7 @@ public class CreatureEval extends CardEvaluator {
     public final double evaluate (Card card) {
         double Cardvalue = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card));
         double value = (Cardvalue) * getRareMultiplier(card);
-        // If the card is in our hand, lower its value if we need to draw more lands to play it.
-        if (card.isInZone(ZoneType.Hand) && card.getController().getLandsAvaliable() < card.getCMC()) {
-            double landsHad = card.getController().getLandsAvaliable();
-            double CardCMC = card.getCMC();
-            double landsPercent = landsHad/CardCMC;
-            double multiplier = Math.pow(landsPercent, 2);
-            value = value*multiplier;
-        }
+
         return value;
     }
 
