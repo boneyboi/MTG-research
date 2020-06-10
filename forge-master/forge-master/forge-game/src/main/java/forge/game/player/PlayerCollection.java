@@ -12,6 +12,7 @@ import forge.game.card.CardCollection;
 import forge.game.research.CardEvaluator;
 import forge.game.research.CreatureEval;
 import forge.game.research.Front;
+import forge.game.research.ZoneEvaluator;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.collect.FCollection;
@@ -32,6 +33,7 @@ public class PlayerCollection extends FCollection<Player> {
         CardCollection result = new CardCollection();
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
+            //ZoneEvaluator evaluator = new ZoneEvaluator(ZoneType.Hand, p);
             for(Card card : p.getCardsIn(ZoneType.Hand)){
                 //ignores cards that are not creatures -- research
                 Front frontC = new Front(card);
