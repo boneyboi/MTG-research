@@ -503,7 +503,8 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
         if (activator == null) {
             activator = c.getController();
             sa.setActivatingPlayer(activator);
-            System.out.println(c.getName() + " Did not have activator set in SpellAbilityRestriction.canPlay()");
+            //TODO: restore this
+            //System.out.println(c.getName() + " Did not have activator set in SpellAbilityRestriction.canPlay()");
         }
 
         if (this.isSorcerySpeed() && !activator.canCastSorcery()) {

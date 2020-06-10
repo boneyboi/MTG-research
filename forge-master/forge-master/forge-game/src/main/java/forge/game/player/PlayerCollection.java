@@ -9,10 +9,8 @@ import com.google.common.collect.Iterables;
 
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
-import forge.game.research.BattlefieldEval;
-import forge.game.research.Front;
-import forge.game.research.HandEval;
-import forge.game.research.ZoneEvaluator;
+import forge.game.research.*;
+import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.collect.FCollection;
@@ -33,10 +31,11 @@ public class PlayerCollection extends FCollection<Player> {
         CardCollection result = new CardCollection();
         for (Player p : this) {
             result.addAll(p.getCardsIn(zone));
-            ZoneEvaluator eval = new HandEval(p);
-            System.out.print(p);
-            System.out.print("'s hand is worth: ");
-            System.out.println(eval.evaluateZone());
+            //ZoneEvaluator eval = new DeckEval(p);
+            //System.out.print(p);
+            //System.out.print("'s library is worth: ");
+            //System.out.println(eval.evaluateZone());
+
         }
         return result;
     }
