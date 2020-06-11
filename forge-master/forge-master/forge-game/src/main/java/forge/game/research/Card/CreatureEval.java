@@ -30,10 +30,12 @@ public class CreatureEval extends CardEvaluator {
      */
 
     public final double evaluate (Card card) {
-        double Cardvalue = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card))
-                +getCounters(card);
+        double stats = getStatChange(card);
+        double cMC = getCMCValue(card);
+        double colors = getColorValue(card);
+        double counters = getCounters(card);
+        double Cardvalue = (BASE + stats + cMC + colors + counters);
         double value = (Cardvalue) * getRareMultiplier(card);
-
         return value;
     }
 

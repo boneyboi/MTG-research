@@ -37,7 +37,7 @@ public abstract class CardEvaluator {
 
     public double getCMCValue (Card card){
         if (card.getCopiedPermanent() != null) {
-            return card.getCopiedPermanent().getCMC() * CMCVALUE;
+            return card.getPaperCard().getRules().getMainPart().getManaCost().getCMC() * CMCVALUE;
         } else {
             return card.getCMC() * CMCVALUE;
         }
