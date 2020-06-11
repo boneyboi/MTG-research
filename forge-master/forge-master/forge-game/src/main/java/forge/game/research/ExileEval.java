@@ -42,9 +42,10 @@ public class ExileEval extends ZoneEvaluator{
 
         double value = super.evaluateCard(c);
         if (count==0) {
-            return value;
+            value = value;
         } else {
-            return value/EXILEEVAL;
+            value = value/EXILEEVAL;
         }
+        return value;
     }
 }
