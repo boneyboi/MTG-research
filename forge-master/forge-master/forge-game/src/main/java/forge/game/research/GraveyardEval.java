@@ -30,7 +30,7 @@ public class GraveyardEval extends ZoneEvaluator {
     public double evaluateCard(Card c) {
         double count = 0;
         for (SpellAbility s: c.getSpellAbilities()) {
-            if (s.getRestrictions().canPlay(c, s) || s.isFlashBackAbility()) {
+            if (s.getRestrictions().canPlay(c, s)) {
                 count += 1;
                 //s.getPayCosts().getTotalMana().getCMC()
             }
