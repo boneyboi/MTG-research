@@ -27,7 +27,7 @@ public class CreatureEval extends CardEvaluator {
      * @param card - card object
      * @return the value of the card
      */
-    @Override
+
     public final double evaluate (Card card) {
         double Cardvalue = (BASE + getStatChange(card) + getCMCValue(card) + getColorValue(card));
         double value = (Cardvalue) * getRareMultiplier(card);
