@@ -21,7 +21,9 @@ public class Front {
     public double chooser () {
 
         //choose a strategy based on card 'type'
-        if(card.isCreature()){
+        if (card.isToken()) {
+            evaluator = new EvaluatorStrategy(new TokenEval());
+        } else if(card.isCreature()){
             evaluator = new EvaluatorStrategy(new CreatureEval());
         } else if(card.isEnchantment()) {
             evaluator = new EvaluatorStrategy(new EnchantmentEval());
