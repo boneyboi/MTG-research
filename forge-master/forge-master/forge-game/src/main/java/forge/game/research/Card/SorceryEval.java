@@ -1,4 +1,10 @@
 package forge.game.research.Card;
 
-public class SorceryEval {
+import forge.game.card.Card;
+
+public class SorceryEval extends CardEvaluator{
+    @Override
+    public double evaluate(Card card) {
+        return 0;
+    }
 }
