@@ -1,5 +1,7 @@
 package forge.game.research.Card;
 
+import forge.card.CardType;
+import forge.card.CardTypeView;
 import forge.game.card.Card;
 import forge.game.research.Card.CreatureEval;
 import forge.game.research.Card.EnchantmentEval;
@@ -19,7 +21,6 @@ public class Front {
      * @return value - value of a card
      */
     public double chooser () {
-
         //choose a strategy based on card 'type'
         if (card.isToken()) {
             evaluator = new EvaluatorStrategy(new TokenEval());
