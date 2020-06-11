@@ -14,7 +14,7 @@ public class PlayerStateEval{
 
     /**
      * Calculates the values of all zones a player controls
-     * @return List of values for Battlefield, Exile, Graeyard, Hand, and Library,
+     * @return List of values for Battlefield, Exile, Graveyard, Hand, and Library,
      * in that abc order.
      */
     public List<Double> evaluate() {
