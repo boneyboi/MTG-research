@@ -21,9 +21,7 @@ public class Front {
     public double chooser () {
 
         //choose a strategy based on card 'type'
-        if (card.isToken()) {
-            evaluator = new EvaluatorStrategy(new TokenEval());
-        } else if(card.isCreature()){
+        if(card.isCreature()){
             evaluator = new EvaluatorStrategy(new CreatureEval());
         } else if(card.isEnchantment()) {
             evaluator = new EvaluatorStrategy(new EnchantmentEval());
@@ -46,6 +44,11 @@ public class Front {
         //just to see results
         //System.out.println(card.getName());
         //System.out.println(value);
+
+        //Account this for food and clue tokens
+        if (value <= 0) {
+            value = 1.5;
+        }
 
         return value;
     }

@@ -36,7 +36,11 @@ public abstract class CardEvaluator {
     public abstract double evaluate(Card card);
 
     public double getCMCValue (Card card){
-        return card.getCMC() * CMCVALUE;
+        if (card.getCopiedPermanent() != null) {
+            return card.getCopiedPermanent().getCMC() * CMCVALUE;
+        } else {
+            return card.getCMC() * CMCVALUE;
+        }
     }
 
     /**

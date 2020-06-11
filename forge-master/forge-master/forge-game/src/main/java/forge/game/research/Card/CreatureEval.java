@@ -41,11 +41,19 @@ public class CreatureEval extends CardEvaluator {
     }
 
     public double getPowerChange (Card card){
-        return card.getCurrentPower() - card.getBasePower();
+        if (card.getCopiedPermanent() != null) {
+            return card.getCurrentPower() - card.getPaperCard().getRules().getMainPart().getIntPower();
+        } else {
+            return card.getCurrentPower() - card.getBasePower();
+        }
     }
 
 
     public double getToughnessChange (Card card){
-        return card.getCurrentToughness() - card.getBaseToughness();
+        if (card.getCopiedPermanent() != null) {
+            return card.getCurrentToughness() - card.getPaperCard().getRules().getMainPart().getIntToughness();
+        } else {
+            return card.getCurrentToughness() - card.getBaseToughness();
+        }
     }
 }
