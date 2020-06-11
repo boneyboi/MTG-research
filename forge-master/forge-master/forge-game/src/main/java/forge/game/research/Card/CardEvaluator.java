@@ -49,7 +49,7 @@ public abstract class CardEvaluator {
      @return rareValue - the multiplier associated with the card's rarity.
      */
     public double getRareMultiplier (Card card){
-        double rareValue = 0;
+        double rareValue = 1;
 
         //sets multiplier depending on the rarity of the card
         switch(card.getRarity().toString()){
@@ -69,7 +69,7 @@ public abstract class CardEvaluator {
                 rareValue = MYTHICMULTIPLIER;
                 break;
             default:
-                if (rareValue == 0) {
+                if (rareValue == 1) {
                     System.err.println("Unexpected Rarity Found");
                 }
                 break;

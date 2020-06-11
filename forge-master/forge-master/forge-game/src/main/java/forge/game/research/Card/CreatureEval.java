@@ -16,6 +16,10 @@ public class CreatureEval extends CardEvaluator {
 
 
     public static final double BASE = .5;
+    public static final int STATBOOST2 = 2;
+    public static final int STATBOOST3 = 3;
+    public static final int STATBOOST4 = 4;
+
 
 
     /**
@@ -62,12 +66,12 @@ public class CreatureEval extends CardEvaluator {
     }
 
     public double getCounters (Card card) {
-        return card.getCounters(CounterType.P1P1) + card.getCounters(CounterType.P1P0) +
-                card.getCounters(CounterType.P0P1) + card.getCounters(CounterType.P2P2)
-                + card.getCounters(CounterType.P1P2) + card.getCounters(CounterType.P0P2)
-                + card.getCounters(CounterType.P2P0)
-                - card.getCounters(CounterType.M1M1) - card.getCounters(CounterType.M1M0)
-                - card.getCounters(CounterType.M0M1) - card.getCounters(CounterType.M0M2)
-                - card.getCounters(CounterType.M2M2) - card.getCounters(CounterType.M2M1);
+        return card.getCounters(CounterType.P1P1)*STATBOOST2 + card.getCounters(CounterType.P1P0) +
+                card.getCounters(CounterType.P0P1) + card.getCounters(CounterType.P2P2)*STATBOOST4
+                + card.getCounters(CounterType.P1P2)*STATBOOST3 + card.getCounters(CounterType.P0P2)*STATBOOST2
+                + card.getCounters(CounterType.P2P0)*STATBOOST2
+                - card.getCounters(CounterType.M1M1)*STATBOOST2 - card.getCounters(CounterType.M1M0)
+                - card.getCounters(CounterType.M0M1) - card.getCounters(CounterType.M0M2)*STATBOOST2
+                - card.getCounters(CounterType.M2M2)*STATBOOST4 - card.getCounters(CounterType.M2M1)*STATBOOST3;
     }
 }
