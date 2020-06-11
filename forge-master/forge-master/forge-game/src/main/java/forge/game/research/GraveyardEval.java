@@ -9,7 +9,7 @@ import forge.game.zone.ZoneType;
 public class GraveyardEval extends ZoneEvaluator {
     //constants
     /**
-     * BATTLEMUL - For comparing zones to other zones
+     * GRAVEEVAL - For comparing zones to other zones
      */
     public static final double GRAVEEVAL = .1;
 
@@ -43,10 +43,13 @@ public class GraveyardEval extends ZoneEvaluator {
         }
 
         double value = super.evaluateCard(c);
+
         if (count==0) {
-            return value;
+            value = value;
         } else {
-            return value/GRAVEEVAL;
+            value = value/GRAVEEVAL;
         }
+        //higher the value more lands you have
+        return value;
     }
 }
