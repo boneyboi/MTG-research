@@ -44,6 +44,7 @@ import forge.game.phase.PhaseType;
 import forge.game.replacement.ReplacementHandler;
 import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
+import forge.game.research.GraveyardEval;
 import forge.game.research.HandEval;
 import forge.game.research.ZoneEvaluator;
 import forge.game.spellability.SpellAbility;
@@ -1749,14 +1750,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         game.fireEvent(new GameEventLandPlayed(this, land));
 
         //This is our code here.
-        ZoneEvaluator hand = new HandEval(game.getPhaseHandler().getPlayerTurn());
-        for (Card card: game.getPhaseHandler().getPlayerTurn().getZone(ZoneType.Hand)) {
+        ZoneEvaluator grave = new GraveyardEval(game.getPhaseHandler().getPlayerTurn());
+        for (Card card: game.getPhaseHandler().getPlayerTurn().getZone(ZoneType.Graveyard)) {
             System.out.print(card);
             System.out.print("'s value is: ");
-            System.out.println(hand.evaluateCard(card));
+            System.out.println(grave.evaluateCard(card));
         }
-        System.out.print("And the hand value is: ");
-        System.out.println(hand.evaluateZone());
+        System.out.print("And the grave value is: ");
+        System.out.println(grave.evaluateZone());
 
 
 

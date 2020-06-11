@@ -39,7 +39,8 @@ public abstract class ZoneEvaluator {
         double result = 0;
         //evaluate card * this.multiplier;
         Front frontC = new Front(c);
-        result += frontC.chooser();
+        double value = frontC.chooser()*this.multiplier;
+        result += value;
 
         return result;
     }
