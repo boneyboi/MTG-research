@@ -6,11 +6,10 @@
  * @since June 08, 2020
  */
 
-package forge.game.research;
+package forge.game.research.Card;
 
 import forge.game.card.Card;
-import forge.game.zone.ZoneType;
-import java.lang.Math;
+import forge.game.research.Card.CardEvaluator;
 
 public class CreatureEval extends CardEvaluator {
 

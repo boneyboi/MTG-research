@@ -1,4 +1,4 @@
-package forge.game.research;
+package forge.game.research.Zone;
 
 import forge.game.player.Player;
 import forge.game.zone.ZoneType;

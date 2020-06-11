@@ -1,39 +1,39 @@
-/**
- * (For Research) Description later
+package forge.game.research.Card; /**
+ * Description
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 09, 2020
  */
-package forge.game.research;
-
-
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
+import forge.game.research.Card.CardEvaluator;
 
-
-public abstract class CardEvaluator {
-    //constants - first four are rarity
+public class EnchantmentEval extends CardEvaluator {
     public static final double MYTHICMULTIPLIER = 1.5;
     public static final double RAREMULTIPLIER = 1.3;
     public static final double UNCOMMONMULTIPLIER = 1.1;
     public static final double COMMONMULTIPLIER = 1.0;
 
-    /**
-     * SHARDVALUE - value of individual mana symbols (this is the same for generic and colored)
-     * CMCVALUE - converted mana cost's value
-     * COLORVALUE - how much colored mana symbols is valued in comparison to generic mana
-     */
     public static final double SHARDVALUE = .75;
     public static final double CMCVALUE = 2;
     public static final double COLORVALUE = .25;
+    public static final double BASE = .5;
 
     /**
-     * evaluate the value of a card
-     @param card: Card object
-     @return: value of a card as a double
+     * A card's value depends on its:
+     *  rarity
+     *  number of colors
+     *  number of colored mana symbols in its cost
+     *  CMC
+     *  base value (.5 to account for 0-cost creatures)
+     * @param card - card object
+     * @return the value of the card
      */
-    public abstract double evaluate(Card card);
+    public final double evaluate(Card card) {
+        //TODO: Add an evaluation statement
+        return 0.0;
+    }
 
     public double getCMCValue (Card card){
         return card.getCMC() * CMCVALUE;
@@ -45,16 +45,8 @@ public abstract class CardEvaluator {
      @return rareValue - the multiplier associated with the card's rarity.
      */
     public double getRareMultiplier (Card card){
-        double rareValue = 0;
-
-        //sets multiplier depending on the rarity of the card
+        double rareValue = COMMONMULTIPLIER;
         switch(card.getRarity().toString()){
-            case("L"):
-                rareValue = COMMONMULTIPLIER;
-                break;
-            case("C"):
-                rareValue = COMMONMULTIPLIER;
-                break;
             case("U"):
                 rareValue = UNCOMMONMULTIPLIER;
                 break;
@@ -65,10 +57,7 @@ public abstract class CardEvaluator {
                 rareValue = MYTHICMULTIPLIER;
                 break;
             default:
-                if (rareValue == 0) {
-                    System.err.println("Unexpected Rarity Found");
-                }
-                break;
+                System.err.println("Unexpected Rarity Found");
         }
         return rareValue;
     }
@@ -80,8 +69,6 @@ public abstract class CardEvaluator {
      */
     public int getNumColors (Card card){
         int colors = 0;
-
-        //iterates through every mana shard
         for (ManaCostShard m : ManaCostShard.values()) {
             if (card.getManaCost().getShardCount(m) != 0 && m != ManaCostShard.GENERIC) {
                 colors++;
@@ -111,8 +98,6 @@ public abstract class CardEvaluator {
      @return the total value of the card's color and devotion
      */
     public double getColorValue (Card card){
-
-        //number of colors * COLORVALUE + how many colored mana symbols does a card have * SHARDVALUE
         return getNumColors(card) * COLORVALUE + getShardCount(card) * SHARDVALUE;
     }
 
