@@ -19,8 +19,8 @@ public class HandEval extends ZoneEvaluator {
     }
 
     /**
-     *
-     * @return
+     * Evaluate's the value of a card in hand
+     * @return double: value of card
      */
     @Override
     public double evaluateCard(Card card){

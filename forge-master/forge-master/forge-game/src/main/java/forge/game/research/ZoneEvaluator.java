@@ -21,7 +21,7 @@ public abstract class ZoneEvaluator {
     /**
      *
      * @param zone
-     * @param p
+     * @param p: player allows to access the cards within zones of the respective player
      * @param multiplier
      */
     public ZoneEvaluator(ZoneType zone, Player p, double multiplier){
@@ -31,9 +31,9 @@ public abstract class ZoneEvaluator {
     }
 
     /**
-     *
+     * Evaluate the value of a specific card
      * @param c
-     * @return
+     * @return double result: value of the card
      */
     public double evaluateCard(Card c){
         double result = 0;
@@ -46,8 +46,8 @@ public abstract class ZoneEvaluator {
     }
 
     /**
-     *
-     * @return
+     * Evaluate the total value of a zone by summing the individual cards
+     * @return double result: value of the zone
      */
     public double evaluateZone(){
         double result = 0;

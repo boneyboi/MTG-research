@@ -21,6 +21,11 @@ public class GraveyardEval extends ZoneEvaluator {
         super(ZoneType.Graveyard, p, GRAVEEVAL);
     }
 
+    /**
+     * Evaluate the current state of the card and return a value based on that
+     * @param c
+     * @return double value of the card
+     */
     @Override
     public double evaluateCard(Card c) {
         double count = 0;
