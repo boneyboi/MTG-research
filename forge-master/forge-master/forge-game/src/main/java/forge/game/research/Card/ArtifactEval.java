@@ -1,4 +1,10 @@
 package forge.game.research.Card;
 
-public class ArtifactEval {
+import forge.game.card.Card;
+
+public class ArtifactEval extends CardEvaluator{
+    @Override
+    public double evaluate(Card card) {
+        return 0;
+    }
 }

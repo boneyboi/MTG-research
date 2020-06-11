@@ -23,8 +23,18 @@ public class Front {
         //choose a strategy based on card 'type'
         if(card.isCreature()){
             evaluator = new EvaluatorStrategy(new CreatureEval());
-        } else if(card.isEnchantment()){
+        } else if(card.isEnchantment()) {
             evaluator = new EvaluatorStrategy(new EnchantmentEval());
+        } else if(card.isArtifact()) {
+            evaluator = new EvaluatorStrategy(new ArtifactEval());
+        } else if(card.isLand()) {
+            evaluator = new EvaluatorStrategy(new LandEval());
+        } else if(card.isPlaneswalker()) {
+            evaluator = new EvaluatorStrategy(new PlaneswalkerEval());
+        } else if(card.isInstant()) {
+            evaluator = new EvaluatorStrategy(new InstantEval());
+        } else if(card.isSorcery()) {
+            evaluator = new EvaluatorStrategy(new SorceryEval());
         } else { //default - can be changed
             evaluator = new EvaluatorStrategy(new CreatureEval());
         }
