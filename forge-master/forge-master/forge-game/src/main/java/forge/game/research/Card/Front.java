@@ -1,7 +1,10 @@
-package forge.game.research;
+package forge.game.research.Card;
 
 import forge.game.card.Card;
-import forge.game.research.*;
+import forge.game.research.Card.CreatureEval;
+import forge.game.research.Card.EnchantmentEval;
+import forge.game.research.Card.EvaluatorStrategy;
+
 public class Front {
 
     private Card card;

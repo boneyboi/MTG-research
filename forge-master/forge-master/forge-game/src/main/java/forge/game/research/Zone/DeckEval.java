@@ -1,10 +1,9 @@
-package forge.game.research;
+package forge.game.research.Zone;
 
-import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.zone.ZoneType;
 
-public class DeckEval extends ZoneEvaluator{
+public class DeckEval extends ZoneEvaluator {
     public static final double DECKMUL = 1;
 
     public DeckEval(Player p) {

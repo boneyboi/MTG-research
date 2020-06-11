@@ -1,5 +1,6 @@
-package forge.game.research;
+package forge.game.research.Card;
 import forge.game.card.*;
+import forge.game.research.Card.CardEvaluator;
 
 public class EvaluatorStrategy {
     private CardEvaluator evaluator;

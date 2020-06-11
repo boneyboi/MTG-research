@@ -1,4 +1,4 @@
-package forge.game.research;
+package forge.game.research.Zone;
 
 import forge.game.card.Card;
 import forge.game.keyword.Keyword;

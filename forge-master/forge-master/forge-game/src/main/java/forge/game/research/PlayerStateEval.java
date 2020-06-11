@@ -1,6 +1,7 @@
 package forge.game.research;
 
 import forge.game.player.Player;
+import forge.game.research.Zone.*;
 
 import java.util.ArrayList;
 import java.util.List;

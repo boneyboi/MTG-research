@@ -1,7 +1,8 @@
-package forge.game.research;
+package forge.game.research.Zone;
 
 import forge.game.card.Card;
 import forge.game.player.Player;
+import forge.game.research.Card.Front;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
