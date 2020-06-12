@@ -2,6 +2,13 @@ package forge.game.research.Card;
 
 import forge.game.card.Card;
 import forge.game.zone.ZoneType;
+/**
+ * (For Research) Description later
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since June 08, 2020
+ */
 
 public class PlaneswalkerEval extends CardEvaluator{
 

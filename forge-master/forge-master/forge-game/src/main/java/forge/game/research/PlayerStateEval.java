@@ -5,6 +5,13 @@ import forge.game.research.Zone.*;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * (For Research) Description later
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since June 08, 2020
+ */
 
 public class PlayerStateEval{
 
