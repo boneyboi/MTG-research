@@ -7,9 +7,8 @@
  * @since June 12, 2020
  */
 
-package forge.game.research.Card;
+package forge.game.research.card;
 import forge.game.card.*;
-import forge.game.research.Card.CardEvaluator;
 
 public class EvaluatorStrategy {
     private CardEvaluator evaluator;

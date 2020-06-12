@@ -6,11 +6,11 @@
  * @since June 08, 2020
  */
 
-package forge.game.research.Zone;
+package forge.game.research.zone;
 
 import forge.game.card.Card;
 import forge.game.player.Player;
-import forge.game.research.Card.Front;
+import forge.game.research.card.Front;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 

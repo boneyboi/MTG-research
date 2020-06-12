@@ -5,7 +5,7 @@
  * @author Deric Siglin
  * @since June 12, 2020
  */
-package forge.game.research.Card;
+package forge.game.research.card;
 
 
 import forge.card.mana.ManaCostShard;
