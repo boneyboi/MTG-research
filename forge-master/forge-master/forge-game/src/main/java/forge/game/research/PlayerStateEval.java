@@ -1,9 +1,10 @@
 /**
- * (For Research) Description later
+ * Class that roughly calculates the player's boardstate by adding up the values of all the zones
+ * i.e. battlefield, exile, graveyard, hand, library
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
 
 package forge.game.research;
