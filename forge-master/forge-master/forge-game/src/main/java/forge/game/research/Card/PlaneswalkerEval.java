@@ -12,6 +12,9 @@ import forge.game.zone.ZoneType;
 
 public class PlaneswalkerEval extends CardEvaluator{
 
+    public PlaneswalkerEval() {
+        super();
+    }
 
 
     @Override
