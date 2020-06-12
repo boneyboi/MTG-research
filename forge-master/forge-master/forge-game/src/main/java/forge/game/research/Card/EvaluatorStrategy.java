@@ -1,9 +1,10 @@
 /**
- * (For Research) Description later
+ * Class that allows for an evaluator to be chosen at runtime, leading to a simpler
+ * 'choose' mechanism
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
 
 package forge.game.research.Card;
