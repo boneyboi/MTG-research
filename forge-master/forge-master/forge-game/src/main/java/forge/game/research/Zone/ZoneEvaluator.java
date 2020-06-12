@@ -17,7 +17,7 @@ public abstract class ZoneEvaluator {
 
     protected static ZoneType zone;
     protected static Player p;
-    protected static double multiplier;
+    protected static double multiplier; //TODO: remove from here and from constructer
 
     /**
      *
@@ -36,11 +36,11 @@ public abstract class ZoneEvaluator {
      * @param c
      * @return double result: value of the card
      */
-    public double evaluateCard(Card c){
+    protected double evaluateCard(Card c){
         double result = 0;
         //evaluate card * this.multiplier;
         Front frontC = new Front(c);
-        double value = frontC.chooser()*this.multiplier;
+        double value = frontC.chooser();
         result += value;
 
         return result;

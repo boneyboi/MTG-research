@@ -19,4 +19,9 @@ public class BattlefieldEval extends ZoneEvaluator {
         super(ZoneType.Battlefield, p, BATTLEMUL);
     }
 
+    @Override
+    public double evaluateZone(){
+        double value = super.evaluateZone();
+        return value*BATTLEMUL;
+    }
 }
