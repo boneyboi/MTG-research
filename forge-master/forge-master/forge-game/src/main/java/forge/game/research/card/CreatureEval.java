@@ -6,11 +6,10 @@
  * @since June 12, 2020
  */
 
-package forge.game.research.Card;
+package forge.game.research.card;
 
 import forge.game.card.Card;
 import forge.game.card.CounterType;
-import forge.game.research.Card.CardEvaluator;
 
 public class CreatureEval extends CardEvaluator {
 

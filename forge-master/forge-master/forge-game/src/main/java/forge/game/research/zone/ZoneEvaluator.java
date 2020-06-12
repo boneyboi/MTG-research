@@ -6,11 +6,11 @@
  * @since June 10 2020
  */
 
-package forge.game.research.Zone;
+package forge.game.research.zone;
 
 import forge.game.card.Card;
 import forge.game.player.Player;
-import forge.game.research.Card.Front;
+import forge.game.research.card.Front;
 import forge.game.zone.ZoneType;
 
 public abstract class ZoneEvaluator {
@@ -36,7 +36,7 @@ public abstract class ZoneEvaluator {
      * @param c
      * @return double result: value of the card
      */
-    protected double evaluateCard(Card c){
+    public double evaluateCard(Card c){
         double result = 0;
         //evaluate card * this.multiplier;
         Front frontC = new Front(c);

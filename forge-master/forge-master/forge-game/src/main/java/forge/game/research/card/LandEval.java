@@ -5,10 +5,9 @@
  * @author Deric Siglin
  * @since June 12, 2020
  */
-package forge.game.research.Card;
+package forge.game.research.card;
 
 import forge.game.card.Card;
-import forge.game.spellability.SpellAbility;
 
 public class LandEval extends CardEvaluator{
 

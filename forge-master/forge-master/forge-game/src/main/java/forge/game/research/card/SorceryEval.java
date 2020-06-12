@@ -6,9 +6,7 @@
  * @since June 12, 2020
  */
 
-package forge.game.research.Card;
-
-import forge.game.card.Card;
+package forge.game.research.card;
 
 public class SorceryEval extends CardEvaluator{
 

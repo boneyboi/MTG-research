@@ -7,14 +7,9 @@
  * @since June 12, 2020
  */
 
-package forge.game.research.Card;
+package forge.game.research.card;
 
-import forge.card.CardType;
-import forge.card.CardTypeView;
 import forge.game.card.Card;
-import forge.game.research.Card.CreatureEval;
-import forge.game.research.Card.EnchantmentEval;
-import forge.game.research.Card.EvaluatorStrategy;
 
 public class Front {
 
