@@ -1748,25 +1748,6 @@ public class Player extends GameEntity implements Comparable<Player> {
         // play a sound
         game.fireEvent(new GameEventLandPlayed(this, land));
 
-        //This is our code here.
-        ZoneEvaluator field = new BattlefieldEval(game.getPhaseHandler().getPlayerTurn());
-        for (Card card: game.getPhaseHandler().getPlayerTurn().getZone(ZoneType.Battlefield)) {
-            System.out.print(card);
-            System.out.print("'s value is: ");
-            System.out.println(field.evaluateCard(card));
-        }
-        for (Card card: game.getPhaseHandler().getPlayerTurn().getZone(ZoneType.Hand)) {
-            System.out.print(card);
-            System.out.print("'s value in hand is: ");
-            System.out.println(field.evaluateCard(card));
-        }
-        System.out.print("And the battlefield value is: ");
-        System.out.println(field.evaluateZone());
-
-
-
-
-
         // Run triggers
         game.getTriggerHandler().runTrigger(TriggerType.LandPlayed, AbilityKey.mapFromCard(land), false);
         game.getStack().unfreezeStack();
