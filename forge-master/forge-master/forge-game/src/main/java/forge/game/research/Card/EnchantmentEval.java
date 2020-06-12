@@ -1,5 +1,5 @@
 /**
- * (For Research) Description later
+ * Subclass of CardEvaluator - determines the value of cards with the Enchantment 'type'
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
@@ -16,7 +16,5 @@ public class EnchantmentEval extends CardEvaluator {
     public EnchantmentEval() {
         super();
     }
-
-
 
 }
