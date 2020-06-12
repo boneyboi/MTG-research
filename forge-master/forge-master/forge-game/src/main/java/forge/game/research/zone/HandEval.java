@@ -28,7 +28,7 @@ public class HandEval extends ZoneEvaluator {
      * @param p the player
      */
     public HandEval(Player p) {
-        super(ZoneType.Hand, p, HANDMUL);
+        super(ZoneType.Hand, p);
     }
 
     /**
@@ -42,22 +42,31 @@ public class HandEval extends ZoneEvaluator {
             double value = frontC.chooser();
             double cardCMC = card.getCMC();
             double landsHad = p.getLandsAvaliable();
+            //TODO: Account for if we have the right colors
             if (landsHad < cardCMC) {
                 double multiplier = Math.pow(landsHad / cardCMC, 2);
                 value = value * multiplier;
             }
 
             //Accounts for the multiple ways you can play certain cards.
-            double count = .8;
-            for (SpellAbility s: card.getSpellAbilities()) {
-                if (s.getRestrictions().canPlay(card,s)) {
-                    count+=.2;
-                    //s.getPayCosts().getTotalMana().getCMC()
+            if (!card.isLand()) {
+                double count = .8;
+                for (SpellAbility s : card.getSpellAbilities()) {
+                    if (s.getRestrictions().canPlay(card, s)) {
+                        count += .2;
+                        //s.getPayCosts().getTotalMana().getCMC()
+                    }
                 }
+                value = value * (count);
             }
-            value = value*(count);
         return value;
 
+    }
+
+    @Override
+    public double evaluateZone(){
+        double value = super.evaluateZone();
+        return value*HANDMUL;
     }
 
 }

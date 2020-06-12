@@ -26,7 +26,7 @@ public class GraveyardEval extends ZoneEvaluator {
      * @param p The player
      */
     public GraveyardEval(Player p) {
-        super(ZoneType.Graveyard, p, GRAVEEVAL);
+        super(ZoneType.Graveyard, p);
     }
 
     /**
@@ -53,11 +53,10 @@ public class GraveyardEval extends ZoneEvaluator {
         double value = super.evaluateCard(c);
 
         if (count==0) {
-            value = value;
-        } else {
-            value = value/GRAVEEVAL;
+            value = value*GRAVEEVAL;
         }
         //higher the value more lands you have
         return value;
     }
+
 }

@@ -470,8 +470,7 @@ public class PhaseHandler implements java.io.Serializable {
                 System.out.println();
                 ZoneEvaluator field = new BattlefieldEval(getPlayerTurn());
                 for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
-                    Front eval = new Front(card);
-                    double value = eval.chooser();
+                    double value = field.evaluateCard(card);
                     System.out.print(card);
                     System.out.print("'s value is: ");
                     System.out.println(value);
@@ -480,15 +479,15 @@ public class PhaseHandler implements java.io.Serializable {
                 System.out.print("And the battlefield value is: ");
                 System.out.println(field.evaluateZone());
                 System.out.println();
+
+                field = new HandEval(getPlayerTurn());
                 for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
-                    Front eval = new Front(card);
-                    double value = eval.chooser();
+                    double value = field.evaluateCard(card);
                     System.out.print(card);
                     System.out.print("'s value is: ");
                     System.out.println(value);
                 }
                 System.out.println();
-                field = new HandEval(getPlayerTurn());
                 System.out.print("And the hand value is: ");
                 System.out.println(field.evaluateZone());
                 System.out.println();

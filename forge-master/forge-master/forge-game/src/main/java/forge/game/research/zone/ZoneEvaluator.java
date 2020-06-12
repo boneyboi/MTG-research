@@ -19,18 +19,15 @@ public abstract class ZoneEvaluator {
 
     protected static ZoneType zone;
     protected static Player p;
-    protected static double multiplier; //TODO: remove from here and from constructer
 
     /**
      *
      * @param zone
      * @param p: player allows to access the cards within zones of the respective player
-     * @param multiplier
      */
-    public ZoneEvaluator(ZoneType zone, Player p, double multiplier){
+    public ZoneEvaluator(ZoneType zone, Player p){
         this.zone = zone;
         this.p = p;
-        this.multiplier = multiplier;
     }
 
     /**

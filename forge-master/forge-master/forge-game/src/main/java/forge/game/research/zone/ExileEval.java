@@ -19,14 +19,14 @@ public class ExileEval extends ZoneEvaluator {
     /**
      * BATTLEMUL - For comparing zones to other zones
      */
-    public static final double EXILEEVAL = .1;
+    public static final double EXILEEVAL = .05;
 
     /**
      * Constructor that calls the main constructor from its parent's class
      * @param p The player
      */
     public ExileEval(Player p) {
-        super(ZoneType.Exile, p, EXILEEVAL);
+        super(ZoneType.Exile, p);
     }
 
     /**
@@ -50,10 +50,9 @@ public class ExileEval extends ZoneEvaluator {
 
         double value = super.evaluateCard(c);
         if (count==0) {
-            value = value;
-        } else {
-            value = value/EXILEEVAL;
+            value = value*EXILEEVAL;
         }
         return value;
     }
+
 }

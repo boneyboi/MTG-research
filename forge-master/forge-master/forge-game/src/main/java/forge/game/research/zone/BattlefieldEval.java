@@ -24,7 +24,7 @@ public class BattlefieldEval extends ZoneEvaluator {
      * @param p The player
      */
     public BattlefieldEval(Player p) {
-        super(ZoneType.Battlefield, p, BATTLEMUL);
+        super(ZoneType.Battlefield, p);
     }
 
     @Override
