@@ -11,6 +11,11 @@ import forge.game.card.Card;
 import forge.game.spellability.SpellAbility;
 
 public class LandEval extends CardEvaluator{
+
+    public LandEval(){
+        super();
+    }
+
     public final double evaluate (Card card) {
         return getRareMultiplier(card);
     }
