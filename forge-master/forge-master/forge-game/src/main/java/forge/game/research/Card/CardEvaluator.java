@@ -1,5 +1,5 @@
 /**
- * (For Research) Description later
+ * Abstract class that
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
