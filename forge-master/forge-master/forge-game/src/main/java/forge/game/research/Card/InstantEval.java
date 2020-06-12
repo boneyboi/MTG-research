@@ -12,10 +12,7 @@ import forge.game.card.Card;
 
 public class InstantEval extends CardEvaluator{
 
-    public double evaluate(Card card) {
-        double cardValue = (getCMCValue(card) + getColorValue(card));
-        double totalValue = (cardValue) * getRareMultiplier(card);
-
-        return totalValue;
+    public InstantEval() {
+        super();
     }
 }

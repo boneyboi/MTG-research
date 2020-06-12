@@ -16,7 +16,8 @@ public class LandEval extends CardEvaluator{
         super();
     }
 
-    public final double evaluate (Card card) {
+    @Override
+    public double evaluate (Card card) {
         return getRareMultiplier(card);
     }
 

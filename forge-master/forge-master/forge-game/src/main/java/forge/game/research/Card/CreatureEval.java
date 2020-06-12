@@ -20,6 +20,10 @@ public class CreatureEval extends CardEvaluator {
     public static final int STATBOOST3 = 3;
     public static final int STATBOOST4 = 4;
 
+    public CreatureEval() {
+        super();
+    }
+
 
 
     /**
@@ -33,6 +37,7 @@ public class CreatureEval extends CardEvaluator {
      * @return the value of the card
      */
 
+    @Override
     public final double evaluate (Card card) {
         double stats = getStatChange(card);
         double cMC = getCMCValue(card);

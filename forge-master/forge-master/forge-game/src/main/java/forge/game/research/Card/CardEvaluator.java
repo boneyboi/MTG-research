@@ -28,12 +28,24 @@ public abstract class CardEvaluator {
     public static final double CMCVALUE = 2;
     public static final double COLORVALUE = .25;
 
+    public CardEvaluator() {
+
+    }
+
     /**
-     * evaluate the value of a card
-     @param card: Card object
-     @return: value of a card as a double
+     * A card's value depends on its:
+     *  rarity
+     *  number of colors
+     *  number of colored mana symbols in its cost
+     *  CMC
+     * @param card - card object
+     * @return the value of the card
      */
-    public abstract double evaluate(Card card);
+    public double evaluate(Card card) {
+        double cardValue = (getCMCValue(card) + getColorValue(card));
+        double totalValue = (cardValue) * getRareMultiplier(card);
+        return totalValue;
+    }
 
     public double getCMCValue (Card card){
         if (card.getCopiedPermanent() != null) {
