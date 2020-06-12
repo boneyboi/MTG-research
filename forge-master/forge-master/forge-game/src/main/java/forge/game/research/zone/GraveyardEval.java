@@ -19,7 +19,7 @@ public class GraveyardEval extends ZoneEvaluator {
     /**
      * GRAVEEVAL - For comparing zones to other zones
      */
-    public static final double GRAVEEVAL = .1;
+    public static final double GRAVEMUL = .1;
 
     /**
      * Constructor that calls the main constructor from its parent's class
@@ -53,7 +53,7 @@ public class GraveyardEval extends ZoneEvaluator {
         double value = super.evaluateCard(c);
 
         if (count==0) {
-            value = value*GRAVEEVAL;
+            value = value*GRAVEMUL;
         }
         //higher the value more lands you have
         return value;
