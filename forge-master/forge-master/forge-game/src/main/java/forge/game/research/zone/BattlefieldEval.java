@@ -1,9 +1,9 @@
 /**
- * (For Research) Description later
+ * Subclass for ZoneEvaluator -- gives a value to the zone 'battlefield'
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
 
 package forge.game.research.zone;

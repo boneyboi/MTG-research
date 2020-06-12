@@ -1,9 +1,11 @@
 /**
- * Description
+ * Abstract class that evaluates the 'zone' i.e. hand, battlefield, exile, graveyard, library
+ * by given each zone a value, which is the sum of the values of the cards in their respective
+ * zones
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 10 2020
+ * @since June 12, 2020
  */
 
 package forge.game.research.zone;

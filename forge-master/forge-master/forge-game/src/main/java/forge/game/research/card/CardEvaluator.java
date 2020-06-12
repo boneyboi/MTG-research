@@ -1,5 +1,5 @@
 /**
- * Abstract class that
+ * Abstract class that allows for card's to be evaluated (given a value) based on their 'type'
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
