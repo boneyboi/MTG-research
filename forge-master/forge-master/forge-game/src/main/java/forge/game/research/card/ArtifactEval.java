@@ -8,17 +8,12 @@
 
 package forge.game.research.card;
 
-import forge.game.card.Card;
 
-public class ArtifactEval extends CardEvaluator{
+public class ArtifactEval extends CardEvaluator {
 
     public ArtifactEval() {
     }
 
-    public double evaluate(Card card) {
-        double cardValue = (getCMCValue(card) + getColorValue(card));
-        double totalValue = (cardValue) * getRareMultiplier(card);
-
-        return totalValue;
-    }
 }
+
+
