@@ -39,6 +39,10 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
+import forge.game.research.card.Front;
+import forge.game.research.zone.BattlefieldEval;
+import forge.game.research.zone.HandEval;
+import forge.game.research.zone.ZoneEvaluator;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
 import forge.game.staticability.StaticAbility;
@@ -460,6 +464,37 @@ public class PhaseHandler implements java.io.Serializable {
 
         switch (phase) {
             case UNTAP:
+                //This is our code here.
+                System.out.print(getPlayerTurn());
+                System.out.print("'s statistics are:");
+                System.out.println();
+                ZoneEvaluator field = new BattlefieldEval(getPlayerTurn());
+                for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
+                    Front eval = new Front(card);
+                    double value = eval.chooser();
+                    System.out.print(card);
+                    System.out.print("'s value is: ");
+                    System.out.println(value);
+                }
+                System.out.println();
+                System.out.print("And the battlefield value is: ");
+                System.out.println(field.evaluateZone());
+                System.out.println();
+                for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
+                    Front eval = new Front(card);
+                    double value = eval.chooser();
+                    System.out.print(card);
+                    System.out.print("'s value is: ");
+                    System.out.println(value);
+                }
+                System.out.println();
+                field = new HandEval(getPlayerTurn());
+                System.out.print("And the hand value is: ");
+                System.out.println(field.evaluateZone());
+                System.out.println();
+
+
+
                 nCombatsThisTurn = 0;
                 break;
 
@@ -1217,7 +1252,7 @@ public class PhaseHandler implements java.io.Serializable {
 
     /**
      * returns the continuous extra turn count
-     * @param PLayer p
+     * @param p
      * @return int
      */
     public int getExtraTurnForPlayer(final Player p) {
