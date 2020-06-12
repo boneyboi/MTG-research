@@ -6,7 +6,7 @@
  * @since June 08, 2020
  */
 
-package forge.game.research.Zone;
+package forge.game.research.zone;
 
 import forge.game.card.Card;
 import forge.game.keyword.Keyword;

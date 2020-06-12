@@ -1,14 +1,13 @@
 /**
- * (For Research) Description later
+ * Subclass of CardEvaluator - determines the value of cards with the Land 'type'
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
-package forge.game.research.Card;
+package forge.game.research.card;
 
 import forge.game.card.Card;
-import forge.game.spellability.SpellAbility;
 
 public class LandEval extends CardEvaluator{
 

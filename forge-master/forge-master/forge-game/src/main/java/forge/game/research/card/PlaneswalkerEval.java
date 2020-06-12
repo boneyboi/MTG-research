@@ -1,14 +1,16 @@
-package forge.game.research.Card;
-
-import forge.game.card.Card;
-import forge.game.zone.ZoneType;
 /**
- * (For Research) Description later
+ * Subclass of CardEvaluator - determines the value of cards with the Planeswalker 'type'
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
+
+package forge.game.research.card;
+
+import forge.game.card.Card;
+import forge.game.zone.ZoneType;
+
 
 public class PlaneswalkerEval extends CardEvaluator{
 

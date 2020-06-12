@@ -1,19 +1,15 @@
 /**
- * (For Research) Description later
+ * Class that allows for the correct subclass of CardEvaluator to be chosen based on the card's
+ * type
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 08, 2020
+ * @since June 12, 2020
  */
 
-package forge.game.research.Card;
+package forge.game.research.card;
 
-import forge.card.CardType;
-import forge.card.CardTypeView;
 import forge.game.card.Card;
-import forge.game.research.Card.CreatureEval;
-import forge.game.research.Card.EnchantmentEval;
-import forge.game.research.Card.EvaluatorStrategy;
 
 public class Front {
 

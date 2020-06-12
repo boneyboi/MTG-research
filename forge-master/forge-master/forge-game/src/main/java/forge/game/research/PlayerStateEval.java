@@ -1,10 +1,3 @@
-package forge.game.research;
-
-import forge.game.player.Player;
-import forge.game.research.Zone.*;
-
-import java.util.ArrayList;
-import java.util.List;
 /**
  * (For Research) Description later
  * @author Michael Bowlin
@@ -12,6 +5,14 @@ import java.util.List;
  * @author Deric Siglin
  * @since June 08, 2020
  */
+
+package forge.game.research;
+
+import forge.game.player.Player;
+import forge.game.research.zone.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerStateEval{
 
