@@ -10,9 +10,28 @@ package forge.game.research.card;
 
 import forge.game.card.Card;
 import forge.game.card.CounterType;
+import forge.game.keyword.Keyword;
+import forge.game.keyword.KeywordInterface;
 
 public class CreatureEval extends CardEvaluator {
 
+    //constants for keywords
+    public static final double INDESTRUCTIBLEVAL = 10;
+    public static final double PROTECITONVAL = 9.5;
+    public static final double HEXPROOFVAL = 9;
+    public static final double DOUBLESTRIKEVAL = 7.5;
+    public static final double FLYINGVAL = 6.5;
+    public static final double HASTEVAL = 5.5;
+    public static final double FIRSTSTRIKEVAL = 5.3;
+    public static final double DEATHTOUCHVAL = 5;
+    public static final double PROWESSVAL = 4.5;
+    public static final double FLASHVAL = 44.5;
+    public static final double VIGILIANCEVAL = 3.8;
+    public static final double TRAMPLEVAL = 3.5;
+    public static final double LIFELINKVAL = 3;
+    public static final double MENACEVAL = 2;
+    public static final double REACHVAL = 1.5;
+    public static final double DEFENDERVAL = -2;
 
     public static final double BASE = .5;
     public static final int STATBOOST2 = 2;
@@ -39,10 +58,10 @@ public class CreatureEval extends CardEvaluator {
     @Override
     public final double evaluate (Card card) {
         double stats = getStatChange(card);
-        double cMC = getCMCValue(card);
+        double keyword = getKeywordValue(card);
         double colors = getColorValue(card);
         double counters = getCounters(card);
-        double Cardvalue = (BASE + stats + cMC + colors + counters);
+        double Cardvalue = (BASE + stats + keyword + colors + counters);
         double value = (Cardvalue) * getRareMultiplier(card);
         return value;
     }
@@ -85,14 +104,61 @@ public class CreatureEval extends CardEvaluator {
                 card.getCounters(CounterType.M2M1)*STATBOOST3;
     }
 
+    /**
+     *
+     * @param card
+     * @return keyValue
+     */
     public double getKeywordValue (Card card) {
         double keyValue = 0;
+        Keyword key = null;
 
+        for (KeywordInterface k : card.getKeywords()){
+            key = k.getKeyword();
 
+            if (key.equals(Keyword.INDESTRUCTIBLE)) {
+                keyValue += INDESTRUCTIBLEVAL;
+            } else if (key.equals(Keyword.PROTECTION)) {
+                keyValue += PROTECITONVAL;
+            } else if (key.equals(Keyword.HEXPROOF)) {
+                keyValue += HEXPROOFVAL;
+            } else if (key.equals(Keyword.DOUBLE_STRIKE)) {
+                keyValue += DOUBLESTRIKEVAL;
+            } else if (key.equals(Keyword.FLYING)) {
+                keyValue += FLYINGVAL;
+            } else if (key.equals(Keyword.HASTE)) {
+                keyValue += HASTEVAL;
+            } else if (key.equals(Keyword.FIRST_STRIKE)) {
+                keyValue += FIRSTSTRIKEVAL;
+            } else if (key.equals(Keyword.DEATHTOUCH)) {
+                keyValue += DEATHTOUCHVAL;
+            } else if (key.equals(Keyword.PROWESS)) {
+                keyValue += PROWESSVAL;
+            } else if (key.equals(Keyword.FLASH)) {
+                keyValue += FLASHVAL;
+            } else if (key.equals(Keyword.VIGILANCE)) {
+                keyValue += VIGILIANCEVAL;
+            } else if (key.equals(Keyword.TRAMPLE)) {
+                keyValue += TRAMPLEVAL;
+            } else if (key.equals(Keyword.LIFELINK)) {
+                keyValue += LIFELINKVAL;
+            } else if (key.equals(Keyword.MENACE)) {
+                keyValue += MENACEVAL;
+            } else if (key.equals(Keyword.REACH)) {
+                keyValue += REACHVAL;
+            } else if (key.equals(Keyword.DEFENDER)) {
+                keyValue += DEFENDERVAL;
+            }
+        }
 
         return keyValue;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     public double getStatTotal (Card card) {
         double statTotal = 0;
 
