@@ -481,40 +481,7 @@ public class PhaseHandler implements java.io.Serializable {
                 break;
 
             case MAIN1:
-
-                //This is the start of our code
-
-                System.out.print(getPlayerTurn());
-                System.out.print("'s statistics are:");
-                System.out.println();
-                ZoneEvaluator field = new BattlefieldEval(getPlayerTurn());
-                for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
-                    double value = field.evaluateCard(card);
-                    System.out.print(card);
-                    System.out.print("'s value is: ");
-                    System.out.println(value);
-                }
-                System.out.println();
-                System.out.print("And the battlefield value is: ");
-                System.out.println(field.evaluateZone());
-                System.out.println();
-
-                field = new HandEval(getPlayerTurn());
-                for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
-                    double value = field.evaluateCard(card);
-                    System.out.print(card);
-                    System.out.print("'s value is: ");
-                    System.out.println(value);
-                }
-                System.out.println();
-                System.out.print("And the hand value is: ");
-                System.out.println(field.evaluateZone());
-                System.out.println();
-
-                //This is the end of our code
-
-
-
+                printEvals();
                 nMain1sThisTurn++;
                 break;
 
@@ -554,6 +521,39 @@ public class PhaseHandler implements java.io.Serializable {
                 break;
             default: // no action
         }
+    }
+
+    private void printEvals() {
+        //This is the start of our code
+
+        System.out.print(getPlayerTurn());
+        System.out.print("'s statistics are:");
+        System.out.println();
+        ZoneEvaluator field = new BattlefieldEval(getPlayerTurn());
+        for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
+            double value = field.evaluateCard(card);
+            System.out.print(card);
+            System.out.print("'s value is: ");
+            System.out.println(value);
+        }
+        System.out.println();
+        System.out.print("And the battlefield value is: ");
+        System.out.println(field.evaluateZone());
+        System.out.println();
+
+        field = new HandEval(getPlayerTurn());
+        for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
+            double value = field.evaluateCard(card);
+            System.out.print(card);
+            System.out.print("'s value is: ");
+            System.out.println(value);
+        }
+        System.out.println();
+        System.out.print("And the hand value is: ");
+        System.out.println(field.evaluateZone());
+        System.out.println();
+
+        //This is the end of our code
     }
 
     private void declareAttackersTurnBasedAction() {
