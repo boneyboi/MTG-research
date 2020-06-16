@@ -84,4 +84,19 @@ public class CreatureEval extends CardEvaluator {
                 card.getCounters(CounterType.M2M2)*STATBOOST4 -
                 card.getCounters(CounterType.M2M1)*STATBOOST3;
     }
+
+    public double getKeywordValue (Card card) {
+        double keyValue = 0;
+
+
+
+        return keyValue;
+    }
+
+    public double getStatTotal (Card card) {
+        double statTotal = 0;
+
+        return statTotal;
+    }
+
 }

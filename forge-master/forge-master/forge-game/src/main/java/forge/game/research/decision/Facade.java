@@ -1,3 +1,10 @@
+/**
+ * Class that returns the decision when the computer asks for one
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since June 19 2020
+ */
 package forge.game.research.decision;
 
 public class Facade {
