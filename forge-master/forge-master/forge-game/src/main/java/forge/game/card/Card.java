@@ -82,6 +82,9 @@ import io.sentry.event.BreadcrumbBuilder;
  * @version $Id$
  */
 public class Card extends GameEntity implements Comparable<Card> {
+    //research variables
+    private int votes = 0;
+
     private final Game game;
     private final IPaperCard paperCard;
 
@@ -317,6 +320,30 @@ public class Card extends GameEntity implements Comparable<Card> {
         view.updateChangedColorWords(this);
         view.updateChangedTypes(this);
         view.updateSickness(this);
+    }
+
+    //research methods - getVotes, setVotes, incrementVotes
+    /**
+     * returns the number of votes a card has
+     * @return votes - umber of votes a card has
+     */
+    public int getVotes() {
+        return votes;
+    }
+
+    /**
+     * Sets the number of votes to the input value
+     * @param value - value that sets
+     */
+    public void setVotes(int value) {
+        votes = value;
+    }
+
+    /**
+     * Increments number of votes by one
+     */
+    public void incrementVotes() {
+        votes++;
     }
 
     public boolean changeToState(final CardStateName state) {
