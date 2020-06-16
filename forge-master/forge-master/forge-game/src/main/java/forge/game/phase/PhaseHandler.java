@@ -464,7 +464,26 @@ public class PhaseHandler implements java.io.Serializable {
 
         switch (phase) {
             case UNTAP:
-                //This is our code here.
+                nCombatsThisTurn = 0;
+                break;
+
+            case UPKEEP:
+                for (Card c : game.getCardsIn(ZoneType.Battlefield)) {
+                    c.getDamageHistory().setNotAttackedSinceLastUpkeepOf(playerTurn);
+                    c.getDamageHistory().setNotBlockedSinceLastUpkeepOf(playerTurn);
+                    c.getDamageHistory().setNotBeenBlockedSinceLastUpkeepOf(playerTurn);
+                    if (playerTurn.equals(c.getController()) && c.getTurnInZone() < game.getPhaseHandler().getTurn()) {
+                        c.setCameUnderControlSinceLastUpkeep(false);
+                    }
+                }
+                game.getUpkeep().executeUntilEndOfPhase(playerTurn);
+                game.getUpkeep().registerUntilEndCommand(playerTurn);
+                break;
+
+            case MAIN1:
+
+                //This is the start of our code
+
                 System.out.print(getPlayerTurn());
                 System.out.print("'s statistics are:");
                 System.out.println();
@@ -492,25 +511,10 @@ public class PhaseHandler implements java.io.Serializable {
                 System.out.println(field.evaluateZone());
                 System.out.println();
 
+                //This is the end of our code
 
 
-                nCombatsThisTurn = 0;
-                break;
 
-            case UPKEEP:
-                for (Card c : game.getCardsIn(ZoneType.Battlefield)) {
-                    c.getDamageHistory().setNotAttackedSinceLastUpkeepOf(playerTurn);
-                    c.getDamageHistory().setNotBlockedSinceLastUpkeepOf(playerTurn);
-                    c.getDamageHistory().setNotBeenBlockedSinceLastUpkeepOf(playerTurn);
-                    if (playerTurn.equals(c.getController()) && c.getTurnInZone() < game.getPhaseHandler().getTurn()) {
-                        c.setCameUnderControlSinceLastUpkeep(false);
-                    }
-                }
-                game.getUpkeep().executeUntilEndOfPhase(playerTurn);
-                game.getUpkeep().registerUntilEndCommand(playerTurn);
-                break;
-
-            case MAIN1:
                 nMain1sThisTurn++;
                 break;
 
