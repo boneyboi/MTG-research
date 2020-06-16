@@ -59,9 +59,8 @@ public class CreatureEval extends CardEvaluator {
     public final double evaluate (Card card) {
         double stats = getStatTotal(card);
         double keyword = getKeywordValue(card);
-        double colors = getColorValue(card);
         double counters = getCounters(card);
-        double Cardvalue = (BASE + stats + keyword + colors + counters);
+        double Cardvalue = (BASE + stats + keyword + counters);
         double value = (Cardvalue) * getRareMultiplier(card);
 
         return value;
