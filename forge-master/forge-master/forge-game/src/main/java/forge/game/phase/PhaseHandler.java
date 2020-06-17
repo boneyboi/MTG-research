@@ -40,11 +40,16 @@ import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
 import forge.game.research.card.Front;
+import forge.game.research.decision.CardTemplate;
+import forge.game.research.decision.TemplateCMC;
+import forge.game.research.decision.TemplateLifelink;
+import forge.game.research.decision.TemplateName;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
+import forge.game.spellability.SpellAbilityVariables;
 import forge.game.staticability.StaticAbility;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -481,7 +486,7 @@ public class PhaseHandler implements java.io.Serializable {
                 break;
 
             case MAIN1:
-                printEvals();
+                printTemplates();
                 nMain1sThisTurn++;
                 break;
 
@@ -520,6 +525,23 @@ public class PhaseHandler implements java.io.Serializable {
                 game.fireEvent(new GameEventTurnEnded());
                 break;
             default: // no action
+        }
+    }
+
+    private void printTemplates() {
+        System.out.print(getPlayerTurn());
+        System.out.print("'s statistics are:");
+        System.out.println();
+        CardTemplate test = new TemplateName("Vampire of the Dire Moon");
+        CardTemplate test2 = new TemplateCMC(1);
+        CardTemplate test3 = new TemplateLifelink();
+        for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
+            if (!card.isLand()) {
+                System.out.println(test.matches(card));
+                System.out.println(test2.matches(card));
+                System.out.println(test3.matches(card));
+
+            }
         }
     }
 
