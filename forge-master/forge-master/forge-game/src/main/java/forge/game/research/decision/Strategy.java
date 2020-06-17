@@ -31,7 +31,11 @@ public class Strategy{
     }
 
     public StrategyNode next(){
-        return path.iterator().next();
+        if(path.iterator().hasNext()){
+            return path.iterator().next();
+        } else {
+            return null;
+        }
     }
 
 

@@ -18,4 +18,19 @@ public class StrategyNode {
         this.requirements = node.requirements;
         this.cards = node.cards;
     }
+
+    public CardTemplate nextReq(){
+        if(this.requirements.iterator().hasNext()){
+            return this.requirements.iterator().next();
+        } else {
+            return null;
+        }
+    }
+    public CardTemplate nextCard(){
+        if(this.cards.iterator().hasNext()){
+            return this.cards.iterator().next();
+        } else {
+            return null;
+        }
+    }
 }
