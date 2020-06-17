@@ -21,7 +21,7 @@ public class Strategy{
     public void pushFront(StrategyNode node){
         path.pushFront(new StrategyNode(node));
     }
-    public void CheckRequirements(){
-
+    public boolean CheckRequirements(){
+        return false;
     }
 }
