@@ -40,10 +40,7 @@ import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
 import forge.game.research.card.Front;
-import forge.game.research.decision.CardTemplate;
-import forge.game.research.decision.TemplateCMC;
-import forge.game.research.decision.TemplateLifelink;
-import forge.game.research.decision.TemplateName;
+import forge.game.research.decision.*;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
@@ -532,14 +529,16 @@ public class PhaseHandler implements java.io.Serializable {
         System.out.print(getPlayerTurn());
         System.out.print("'s statistics are:");
         System.out.println();
-        CardTemplate test = new TemplateName("Vampire of the Dire Moon");
+        CardTemplate test = new TemplateName("Notion Rain");
         CardTemplate test2 = new TemplateCMC(1);
         CardTemplate test3 = new TemplateLifelink();
-        for (Card card: getPlayerTurn().getZone(ZoneType.Battlefield)) {
+        for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
             if (!card.isLand()) {
-                System.out.println(test.matches(card));
-                System.out.println(test2.matches(card));
+                System.out.println(card.getName());
+                //System.out.println(test.matches(card));
+                //System.out.println(test2.matches(card));
                 System.out.println(test3.matches(card));
+                System.out.println();
 
             }
         }

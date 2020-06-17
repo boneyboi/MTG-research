@@ -2,6 +2,8 @@ package forge.game.research.decision;
 
 import forge.game.card.Card;
 import forge.game.keyword.Keyword;
+import forge.game.spellability.SpellAbility;
+import forge.util.collect.FCollectionView;
 
 public class TemplateLifelink extends CardTemplate{
 
@@ -11,6 +13,15 @@ public class TemplateLifelink extends CardTemplate{
 
     @Override
     public boolean matches(Card card){
-        return (card.hasKeyword(Keyword.LIFELINK) || card.hasSVar("TrigGainLife") || card.hasSVar("DBGainLife"));
+        FCollectionView<SpellAbility> stuff = card.getSpellAbilities();
+        for (SpellAbility sa: stuff) {
+            if (sa.getMapParams().containsValue("GainLife")) {
+                return true;
+            }
+        }
+        return ((card.hasKeyword(Keyword.LIFELINK) ||
+                card.hasSVar("TrigGainLife") ||
+                card.hasSVar("DBGainLife"))
+                && !card.isLand());
     }
 }
