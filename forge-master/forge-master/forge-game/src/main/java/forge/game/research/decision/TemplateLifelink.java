@@ -9,7 +9,6 @@ public class TemplateLifelink extends CardTemplate{
 
     }
 
-    //TODO: We need to test this!!!!
     @Override
     public boolean matches(Card card){
         return (card.hasKeyword(Keyword.LIFELINK) || card.hasSVar("TrigGainLife") || card.hasSVar("DBGainLife"));
