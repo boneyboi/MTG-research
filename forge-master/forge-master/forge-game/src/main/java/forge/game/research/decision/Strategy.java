@@ -6,16 +6,19 @@ import forge.game.research.DoublyLinkedList;
 
 public class Strategy{
 
-    private DoublyLinkedList<Requirements> path;
-
+    private DoublyLinkedList<StrategyNode> path;
+    private DoublyLinkedList<Card> requirements;
+    private DoublyLinkedList<Card> cards;
 
      //TODO: Add variables to let this create a strategy off of a file import.
 
     public Strategy() {
-        path = new DoublyLinkedList<Requirements>();
-        path.pushFront(new Requirements());
+        path = new DoublyLinkedList<StrategyNode>();
     }
 
+    public void pushFront(StrategyNode node){
+        path.pushFront(new StrategyNode(node));
+    }
     public void CheckRequirements(){
 
     }
