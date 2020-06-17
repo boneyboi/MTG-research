@@ -14,6 +14,9 @@ public class Strategy{
     public Strategy() {
         path = new DoublyLinkedList<Requirements>();
         path.pushFront(new Requirements());
+    }
+
+    public void CheckRequirements(){
 
     }
 }
