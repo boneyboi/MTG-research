@@ -9,6 +9,7 @@ package forge.game.research.decision;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import forge.game.card.Card;
 
 public class Facade {
 
@@ -37,30 +38,58 @@ public class Facade {
 
      /**
      * Used when deciding what card or ability to play
-     * Get decision (param: List of options/SpellAbilities)
-     * (return Spell Ability)
+     * @param: options : list
+     * @return playAbility
+      *TODO: fill out body
      */
      public void getDecision (ArrayList options) {
-
      }
 
      /**
      * Used when deciding to mulligan and what cards to keep if we do.
-     * Mulligan (param: Hand, Mull #)
-     * (return List of cards to put back, or null if we want to mulligan)
-     *
+     * @param mullAlready
+      * @oaram
+     * @return List of cards to put back, or null if we want to mulligan
+      * TODO: decide on return, create 'hand' parameter somehow, fill out body
+     */
+     public void mulligan(int mullAlready) {
+     }
+
+     /**
      * Used when we have to discard a card but can choose which card to discard.
-     * Forced Discard (param: Hand)
-     * (return card)
-     *
+     * @param
+     * @return discardCard
+      * TODO: fill out body, find way to pass hand
+      */
+     public Card forcedDiscard () {
+         Card discardCard = null;
+
+         return discardCard;
+     }
+
+     /**
      * Used when we are forced to sacrifice a permanent.
-     * Forced Sacrifice (param: List of cards that can be sacrificed)
-     * (return card)
-     *
+     * @param canBeSacrificed
+     * @return sacrificeCard
+      * TODO: fill out body
+     */
+     public Card forcedSacrifice (ArrayList canBeSacrificed) {
+         Card sacrificeCard = null;
+
+         return sacrificeCard;
+     }
+
+     /**
      * Used when our creature is blocked by multiple creatures, and we have to assign damage.
-     * Damage on Double block (param: Attacker power, list of defenders)
-     * (return List of integers)
-     *
+     * @param attackPow
+      * @param defenders
+     * @return damageAssigned
+     * TODO: void to list or arraylist, fill out body
     */
+     public int multiBlock (int attackPow, ArrayList defenders) {
+         int damageAssigned = 0;
+
+         return damageAssigned;
+     }
 
 }
