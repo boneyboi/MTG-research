@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 19 2020
+ * @since June 17 2020
  */
 package forge.game.research.decision;
 

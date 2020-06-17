@@ -1,3 +1,11 @@
+/**
+ * Description
+ * @author Michael Bowling
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since 17 June 2020
+ */
+
 package forge.game.research.decision;
 
 import forge.game.card.Card;
