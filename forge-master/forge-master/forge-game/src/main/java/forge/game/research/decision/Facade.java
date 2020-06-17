@@ -7,8 +7,9 @@
  */
 package forge.game.research.decision;
 
-public class Facade {
+import forge.game.research.DoublyLinkedList;
 
+public class Facade {
     /**
      * Used when deciding attackers
      * Get Attackers (param: List of possible attackers, List of possible blockers)

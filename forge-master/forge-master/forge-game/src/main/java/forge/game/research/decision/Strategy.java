@@ -15,12 +15,27 @@ public class Strategy{
 
     public Strategy(String name) {
         path = new DoublyLinkedList<StrategyNode>();
+        path.pushFront(new StrategyNode(new DoublyLinkedList<CardTemplate>(),
+                new DoublyLinkedList<CardTemplate>()));
         this.name = name;
     }
 
     public void pushFront(StrategyNode node){
         path.pushFront(new StrategyNode(node));
     }
+    public void pushCard(CardTemplate template){
+        path.iterator().next().cards.pushFront(template);
+    }
+    public void pushReq(CardTemplate template){
+        path.iterator().next().requirements.pushFront(template);
+    }
+
+    public StrategyNode next(){
+        return path.iterator().next();
+    }
+
+
+
     public boolean CheckRequirements(){
         return false;
     }
