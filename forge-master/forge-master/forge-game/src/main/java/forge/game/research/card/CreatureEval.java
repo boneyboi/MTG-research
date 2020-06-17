@@ -122,7 +122,7 @@ public class CreatureEval extends CardEvaluator {
         for (KeywordInterface k : card.getKeywords()){
             key = k.getKeyword();
 
-            /**if (key.equals(Keyword.INDESTRUCTIBLE)) {
+            if (key.equals(Keyword.INDESTRUCTIBLE)) {
                 keyValue += INDESTRUCTIBLEVAL;
             } else if (key.equals(Keyword.PROTECTION)) {
                 keyValue += PROTECITONVAL;
@@ -154,33 +154,7 @@ public class CreatureEval extends CardEvaluator {
                 keyValue += REACHVAL;
             } else if (key.equals(Keyword.DEFENDER)) {
                 keyValue += DEFENDERVAL;
-            //}
-             */
-
-            switch(key){
-                case("L"):
-                    rareValue = COMMONMULTIPLIER;
-                    break;
-                case("C"):
-                    rareValue = COMMONMULTIPLIER;
-                    break;
-                case("U"):
-                    rareValue = UNCOMMONMULTIPLIER;
-                    break;
-                case("R"):
-                    rareValue = RAREMULTIPLIER;
-                    break;
-                case("M"):
-                    rareValue = MYTHICMULTIPLIER;
-                    break;
-                default:
-                    if (rareValue == 1) {
-                        System.err.println("Unexpected Rarity Found");
-                    }
-                    break;
             }
-            return rareValue;
-        }
         }
 
         return keyValue;
