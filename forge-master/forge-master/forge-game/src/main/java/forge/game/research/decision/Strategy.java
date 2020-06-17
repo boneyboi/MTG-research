@@ -12,13 +12,13 @@ public class Strategy{
 
      //TODO: Add variables to let this create a strategy off of a file import.
 
-    public Strategy(DoublyLinkedList<Card> requirements, DoublyLinkedList<Card> cards) {
+    public Strategy() {
         path = new DoublyLinkedList<StrategyNode>();
-        this.requirements = requirements;
-        this.cards = cards;
-        path.pushFront(new StrategyNode());
     }
 
+    public void pushFront(StrategyNode node){
+        path.pushFront(new StrategyNode(node));
+    }
     public void CheckRequirements(){
 
     }

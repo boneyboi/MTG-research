@@ -8,8 +8,8 @@ public class StrategyNode {
     private DoublyLinkedList<Card> requirements;
     private DoublyLinkedList<Card> cards;
 
-    public StrategyNode(){
-        DoublyLinkedList<Card> requirements = new DoublyLinkedList<Card>();
-        DoublyLinkedList<Card> cards = new DoublyLinkedList<Card>();
+    public StrategyNode(StrategyNode node){
+        this.requirements = node.requirements;
+        this.cards = node.cards;
     }
 }
