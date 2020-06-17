@@ -1,3 +1,11 @@
+/**
+ * Description
+ * @author Michael Bowling
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since 17 June 2020
+ */
+
 package forge.game.research.decision;
 
 import forge.game.card.Card;
@@ -17,5 +25,20 @@ public class StrategyNode {
     public StrategyNode(StrategyNode node){
         this.requirements = node.requirements;
         this.cards = node.cards;
+    }
+
+    public CardTemplate nextReq(){
+        if(this.requirements.iterator().hasNext()){
+            return this.requirements.iterator().next();
+        } else {
+            return null;
+        }
+    }
+    public CardTemplate nextCard(){
+        if(this.cards.iterator().hasNext()){
+            return this.cards.iterator().next();
+        } else {
+            return null;
+        }
     }
 }

@@ -88,6 +88,11 @@ public class CreatureEval extends CardEvaluator {
         }
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     public double getCounters (Card card) {
         return  card.getCounters(CounterType.P1P1)*STATBOOST2 +
                 card.getCounters(CounterType.P1P0) +
@@ -105,7 +110,8 @@ public class CreatureEval extends CardEvaluator {
     }
 
     /**
-     *
+     * Calculates the portion of a card's value that is reliant on keywords, cumulative with multiple
+     * keywords
      * @param card
      * @return keyValue
      */
