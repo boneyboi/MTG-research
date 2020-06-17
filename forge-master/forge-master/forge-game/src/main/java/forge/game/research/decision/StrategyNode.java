@@ -5,8 +5,14 @@ import forge.game.research.DoublyLinkedList;
 
 public class StrategyNode {
 
-    private DoublyLinkedList<CardTemplate> requirements;
-    private DoublyLinkedList<CardTemplate> cards;
+    public DoublyLinkedList<CardTemplate> requirements;
+    public DoublyLinkedList<CardTemplate> cards;
+
+    public StrategyNode(DoublyLinkedList<CardTemplate> requirements,
+                        DoublyLinkedList<CardTemplate> cards){
+        this.requirements = requirements;
+        this.cards = cards;
+    }
 
     public StrategyNode(StrategyNode node){
         this.requirements = node.requirements;
