@@ -57,18 +57,13 @@ public class CreatureEval extends CardEvaluator {
 
     @Override
     public final double evaluate (Card card) {
-        double stats = getStatTotal(card);
+        double stats = getStatChange(card);
         double keyword = getKeywordValue(card);
+        double colors = getColorValue(card);
         double counters = getCounters(card);
-        double Cardvalue = (BASE + stats + keyword + counters);
+        double Cardvalue = (BASE + stats + keyword + colors + counters);
         double value = (Cardvalue) * getRareMultiplier(card);
-
         return value;
-    }
-
-    public double getStatTotal(Card card) {
-        return card.getCurrentPower()
-                + card.getCurrentToughness();
     }
 
     public double getStatChange (Card card){
@@ -191,5 +186,15 @@ public class CreatureEval extends CardEvaluator {
         return keyValue;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
+    public double getStatTotal (Card card) {
+        double statTotal = 0;
+
+        return statTotal;
+    }
 
 }

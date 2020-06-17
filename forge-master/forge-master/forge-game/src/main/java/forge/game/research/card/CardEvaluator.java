@@ -64,6 +64,7 @@ public abstract class CardEvaluator {
         double rareValue = 1;
 
         //sets multiplier depending on the rarity of the card
+
         switch(card.getRarity().toString()){
             case("L"):
                 rareValue = COMMONMULTIPLIER;
