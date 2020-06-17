@@ -94,6 +94,11 @@ public class CreatureEval extends CardEvaluator {
         }
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     public double getCounters (Card card) {
         return  card.getCounters(CounterType.P1P1)*STATBOOST2 +
                 card.getCounters(CounterType.P1P0) +
@@ -111,7 +116,8 @@ public class CreatureEval extends CardEvaluator {
     }
 
     /**
-     *
+     * Calculates the portion of a card's value that is reliant on keywords, cumulative with multiple
+     * keywords
      * @param card
      * @return keyValue
      */
@@ -122,7 +128,7 @@ public class CreatureEval extends CardEvaluator {
         for (KeywordInterface k : card.getKeywords()){
             key = k.getKeyword();
 
-            if (key.equals(Keyword.INDESTRUCTIBLE)) {
+            /**if (key.equals(Keyword.INDESTRUCTIBLE)) {
                 keyValue += INDESTRUCTIBLEVAL;
             } else if (key.equals(Keyword.PROTECTION)) {
                 keyValue += PROTECITONVAL;
@@ -154,7 +160,33 @@ public class CreatureEval extends CardEvaluator {
                 keyValue += REACHVAL;
             } else if (key.equals(Keyword.DEFENDER)) {
                 keyValue += DEFENDERVAL;
+            //}
+             */
+
+            switch(key){
+                case("L"):
+                    rareValue = COMMONMULTIPLIER;
+                    break;
+                case("C"):
+                    rareValue = COMMONMULTIPLIER;
+                    break;
+                case("U"):
+                    rareValue = UNCOMMONMULTIPLIER;
+                    break;
+                case("R"):
+                    rareValue = RAREMULTIPLIER;
+                    break;
+                case("M"):
+                    rareValue = MYTHICMULTIPLIER;
+                    break;
+                default:
+                    if (rareValue == 1) {
+                        System.err.println("Unexpected Rarity Found");
+                    }
+                    break;
             }
+            return rareValue;
+        }
         }
 
         return keyValue;

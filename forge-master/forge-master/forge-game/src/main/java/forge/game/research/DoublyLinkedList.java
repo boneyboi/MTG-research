@@ -22,6 +22,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item>
         }
     }
 
+
     public boolean contains(Item target)
     {
         for (Item item : this)
