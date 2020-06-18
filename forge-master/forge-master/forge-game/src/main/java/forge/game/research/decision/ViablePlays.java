@@ -40,6 +40,7 @@ public class ViablePlays {
             for (SpellAbility sa: c.getNonManaAbilities()) {
                 if (sa.getPayCosts().getTotalMana().getCMC() <= manaPossible) {
                     plays.add(sa);
+                    c.getManaCost().getColorProfile();
                 }
             }
         }
