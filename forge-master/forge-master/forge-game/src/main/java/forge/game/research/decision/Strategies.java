@@ -18,8 +18,6 @@ public class Strategies {
         monoredStrats.get(0).pushCard(new TemplateCMC(3));
         monoredStrats.get(0).pushCard(new TemplateCMC(2));
         monoredStrats.get(0).pushCard(new TemplateCMC(1));
-
-
     }
 
 }
