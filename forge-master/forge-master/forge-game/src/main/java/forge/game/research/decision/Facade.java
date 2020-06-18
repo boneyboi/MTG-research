@@ -36,13 +36,30 @@ public class Facade {
     public void getBlockers (ArrayList possAttackers, ArrayList possBlockers) {
     }
 
-     /**
+    /**
+     * Used when our creature is blocked by multiple creatures, and we have to assign damage.
+     * @param attackPow
+     * @param defenders
+     * @return damageAssigned
+     * TODO: void to list or arraylist, fill out body
+     */
+    public int multiBlock (int attackPow, ArrayList defenders) {
+        int damageAssigned = 0;
+
+        return damageAssigned;
+    }
+
+
+    /**
      * Used when deciding what card or ability to play
      * @param: options : list
      * @return playAbility
       *TODO: fill out body
      */
-     public void getDecision (ArrayList options) {
+     public void getDecision (ArrayList<Strategy> options) {
+         for(Strategy s : options){
+             s.next(); //play the next available card
+         }
      }
 
      /**
@@ -79,17 +96,5 @@ public class Facade {
          return sacrificeCard;
      }
 
-     /**
-     * Used when our creature is blocked by multiple creatures, and we have to assign damage.
-     * @param attackPow
-      * @param defenders
-     * @return damageAssigned
-     * TODO: void to list or arraylist, fill out body
-    */
-     public int multiBlock (int attackPow, ArrayList defenders) {
-         int damageAssigned = 0;
-
-         return damageAssigned;
-     }
 
 }
