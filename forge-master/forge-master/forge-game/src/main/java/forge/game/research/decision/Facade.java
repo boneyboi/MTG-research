@@ -58,7 +58,8 @@ public class Facade {
      */
      public void getDecision (ArrayList<Strategy> options) {
          for(Strategy s : options){
-             s.next(); //play the next available card
+             s.next();
+              //play the next available card
          }
      }
 

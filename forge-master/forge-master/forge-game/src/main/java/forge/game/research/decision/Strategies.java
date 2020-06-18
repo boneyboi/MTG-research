@@ -15,6 +15,8 @@ public class Strategies {
 
         monoredStrats = new ArrayList<Strategy>();
         monoredStrats.add(new Strategy("Monored"));
+        monoredStrats.get(0).pushCard(new TemplateCMC(3));
+        monoredStrats.get(0).pushCard(new TemplateCMC(2));
         monoredStrats.get(0).pushCard(new TemplateCMC(1));
 
 

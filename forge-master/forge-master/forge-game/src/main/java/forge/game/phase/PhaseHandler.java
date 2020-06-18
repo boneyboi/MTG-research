@@ -44,6 +44,7 @@ import forge.game.research.decision.*;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
+import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbilityVariables;
@@ -483,7 +484,7 @@ public class PhaseHandler implements java.io.Serializable {
                 break;
 
             case MAIN1:
-                printTemplates();
+
                 nMain1sThisTurn++;
                 break;
 
@@ -523,6 +524,16 @@ public class PhaseHandler implements java.io.Serializable {
                 break;
             default: // no action
         }
+    }
+
+    private void printOptions(Player p) {
+        System.out.println("This player's options are: ");
+        ViablePlays vp = new ViablePlays(p);
+        ArrayList<SpellAbility> options = vp.getPlays();
+        for (SpellAbility sa: options) {
+            System.out.println(sa);
+        }
+        System.out.println();
     }
 
     private void printTemplates() {
@@ -1059,6 +1070,8 @@ public class PhaseHandler implements java.io.Serializable {
                         pPlayerPriority = game.getNextPlayerAfter(getPriorityPlayer());
                         pFirstPriority = pPlayerPriority;
                     }
+
+                    printOptions(playerTurn);
 
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     if (chosenSa == null) {
