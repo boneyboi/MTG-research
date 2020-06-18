@@ -66,7 +66,10 @@ public class Facade {
      * @param card
      */
     public void playCard(Card card){
-
+        //use ballot box to see what it voted on
+        //then play the card
+        BallotBox b = new BallotBox();
+        b.votedCard();
     }
 
      /**
