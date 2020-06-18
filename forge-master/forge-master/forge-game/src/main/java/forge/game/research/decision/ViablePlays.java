@@ -23,13 +23,14 @@ public class ViablePlays {
     }
 
     public void getMana() {
+        //TODO: Account for sources that provide more than one mana?
         manaPossible = 0;
         for (Card c: controller.getZone(ZoneType.Battlefield))
-            if (!c.getManaAbilities().isEmpty()) {
+            if (!c.getManaAbilities().isEmpty() && c.isUntapped()) {
                 manaPossible += 1;
             }
-        manaPossible = controller.getZone(ZoneType.Battlefield).getNumLandsIn();
-        if (controller.getZone(ZoneType.Hand).contains(Card::isLand) && controller.getLandsPlayedThisTurn() == 0) {
+        if (controller.getZone(ZoneType.Hand).contains(Card::isLand)
+                && controller.getLandsPlayedThisTurn() == 0) {
             manaPossible+=1;
         }
     }
@@ -37,7 +38,7 @@ public class ViablePlays {
     public void addZoneOptions(ZoneType z) {
         for (Card c: controller.getZone(z)) {
             for (SpellAbility sa: c.getNonManaAbilities()) {
-                if (sa.getPayCosts().getTotalMana().getCMC() <= manaPossible && sa.canPlay()) {
+                if (sa.getPayCosts().getTotalMana().getCMC() <= manaPossible) {
                     plays.add(sa);
                 }
             }
@@ -50,7 +51,7 @@ public class ViablePlays {
         addZoneOptions(ZoneType.Battlefield);
         addZoneOptions(ZoneType.Graveyard);
         addZoneOptions(ZoneType.Exile);
-        //addLandOptions();
+        //TODO: addLandOptions();
     }
 
     public void emptyOptions() {
