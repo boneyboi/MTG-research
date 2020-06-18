@@ -531,7 +531,7 @@ public class PhaseHandler implements java.io.Serializable {
         System.out.println();
         CardTemplate test = new TemplateName("Notion Rain");
         CardTemplate test2 = new TemplateCMC(1);
-        CardTemplate test3 = new TemplateLifeBuff();
+        CardTemplate test3 = new TemplateSurveilBoost();
         for (Card card: getPlayerTurn().getZone(ZoneType.Hand)) {
             if (!card.isLand()) {
                 System.out.println(card.getName());

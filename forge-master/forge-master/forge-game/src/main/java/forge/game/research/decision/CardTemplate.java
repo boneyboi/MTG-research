@@ -15,7 +15,7 @@ public abstract class CardTemplate{
 
 
     /**
-     * A template for cards to be played in the strategy class
+     * A template for what kinds of cards are played in the strategy class
      */
     public CardTemplate() {
     }
