@@ -53,14 +53,21 @@ public class Facade {
     /**
      * Used when deciding what card or ability to play
      * @param: options : list
-     * @return playAbility
-      *TODO: fill out body
+     * @return a card to play
+      *TODO: fill out body, and have it return a card
      */
      public void getDecision (ArrayList<Strategy> options) {
-         for(Strategy s : options){
-             s.next(); //play the next available card
-         }
+         //call the decision maker from the other class and pass the card it voted on through here
+         //return decision();
      }
+
+    /**
+     * Play a card to the field
+     * @param card
+     */
+    public void playCard(Card card){
+
+    }
 
      /**
      * Used when deciding to mulligan and what cards to keep if we do.
