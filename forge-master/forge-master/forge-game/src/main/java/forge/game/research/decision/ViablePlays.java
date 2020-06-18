@@ -36,6 +36,7 @@ public class ViablePlays {
     }
 
     public void addZoneOptions(ZoneType z) {
+        //ComputerUtilCost costComp = new ComputerUtilCost();
         for (Card c: controller.getZone(z)) {
             for (SpellAbility sa: c.getNonManaAbilities()) {
                 if (sa.getPayCosts().getTotalMana().getCMC() <= manaPossible) {

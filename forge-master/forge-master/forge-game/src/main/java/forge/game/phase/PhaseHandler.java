@@ -1073,6 +1073,7 @@ public class PhaseHandler implements java.io.Serializable {
 
                     printOptions(playerTurn);
 
+
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     if (chosenSa == null) {
                         break; // that means 'I pass'
