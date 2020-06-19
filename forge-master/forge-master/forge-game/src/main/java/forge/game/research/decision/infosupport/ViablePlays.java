@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class ViablePlays {
     ArrayList<SpellAbility> plays = new ArrayList<SpellAbility>();
+    ArrayList<Card> lands;
     Player controller = null;
     ArrayList<Integer> manapool;
     public int whiteMana;
@@ -33,9 +34,13 @@ public class ViablePlays {
         controller = p;
     }
 
+    public ArrayList<Card> getLandPlays() {
+        lands = new ArrayList<Card>();
+        addLandOptions();
+        return lands;
+    }
 
-
-    public ArrayList<SpellAbility> getPlays() {
+    public ArrayList<SpellAbility> getNonlandPlays() {
         emptyOptions();
         buildOptions();
         return plays;
@@ -66,6 +71,14 @@ public class ViablePlays {
         }
     }
 
+    public void addLandOptions(){
+        for (Card c: controller.getZone(ZoneType.Hand)) {
+            if (c.isLand()) {
+                lands.add(c);
+            }
+        }
+    }
+
     public void buildOptions() {
         ManaEvaluation manaOptions = new ManaEvaluation(controller);
         manapool = manaOptions.getReturnValues();
@@ -80,7 +93,6 @@ public class ViablePlays {
         addZoneOptions(ZoneType.Battlefield);
         addZoneOptions(ZoneType.Graveyard);
         addZoneOptions(ZoneType.Exile);
-        //TODO: addLandOptions();
     }
 
     public void emptyOptions() {

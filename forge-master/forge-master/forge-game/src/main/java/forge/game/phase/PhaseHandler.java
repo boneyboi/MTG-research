@@ -530,9 +530,13 @@ public class PhaseHandler implements java.io.Serializable {
     private void printOptions(Player p) {
         System.out.println("This player's options are: ");
         ViablePlays vp = new ViablePlays(p);
-        ArrayList<SpellAbility> options = vp.getPlays();
+        ArrayList<SpellAbility> options = vp.getNonlandPlays();
         for (SpellAbility sa: options) {
             System.out.println(sa);
+        }
+        ArrayList<Card> lands = vp.getLandPlays();
+        for (Card c: lands) {
+            System.out.println(c);
         }
         System.out.println();
     }
