@@ -1,5 +1,5 @@
 /**
- * Description
+ * Template to allow for filtering cards based on if a card allows a player to 'surveil'
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
