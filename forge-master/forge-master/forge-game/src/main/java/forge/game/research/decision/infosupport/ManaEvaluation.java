@@ -16,14 +16,14 @@ import forge.game.zone.ZoneType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMana{
+public class ManaEvaluation {
     public static final String RED = "R";
     public static final String GREEN = "G";
     public static final String BLUE = "U";
     public static final String BLACK = "B";
     public static final String WHITE = "W";
 
-    int manaPossible = 0;
+    int manaPool = 0;
 
     int mountainNum = 0;
     int swampNum = 0;
@@ -44,7 +44,7 @@ public class GetMana{
      * Evaluates our possible mana pool
      * @param p
      */
-    public GetMana(Player p) {
+    public ManaEvaluation(Player p) {
         controller = p;
         getMana();
         checkPossibleColorPlays();
@@ -57,7 +57,7 @@ public class GetMana{
      */
     public ArrayList<Integer> getReturnValues() {
         ArrayList<Integer> returns = new ArrayList<Integer>();
-        returns.add(manaPossible);
+        returns.add(manaPool);
         returns.add(plainsNum);
         returns.add(islandNum);
         returns.add(swampNum);
@@ -89,7 +89,7 @@ public class GetMana{
      * Tallies our current on the battlefield mana, and the possible colors of that mana.
      */
     public void getMana() {
-        manaPossible = 0;
+        manaPool = 0;
         mountainNum = 0;
         swampNum = 0;
         islandNum = 0;
@@ -102,28 +102,28 @@ public class GetMana{
                     String type = sa.getMapParams().get("Produced");
                     if (type.contains(RED)) {
                         mountainNum += 1;
-                        manaPossible += 1;
+                        manaPool += 1;
                     }
                     if (type.contains(BLACK)) {
                         swampNum += 1;
-                        manaPossible += 1;
+                        manaPool += 1;
                     }
                     if (type.contains(BLUE)) {
                         islandNum += 1;
-                        manaPossible += 1;
+                        manaPool += 1;
                     }
                     if (type.contains(GREEN)) {
                         forestNum += 1;
-                        manaPossible += 1;
+                        manaPool += 1;
                     }
                     if (type.contains(WHITE)) {
                         plainsNum += 1;
-                        manaPossible += 1;
+                        manaPool += 1;
                     }
 
                 }
                 if (!c.getManaAbilities().isEmpty()) {
-                    manaPossible += 1 - c.getManaAbilities().size();
+                    manaPool += 1 - c.getManaAbilities().size();
                 }
             }
         }
@@ -177,7 +177,7 @@ public class GetMana{
                 }
             }
             if (manaAvaliable) {
-                manaPossible += 1;
+                manaPool += 1;
             }
         }
     }

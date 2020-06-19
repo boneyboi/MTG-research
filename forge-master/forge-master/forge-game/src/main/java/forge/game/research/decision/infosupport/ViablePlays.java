@@ -9,7 +9,6 @@
 package forge.game.research.decision.infosupport;
 
 import forge.game.card.Card;
-import forge.game.keyword.KeywordInterface;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -49,7 +48,7 @@ public class ViablePlays {
     }
 
     public void buildOptions() {
-        GetMana manaOptions = new GetMana(controller);
+        ManaEvaluation manaOptions = new ManaEvaluation(controller);
         manapool = manaOptions.getReturnValues();
         addZoneOptions(ZoneType.Hand);
         addZoneOptions(ZoneType.Battlefield);
