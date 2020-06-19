@@ -9,6 +9,7 @@
 package forge.game.research.decision.strategy;
 
 
+import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.research.decision.strategy.template.TemplateCMC;
 import forge.game.research.decision.strategy.template.TemplateName;
 
@@ -20,15 +21,24 @@ public class DeckStrategies {
 
     public DeckStrategies(){
         lifelinkstrats = new ArrayList<Strategy>();
-        lifelinkstrats.add(new Strategy("LifeLink"));
-        lifelinkstrats.get(0).pushCard(new TemplateName("Daxos"));
+        addStrategy(this.lifelinkstrats, "LifeLink");
+        addTemplateCard(this.lifelinkstrats, 0, new TemplateName("Daxos"));
 
 
         monoredStrats = new ArrayList<Strategy>();
-        monoredStrats.add(new Strategy("Monored"));
-        monoredStrats.get(0).pushCard(new TemplateCMC(3));
-        monoredStrats.get(0).pushCard(new TemplateCMC(2));
-        monoredStrats.get(0).pushCard(new TemplateCMC(1));
+        addStrategy(this.monoredStrats, "Monored");
+        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(1));
+        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(2));
+        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(3));
     }
 
+    public void addStrategy(ArrayList<Strategy> strategy, String name){
+        strategy.add(new Strategy(name));
+    }
+    public void addTemplateCard(ArrayList<Strategy> strategy, int index, CardTemplate template){
+        strategy.get(index).pushCard(template);
+    }
+    public void addTemplateRequirement(ArrayList<Strategy> strategy, int index, CardTemplate template){
+        strategy.get(index).pushReq(template);
+    }
 }
