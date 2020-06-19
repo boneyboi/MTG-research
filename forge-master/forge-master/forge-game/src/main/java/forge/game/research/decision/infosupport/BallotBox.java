@@ -1,3 +1,11 @@
+/**
+ * Returns which card to play using a 'voting' system
+ * @author Michael Bowling
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since 19 June 2020
+ */
+
 package forge.game.research.decision.infosupport;
 
 import forge.game.card.Card;

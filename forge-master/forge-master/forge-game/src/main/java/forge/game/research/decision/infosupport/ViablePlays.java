@@ -1,3 +1,11 @@
+/**
+ * Determines what cards can be played with the mana available
+ * @author Michael Bowling
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since 19 June 2020
+ */
+
 package forge.game.research.decision.infosupport;
 
 import forge.game.card.Card;
