@@ -11,17 +11,31 @@ package forge.game.research.decision.infosupport;
 import forge.game.card.Card;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.DeckStrategies;
+import forge.game.player.Player;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
+import forge.game.spellability.SpellAbility;
+
+import java.util.ArrayList;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
 
 public class BallotBox {
+    public Player controller;
+    public ArrayList<SpellAbility> nonlands;
+    public ArrayList<Card> lands;
 
+    public BallotBox(Player p){
+        controller = p;
+    }
 
     public BallotBox(){}
-
+    public void getOptions() {
+        ViablePlays vp = new ViablePlays(controller);
+        nonlands = vp.getNonlandPlays();
+        lands = vp.getLandPlays();
+    }
     public DoublyLinkedList<Card> getVotes(DeckStrategies deckstrategies){
         DoublyLinkedList<Card> votednodes = new DoublyLinkedList<Card>();
         for(Strategy strategy : deckstrategies.monoredStrats){
