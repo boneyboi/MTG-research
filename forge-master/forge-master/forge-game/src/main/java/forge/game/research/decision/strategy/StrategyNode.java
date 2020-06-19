@@ -10,6 +10,9 @@ package forge.game.research.decision.strategy;
 
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.template.CardTemplate;
+import forge.game.spellability.SpellAbility;
+
+import java.util.ArrayList;
 
 public class StrategyNode {
 
@@ -39,5 +42,24 @@ public class StrategyNode {
         } else {
             return null;
         }
+    }
+
+    public boolean isViable(ArrayList<SpellAbility> options) {
+        ArrayList<SpellAbility> optionsleft = options;
+        SpellAbility chosen = null;
+        for (CardTemplate c: cards) {
+            boolean found = false;
+            for (SpellAbility spell: optionsleft) {
+                if (c.matches(spell)) {
+                    found = true;
+                    chosen = spell;
+                }
+            }
+             if (!found) {
+                 return false;
+             }
+             optionsleft.remove(chosen);
+        }
+        return true;
     }
 }

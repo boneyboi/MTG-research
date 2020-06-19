@@ -39,7 +39,7 @@ public class BallotBox {
     public DoublyLinkedList<Card> getVotes(DeckStrategies deckstrategies){
         DoublyLinkedList<Card> votednodes = new DoublyLinkedList<Card>();
         for(Strategy strategy : deckstrategies.monoredStrats){
-            votednodes.pushFront(getViableNode(strategy));
+            //votednodes.pushFront(getViableNode(strategy)); TODO: Get List From Node
         }
         return votednodes;
     }
@@ -61,8 +61,19 @@ public class BallotBox {
      * Go through a strategy and get the last playable node
      * @param strategy
      */
-    public Card getViableNode(Strategy strategy){
+    public StrategyNode getViableNode(Strategy strategy){
+        ViablePlays vp = new ViablePlays(controller);
+        nonlands = vp.getNonlandPlays();
+        StrategyNode current = strategy.next();
+        StrategyNode next = strategy.next();
+        if (!current.isViable(nonlands)){
+            return null;
+        }
+        while (next.isViable(nonlands)) {
+            current = next;
+            next = strategy.next();
+        }
+        return current;
 
-        return null;
     }
 }
