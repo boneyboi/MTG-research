@@ -25,7 +25,7 @@ public class ViablePlays {
     boolean mountainPos;
     boolean manaPos;
 
-
+    //TODO: add public final string constants for land string literals like "R" or "B"
     public ViablePlays(Player p) {
         controller = p;
     }

@@ -25,7 +25,9 @@ public class Facade {
      */
     public void getAttackers (ArrayList possAttackers, ArrayList possBlockers) {
     }
-
+    public void getAttackers (ArrayList possAttackers, ArrayList possBlockers,
+                              ArrayList player1hand, ArrayList player2hand) {
+    }
     /**
      * Used when deciding blockers
      * @param possAttackers : list
@@ -35,7 +37,9 @@ public class Facade {
      */
     public void getBlockers (ArrayList possAttackers, ArrayList possBlockers) {
     }
-
+    public void getBlockers (ArrayList possAttackers, ArrayList possBlockers,
+                             ArrayList player1hand, ArrayList player2hand) {
+    }
     /**
      * Used when our creature is blocked by multiple creatures, and we have to assign damage.
      * @param attackPow
@@ -56,7 +60,7 @@ public class Facade {
      * @return a card to play
       *TODO: fill out body, and have it return a card
      */
-     public void getDecision (ArrayList<Strategy> options) {
+     public void getNextPlayDecision (ArrayList<Strategy> deckstrategy) {
          //call the decision maker from the other class and pass the card it voted on through here
          //return decision();
      }
