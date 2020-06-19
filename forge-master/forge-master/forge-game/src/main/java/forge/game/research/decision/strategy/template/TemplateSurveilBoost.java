@@ -1,5 +1,5 @@
 /**
- * Description
+ * Template to allow for filtering cards based on if a card is buffed if the player 'surveils'
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin

@@ -1,5 +1,8 @@
 /**
- * Description
+ * Abstract class that allow for the creation of templates that can be used to filter based on:
+ * CMC, Name
+ * Lifebuff, Lifegain
+ * Surveil, SurveilBoost
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin

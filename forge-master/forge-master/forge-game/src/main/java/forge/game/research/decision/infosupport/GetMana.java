@@ -40,12 +40,21 @@ public class GetMana{
 
     Player controller;
 
+    /**
+     * Evaluates our possible mana pool
+     * @param p
+     */
     public GetMana(Player p) {
         controller = p;
         getMana();
         checkPossibleColorPlays();
     }
 
+
+    /**
+     * Puts all mana pool values to be returned in a list and returns them
+     * @return Arraylist of Integers
+     */
     public ArrayList<Integer> getReturnValues() {
         ArrayList<Integer> returns = new ArrayList<Integer>();
         returns.add(manaPossible);
@@ -63,6 +72,11 @@ public class GetMana{
         return returns;
     }
 
+    /**
+     * Puts our boolean values in our Integer ArrayList
+     * @param b
+     * @param i
+     */
     private void appendBooleanValue(Boolean b, ArrayList<Integer> i) {
         if (b) {
             i.add(0);
@@ -71,6 +85,9 @@ public class GetMana{
         }
     }
 
+    /**
+     * Tallies our current on the battlefield mana, and the possible colors of that mana.
+     */
     public void getMana() {
         manaPossible = 0;
         mountainNum = 0;
@@ -80,35 +97,43 @@ public class GetMana{
         plainsNum = 0;
 
         for (Card c: controller.getZone(ZoneType.Battlefield)) {
-            for (SpellAbility sa : c.getManaAbilities()) {
-                String type = sa.getMapParams().get("Produced");
-                if (type.contains(RED)) {
-                    mountainNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(BLACK)) {
-                    swampNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(BLUE)) {
-                    islandNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(GREEN)) {
-                    forestNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(WHITE)) {
-                    plainsNum += 1;
-                    manaPossible += 1;
-                }
+            if (!c.isTapped()) {
+                for (SpellAbility sa : c.getManaAbilities()) {
+                    String type = sa.getMapParams().get("Produced");
+                    if (type.contains(RED)) {
+                        mountainNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(BLACK)) {
+                        swampNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(BLUE)) {
+                        islandNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(GREEN)) {
+                        forestNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(WHITE)) {
+                        plainsNum += 1;
+                        manaPossible += 1;
+                    }
 
+                }
+                if (!c.getManaAbilities().isEmpty()) {
+                    manaPossible += 1 - c.getManaAbilities().size();
+                }
             }
-            manaPossible += 1 - c.getManaAbilities().size();
         }
 
     }
 
+    /**
+     * Checks to see if we can play an untapped land this turn, and if so, what colors we can gain
+     * from doing so.
+     */
     public void checkPossibleColorPlays() {
         mountainAvaliable = false;
         swampAvaliable = false;

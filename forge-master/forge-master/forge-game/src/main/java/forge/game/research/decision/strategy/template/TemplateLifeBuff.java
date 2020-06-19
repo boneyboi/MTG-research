@@ -1,5 +1,5 @@
 /**
- * Description
+ * Template to allow for filtering cards based on if a card is able to be buffed in someway when gaining life
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
