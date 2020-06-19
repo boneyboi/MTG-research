@@ -17,7 +17,7 @@ import static forge.game.ability.AbilityKey.Player;
 
 public class Facade {
 
-    Player controller;
+    public Player controller;
 
     public Facade(Player p) {
         controller = p;
@@ -79,7 +79,7 @@ public class Facade {
     public void playCard(Card card){
         //use ballot box to see what it voted on
         //then play the card
-        BallotBox b = new BallotBox(Player controller);
+        BallotBox b = new BallotBox(controller);
         b.votedCard();
     }
 
