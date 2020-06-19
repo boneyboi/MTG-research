@@ -9,12 +9,18 @@ package forge.game.research.decision;
 
 import java.util.ArrayList;
 import forge.game.card.Card;
+import forge.game.player.Player;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.strategy.Strategy;
 
+import static forge.game.ability.AbilityKey.Player;
+
 public class Facade {
 
-    public Facade() {
+    Player controller;
+
+    public Facade(Player p) {
+        controller = p;
     }
 
     /**
@@ -73,7 +79,7 @@ public class Facade {
     public void playCard(Card card){
         //use ballot box to see what it voted on
         //then play the card
-        BallotBox b = new BallotBox();
+        BallotBox b = new BallotBox(Player controller);
         b.votedCard();
     }
 
