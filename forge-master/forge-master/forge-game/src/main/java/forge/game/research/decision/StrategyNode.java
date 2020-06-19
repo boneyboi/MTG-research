@@ -23,8 +23,7 @@ public class StrategyNode {
     }
 
     public StrategyNode(StrategyNode node){
-        this.requirements = node.requirements;
-        this.cards = node.cards;
+        this(node.requirements, node.cards);
     }
 
     public CardTemplate nextReq(){

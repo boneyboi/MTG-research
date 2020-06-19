@@ -12,7 +12,7 @@ public class ViablePlays {
     ArrayList<SpellAbility> plays = new ArrayList<SpellAbility>();
     Player controller = null;
 
-
+    //TODO: add public final string constants for land string literals like "R" or "B"
     public ViablePlays(Player p) {
         controller = p;
     }
