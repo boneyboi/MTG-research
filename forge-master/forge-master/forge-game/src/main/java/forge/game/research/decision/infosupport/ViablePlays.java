@@ -19,6 +19,11 @@ public class ViablePlays {
     ArrayList<SpellAbility> plays = new ArrayList<SpellAbility>();
     Player controller = null;
     ArrayList<Integer> manapool;
+    public int whiteMana;
+    public int blueMana;
+    public int blackMana;
+    public int redMana;
+    public int greenMana;
 
 
 
@@ -50,6 +55,13 @@ public class ViablePlays {
     public void buildOptions() {
         ManaEvaluation manaOptions = new ManaEvaluation(controller);
         manapool = manaOptions.getReturnValues();
+
+        whiteMana = manapool.get(1);
+        blueMana = manapool.get(2);
+        blackMana = manapool.get(3);
+        redMana = manapool.get(4);
+        greenMana = manapool.get(5);
+
         addZoneOptions(ZoneType.Hand);
         addZoneOptions(ZoneType.Battlefield);
         addZoneOptions(ZoneType.Graveyard);

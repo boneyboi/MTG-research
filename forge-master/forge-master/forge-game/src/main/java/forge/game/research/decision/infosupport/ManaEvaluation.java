@@ -57,18 +57,27 @@ public class ManaEvaluation {
      */
     public ArrayList<Integer> getReturnValues() {
         ArrayList<Integer> returns = new ArrayList<Integer>();
+        if (plainsAvaliable) {
+            plainsNum += 1;
+        }
+        if (islandAvaliable) {
+            islandNum += 1;
+        }
+        if (swampAvaliable) {
+            swampNum += 1;
+        }
+        if (mountainAvaliable) {
+            mountainNum += 1;
+        }
+        if (forestAvaliable) {
+            forestNum += 1;
+        }
         returns.add(manaPool);
         returns.add(plainsNum);
         returns.add(islandNum);
         returns.add(swampNum);
         returns.add(mountainNum);
 
-        appendBooleanValue(manaAvaliable, returns);
-        appendBooleanValue(plainsAvaliable, returns);
-        appendBooleanValue(islandAvaliable, returns);
-        appendBooleanValue(swampAvaliable, returns);
-        appendBooleanValue(mountainAvaliable, returns);
-        appendBooleanValue(forestAvaliable, returns);
         return returns;
     }
 
@@ -77,13 +86,14 @@ public class ManaEvaluation {
      * @param b
      * @param i
      */
-    private void appendBooleanValue(Boolean b, ArrayList<Integer> i) {
+    /**private void appendBooleanValue(Boolean b, ArrayList<Integer> i) {
         if (b) {
             i.add(0);
         } else {
             i.add(1);
         }
     }
+     */
 
     /**
      * Tallies our current on the battlefield mana, and the possible colors of that mana.
