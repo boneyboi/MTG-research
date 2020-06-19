@@ -77,6 +77,7 @@ public class ManaEvaluation {
         returns.add(islandNum);
         returns.add(swampNum);
         returns.add(mountainNum);
+        returns.add(forestNum);
 
         return returns;
     }

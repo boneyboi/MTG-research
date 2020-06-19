@@ -8,6 +8,7 @@
 
 package forge.game.research.decision.infosupport;
 
+import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -40,12 +41,25 @@ public class ViablePlays {
         return plays;
     }
 
+    public boolean areColorsAvaliable(SpellAbility sa) {
+        int[] shardsNeeded = sa.getPayCosts().getTotalMana().getColorShardCounts();
+        if (shardsNeeded[0] > whiteMana ||
+                shardsNeeded[1] > blueMana ||
+                shardsNeeded[2] > blackMana ||
+                shardsNeeded[3] > redMana ||
+                shardsNeeded[4] > greenMana) {
+            return false;
+        }
+        return true;
+    }
+
 
     public void addZoneOptions(ZoneType z) {
         for (Card c: controller.getZone(z)) {
             for (SpellAbility sa: c.getNonManaAbilities()) {
-                if (sa.getPayCosts().getTotalMana().getCMC() <= (int) manapool.get(0)
-                        && sa.canPlay()) {
+                if (sa.getPayCosts().getTotalMana().getCMC() <= (int) manapool.get(0) &&
+                        sa.canPlay() &&
+                        areColorsAvaliable(sa)) {
                     plays.add(sa);
                 }
             }
