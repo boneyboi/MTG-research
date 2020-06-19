@@ -76,6 +76,7 @@ import java.util.Map.Entry;
  * @author Forge
  * @version $Id$
  */
+
 public class AiController {
     private final Player player;
     private final Game game;
