@@ -14,11 +14,11 @@ import forge.game.research.decision.strategy.template.TemplateName;
 
 import java.util.ArrayList;
 
-public class Strategies {
+public class DeckStrategies {
     public ArrayList<Strategy> lifelinkstrats;
     public ArrayList<Strategy> monoredStrats;
 
-    public Strategies(){
+    public DeckStrategies(){
         lifelinkstrats = new ArrayList<Strategy>();
         lifelinkstrats.add(new Strategy("LifeLink"));
         lifelinkstrats.get(0).pushCard(new TemplateName("Daxos"));
