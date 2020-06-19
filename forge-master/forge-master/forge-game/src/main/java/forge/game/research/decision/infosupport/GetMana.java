@@ -1,3 +1,11 @@
+/**
+ * Calculates how much mana is available and the potential mana we could have available a turn
+ * @author Michael Bowling
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since 19 June 2020
+ */
+
 package forge.game.research.decision.infosupport;
 
 import forge.game.card.Card;
@@ -70,6 +78,7 @@ public class GetMana{
         islandNum = 0;
         forestNum = 0;
         plainsNum = 0;
+
         for (Card c: controller.getZone(ZoneType.Battlefield)) {
             if (!c.isTapped()) {
                 for (SpellAbility sa : c.getManaAbilities()) {
