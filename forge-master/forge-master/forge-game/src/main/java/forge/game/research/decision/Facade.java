@@ -7,9 +7,10 @@
  */
 package forge.game.research.decision;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import forge.game.card.Card;
+import forge.game.research.decision.infosupport.BallotBox;
+import forge.game.research.decision.strategy.Strategy;
 
 public class Facade {
 

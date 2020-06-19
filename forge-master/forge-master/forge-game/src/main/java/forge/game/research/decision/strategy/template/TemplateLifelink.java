@@ -1,11 +1,11 @@
-package forge.game.research.decision;
+package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
 import forge.game.keyword.Keyword;
 import forge.game.spellability.SpellAbility;
 import forge.util.collect.FCollectionView;
 
-public class TemplateLifelink extends CardTemplate{
+public class TemplateLifelink extends CardTemplate {
 
     public TemplateLifelink() {
 

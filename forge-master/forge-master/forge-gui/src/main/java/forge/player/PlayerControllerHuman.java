@@ -1325,6 +1325,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             }
         }
 
+
         final InputPassPriority defaultInput = new InputPassPriority(this);
         defaultInput.showAndWait();
         return defaultInput.getChosenSa();

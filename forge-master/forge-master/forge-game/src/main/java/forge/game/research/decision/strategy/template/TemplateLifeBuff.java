@@ -1,12 +1,9 @@
-package forge.game.research.decision;
+package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
-import forge.game.keyword.Keyword;
-import forge.game.spellability.SpellAbility;
 import forge.game.trigger.Trigger;
-import forge.util.collect.FCollectionView;
 
-public class TemplateLifeBuff extends CardTemplate{
+public class TemplateLifeBuff extends CardTemplate {
     public TemplateLifeBuff() {
 
     }

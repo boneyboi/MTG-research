@@ -1,5 +1,8 @@
-package forge.game.research.decision;
+package forge.game.research.decision.strategy;
 
+
+import forge.game.research.decision.strategy.template.TemplateCMC;
+import forge.game.research.decision.strategy.template.TemplateName;
 
 import java.util.ArrayList;
 

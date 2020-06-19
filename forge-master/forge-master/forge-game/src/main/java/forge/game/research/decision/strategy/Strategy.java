@@ -1,16 +1,15 @@
 /**
- * Description
+ * Template for creating strategies
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
  * @since 17 June 2020
  */
 
-package forge.game.research.decision;
+package forge.game.research.decision.strategy;
 
-import forge.game.ability.effects.DetachedCardEffect;
-import forge.game.card.Card;
 import forge.game.research.DoublyLinkedList;
+import forge.game.research.decision.strategy.template.CardTemplate;
 
 public class Strategy{
 
@@ -49,4 +48,6 @@ public class Strategy{
     public boolean allRequirementsInPlay(){
         return false;
     }
+
+
 }

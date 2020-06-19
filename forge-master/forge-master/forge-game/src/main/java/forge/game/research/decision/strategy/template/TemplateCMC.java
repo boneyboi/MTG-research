@@ -6,11 +6,11 @@
  * @since 17 June 2020
  */
 
-package forge.game.research.decision;
+package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
 
-public class TemplateCMC extends CardTemplate{
+public class TemplateCMC extends CardTemplate {
 
     int cmc;
 

@@ -39,15 +39,16 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
-import forge.game.research.card.Front;
-import forge.game.research.decision.*;
+import forge.game.research.decision.infosupport.ViablePlays;
+import forge.game.research.decision.strategy.template.CardTemplate;
+import forge.game.research.decision.strategy.template.TemplateCMC;
+import forge.game.research.decision.strategy.template.TemplateName;
+import forge.game.research.decision.strategy.template.TemplateSurveilBoost;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
-import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
-import forge.game.spellability.SpellAbilityVariables;
 import forge.game.staticability.StaticAbility;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -1075,6 +1076,7 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
+
                     if (chosenSa == null) {
                         break; // that means 'I pass'
                     }
@@ -1087,7 +1089,10 @@ public class PhaseHandler implements java.io.Serializable {
                         final Zone originZone = saHost.getZone();
 
                         // TODO it has no return value if successful
+                        SpellAbility testList = null;
+
                         pPlayerPriority.getController().playChosenSpellAbility(sa);
+                        System.out.print(pPlayerPriority.getCardsIn(ZoneType.Hand));
 
                         saHost = game.getCardState(saHost);
                         final Zone currentZone = saHost.getZone();

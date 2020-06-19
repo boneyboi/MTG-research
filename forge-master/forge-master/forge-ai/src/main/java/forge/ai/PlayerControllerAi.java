@@ -596,8 +596,7 @@ public class PlayerControllerAi extends PlayerController {
     public List<SpellAbility> chooseSpellAbilityToPlay() {
         return brains.chooseSpellAbilityToPlay();
     }
-    
-    @Override
+
     public void playChosenSpellAbility(SpellAbility sa) {
         // System.out.println("Playing sa: " + sa);
         if (sa instanceof LandAbility) {

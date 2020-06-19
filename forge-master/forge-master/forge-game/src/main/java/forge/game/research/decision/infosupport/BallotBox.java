@@ -1,6 +1,8 @@
-package forge.game.research.decision;
+package forge.game.research.decision.infosupport;
 
 import forge.game.card.Card;
+import forge.game.research.decision.strategy.Strategy;
+import forge.game.research.decision.strategy.StrategyNode;
 
 public class BallotBox {
 

@@ -1,9 +1,9 @@
-package forge.game.research.decision;
+package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
 import forge.game.trigger.Trigger;
 
-public class TemplateSurveilBoost extends CardTemplate{
+public class TemplateSurveilBoost extends CardTemplate {
     public TemplateSurveilBoost() {
 
     }
