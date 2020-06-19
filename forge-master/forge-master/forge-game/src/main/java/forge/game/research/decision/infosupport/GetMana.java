@@ -5,6 +5,9 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GetMana{
     public static final String RED = "R";
     public static final String GREEN = "G";
@@ -31,6 +34,33 @@ public class GetMana{
 
     public GetMana(Player p) {
         controller = p;
+        getMana();
+        checkPossibleColorPlays();
+    }
+
+    public ArrayList<Integer> getReturnValues() {
+        ArrayList<Integer> returns = new ArrayList<Integer>();
+        returns.add(manaPossible);
+        returns.add(plainsNum);
+        returns.add(islandNum);
+        returns.add(swampNum);
+        returns.add(mountainNum);
+
+        appendBooleanValue(manaAvaliable, returns);
+        appendBooleanValue(plainsAvaliable, returns);
+        appendBooleanValue(islandAvaliable, returns);
+        appendBooleanValue(swampAvaliable, returns);
+        appendBooleanValue(mountainAvaliable, returns);
+        appendBooleanValue(forestAvaliable, returns);
+        return returns;
+    }
+
+    private void appendBooleanValue(Boolean b, ArrayList<Integer> i) {
+        if (b) {
+            i.add(0);
+        } else {
+            i.add(1);
+        }
     }
 
     public void getMana() {
