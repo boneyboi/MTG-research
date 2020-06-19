@@ -71,31 +71,35 @@ public class GetMana{
         forestNum = 0;
         plainsNum = 0;
         for (Card c: controller.getZone(ZoneType.Battlefield)) {
-            for (SpellAbility sa : c.getManaAbilities()) {
-                String type = sa.getMapParams().get("Produced");
-                if (type.contains(RED)) {
-                    mountainNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(BLACK)) {
-                    swampNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(BLUE)) {
-                    islandNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(GREEN)) {
-                    forestNum += 1;
-                    manaPossible += 1;
-                }
-                if (type.contains(WHITE)) {
-                    plainsNum += 1;
-                    manaPossible += 1;
-                }
+            if (!c.isTapped()) {
+                for (SpellAbility sa : c.getManaAbilities()) {
+                    String type = sa.getMapParams().get("Produced");
+                    if (type.contains(RED)) {
+                        mountainNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(BLACK)) {
+                        swampNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(BLUE)) {
+                        islandNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(GREEN)) {
+                        forestNum += 1;
+                        manaPossible += 1;
+                    }
+                    if (type.contains(WHITE)) {
+                        plainsNum += 1;
+                        manaPossible += 1;
+                    }
 
+                }
+                if (!c.getManaAbilities().isEmpty()) {
+                    manaPossible += 1 - c.getManaAbilities().size();
+                }
             }
-            manaPossible += 1 - c.getManaAbilities().size();
         }
 
     }
