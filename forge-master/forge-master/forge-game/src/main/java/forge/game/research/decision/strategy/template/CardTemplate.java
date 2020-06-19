@@ -13,6 +13,7 @@ package forge.game.research.decision.strategy.template;
 
 import forge.game.Game;
 import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 
 public abstract class CardTemplate{
 
@@ -25,10 +26,10 @@ public abstract class CardTemplate{
 
     /**
      * Returns whether or not the card matches the template
-     * @param card
+     * @param sa
      * @return boolean
      */
-    public boolean matches(Card card){
+    public boolean matches(SpellAbility sa){
         return false;
     }
 }

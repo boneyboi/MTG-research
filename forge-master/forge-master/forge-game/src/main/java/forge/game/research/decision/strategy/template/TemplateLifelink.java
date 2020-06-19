@@ -20,7 +20,8 @@ public class TemplateLifelink extends CardTemplate {
     }
 
     @Override
-    public boolean matches(Card card){
+    public boolean matches(SpellAbility spell){
+        Card card = spell.getHostCard();
         FCollectionView<SpellAbility> stuff = card.getSpellAbilities();
         for (SpellAbility sa: stuff) {
             if (sa.getMapParams().containsValue("GainLife")) {

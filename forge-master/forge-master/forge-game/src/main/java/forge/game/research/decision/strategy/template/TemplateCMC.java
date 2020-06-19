@@ -9,6 +9,7 @@
 package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 
 public class TemplateCMC extends CardTemplate {
 
@@ -19,7 +20,7 @@ public class TemplateCMC extends CardTemplate {
     }
 
     @Override
-    public boolean matches(Card card){
-        return (card.getCMC() == cmc);
+    public boolean matches(SpellAbility sa){
+        return (sa.getPayCosts().getTotalMana().getCMC() == cmc);
     }
 }

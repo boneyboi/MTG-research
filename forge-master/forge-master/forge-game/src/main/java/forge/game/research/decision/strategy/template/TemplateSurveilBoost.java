@@ -9,6 +9,7 @@
 package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 import forge.game.trigger.Trigger;
 
 public class TemplateSurveilBoost extends CardTemplate {
@@ -17,7 +18,8 @@ public class TemplateSurveilBoost extends CardTemplate {
     }
 
     @Override
-    public boolean matches(Card card){
+    public boolean matches(SpellAbility spell){
+        Card card = spell.getHostCard();
         for (Trigger t: card.getTriggers()) {
             if (t.getMode().name().equals("Surveil")) {
                 return true;

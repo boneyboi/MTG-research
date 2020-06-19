@@ -9,6 +9,7 @@
 package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 
 public class TemplateName extends CardTemplate {
     String name;
@@ -18,7 +19,7 @@ public class TemplateName extends CardTemplate {
     }
 
     @Override
-    public boolean matches(Card card){
-        return card.getName().equals(name);
+    public boolean matches(SpellAbility sa){
+        return sa.getHostCard().getName().equals(name);
     }
 }
