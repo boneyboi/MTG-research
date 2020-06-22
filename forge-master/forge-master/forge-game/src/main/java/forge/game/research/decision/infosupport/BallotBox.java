@@ -12,6 +12,7 @@ import forge.game.card.Card;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.player.Player;
+import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.spellability.SpellAbility;
@@ -39,9 +40,9 @@ public class BallotBox {
         nonlands = vp.getNonlandPlays();
         lands = vp.getLandPlays();
     }
-    public DoublyLinkedList<StrategyNode> getVotes(DeckStrategies deckstrategies){
+    public DoublyLinkedList<StrategyNode> getVotes(DeckStrategy deckstrategy){
         DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
-        for(Strategy strategy : monoredStrats.getStrategies()){
+        for(Strategy strategy : deckstrategy.getStrategies()){
             //TODO: make this a general case/put in a specific passed in strategy
             votednodes.pushFront(getViableNode(strategy));
         }
@@ -53,9 +54,9 @@ public class BallotBox {
      * use this space to describe how a card is voted on
      * @return
      */
-    public StrategyNode votedCard(DeckStrategies deckstrategies){
+    public StrategyNode votedCard(DeckStrategy deckStrategy){
         HashMap<StrategyNode, Integer> votesofcards = new HashMap<StrategyNode, Integer>();
-        for(StrategyNode node : getVotes(deckstrategies)){
+        for(StrategyNode node : getVotes(deckStrategy)){
             if(votesofcards.get(node).equals(null)){
                 votesofcards.put(node, 0);
             }
