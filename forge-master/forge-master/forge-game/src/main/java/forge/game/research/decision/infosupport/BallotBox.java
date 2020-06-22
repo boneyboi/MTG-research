@@ -44,7 +44,7 @@ public class BallotBox {
         DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
         for(Strategy strategy : deckstrategy.getStrategies()){
             //TODO: make this a general case/put in a specific passed in strategy
-            votednodes.pushFront(getViableNode(strategy));
+            votednodes.push_front(getViableNode(strategy));
         }
         return votednodes;
     }
