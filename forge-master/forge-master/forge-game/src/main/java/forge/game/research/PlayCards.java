@@ -1,6 +1,9 @@
 package forge.game.research;
 
 import forge.game.card.Card;
+import forge.game.research.decision.infosupport.ViablePlays;
+import forge.game.spellability.LandAbility;
+import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -17,6 +20,28 @@ public class PlayCards {
 
     public PlayCards(Player playerPriority) {
         controller = playerPriority;
+    }
+
+    public ArrayList playFromOptions() {
+        ArrayList toplay = new ArrayList<SpellAbility>();
+        ViablePlays vp = new ViablePlays(controller);
+        toplay.add(vp.getNonlandPlays().get(0));
+        return toplay;
+    }
+
+    public ArrayList playLand() {
+        ArrayList toplay = new ArrayList<SpellAbility>();
+        SpellAbility sa;
+        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays()) {
+            for (Card c: controller.getZone(ZoneType.Hand)) {
+                if (c.isLand()) {
+                    sa = new LandAbility(c, controller, null);
+                    toplay.add(sa);
+                    return toplay;
+                }
+            }
+        }
+        return playMethod();
     }
 
     public ArrayList playMethod() {

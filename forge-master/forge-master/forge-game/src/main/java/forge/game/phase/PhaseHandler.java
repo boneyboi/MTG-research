@@ -1080,7 +1080,11 @@ public class PhaseHandler implements java.io.Serializable {
                     printOptions(playerTurn);
 
 
+                    if (pPlayerPriority.getName().equals("Ai"))
+                        chosenSa = null;
+                    else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
+                    }
 
                     /**boolean memnite = false;
                     boolean hopethisworks = false;
@@ -1101,7 +1105,7 @@ public class PhaseHandler implements java.io.Serializable {
                     boolean memniteforever = memnite;*/
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
-                    chosenSa = pc.playMethod();
+                    chosenSa = pc.playLand();
 
                     }
                     if (chosenSa == null) {
