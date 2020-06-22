@@ -1,6 +1,7 @@
 package forge.game.research;
 
 import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 import java.util.ArrayList;
@@ -11,22 +12,27 @@ import forge.game.phase.PhaseHandler;
 
 public class PlayCards {
 
-    private Player MplayerPriority;
+    private Player controller;
     private Player turn;
 
     public PlayCards(Player playerPriority) {
-        MplayerPriority = playerPriority;
+        controller = playerPriority;
     }
 
     public ArrayList playMethod() {
-        ArrayList toplay = null;
-        if (MplayerPriority.getName().equals("Ai")){
-            for (Card card : MplayerPriority.getCardsIn(ZoneType.Hand)) {
+        ArrayList toplay = new ArrayList<SpellAbility>();
+        if (controller.getName().equals("Ai")){
+            for (Card card : controller.getCardsIn(ZoneType.Hand)) {
                 if (card.getName().equals("Memnite")) {
-                    toplay.add(card.getFirstSpellAbility());
+                    SpellAbility sa = card.getFirstSpellAbility();
+                    if (sa.canPlay()) {
+                        toplay.add(sa);
+                        return toplay;
+                    }
+
                 }
             }
         }
-        return toplay;
+        return null;
     }
 }
