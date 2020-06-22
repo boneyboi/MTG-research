@@ -21,12 +21,15 @@ public class StrategyNode {
 
     public DoublyLinkedList<CardTemplate> requirements;
     public DoublyLinkedList<CardTemplate> cards;
+    public boolean finished = false;
+    public boolean repeatable = false;
 
     public StrategyNode(DoublyLinkedList<CardTemplate> requirements,
                         DoublyLinkedList<CardTemplate> cards){
         this.requirements = requirements;
         this.cards = cards;
     }
+
 
     public StrategyNode(StrategyNode node){
         this(node.requirements, node.cards);
@@ -55,6 +58,7 @@ public class StrategyNode {
                     if (!found && req.matches(sa)) {
                         found = true;
                     }
+
                 }
             }
             if (!found) {
@@ -64,9 +68,30 @@ public class StrategyNode {
         return true;
     }
 
-    //TODO: Add requirement check.
+    public boolean alreadyDone(Player p) {
+        if (repeatable) {
+            return false;
+        }
+        int count = 0;
+        for (CardTemplate c: cards) {
+            boolean found = false;
+            for (Card card : p.getZone(ZoneType.Battlefield)) {
+                for (SpellAbility sa: card.getSpellAbilities()) {
+                    if (!found && c.matches(sa)) {
+                        found = true;
+                    }
+
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
-        if (!reqsDone(controller)) {
+        if (!reqsDone(controller) || alreadyDone(controller)) {
             return false;
         }
         ArrayList<SpellAbility> optionsleft = options;
