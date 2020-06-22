@@ -50,6 +50,10 @@ public class StrategyNode {
         }
     }
 
+    public void markRepeatable() {
+        repeatable = true;
+    }
+
     public boolean reqsDone(Player p) {
         for (CardTemplate req: requirements) {
             boolean found = false;
