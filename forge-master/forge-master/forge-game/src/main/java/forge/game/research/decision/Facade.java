@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.research.decision.infosupport.BallotBox;
+import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.Strategy;
 
 import static forge.game.ability.AbilityKey.Player;
@@ -67,8 +68,10 @@ public class Facade {
      * @return a card to play
       *TODO: fill out body, and have it return a card
      */
-     public Card getNextPlayDecision (ArrayList<Strategy> deckstrategy) {
+     public Card getNextPlayDecision (DeckStrategies deckstrategy) {
          //call the decision maker from the other class and pass the card it voted on through here
+         BallotBox b = new BallotBox();
+         b.votedCard(deckstrategy);
          //return decision();
          return null;
      }
@@ -77,7 +80,7 @@ public class Facade {
      * Play a card to the field
      * @param deckstrategy
      */
-    public void playCard(ArrayList<Strategy> deckstrategy){
+    public void playCard(DeckStrategies deckstrategy){
         //use ballot box to see what it voted on
         //then play the card
         playCard(getNextPlayDecision(deckstrategy));
@@ -90,7 +93,7 @@ public class Facade {
     public void playCard(Card card){
         //play the card
         BallotBox b = new BallotBox(controller);
-        b.votedCard(null);
+        //b.votedCard();
     }
 
      /**
