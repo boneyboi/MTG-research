@@ -16,29 +16,21 @@ import forge.game.research.decision.strategy.template.TemplateName;
 import java.util.ArrayList;
 
 public class DeckStrategies {
-    public ArrayList<Strategy> lifelinkstrats;
-    public ArrayList<Strategy> monoredStrats;
+    public static DeckStrategy lifelinkstrats;
+    public static DeckStrategy monoredStrats;
 
     public DeckStrategies(){
-        lifelinkstrats = new ArrayList<Strategy>();
-        addStrategy(this.lifelinkstrats, "LifeLink");
-        addTemplateCard(this.lifelinkstrats, 0, new TemplateName("Daxos"));
+        this.lifelinkstrats = new DeckStrategy();
+        this.lifelinkstrats.addStrategy("LifeLink");
+        this.lifelinkstrats.addTemplateCard(0, new TemplateName("Daxos"));
 
 
-        monoredStrats = new ArrayList<Strategy>();
-        addStrategy(this.monoredStrats, "Monored");
-        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(1));
-        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(2));
-        addTemplateCard(this.monoredStrats, 0, new TemplateCMC(3));
+        this.monoredStrats = new DeckStrategy();
+        this.monoredStrats.addStrategy("Monored");
+        this.monoredStrats.addTemplateCard(0, new TemplateCMC(1));
+        this.monoredStrats.addTemplateCard(0, new TemplateCMC(2));
+        this.monoredStrats.addTemplateCard(0, new TemplateCMC(3));
     }
 
-    public void addStrategy(ArrayList<Strategy> strategy, String name){
-        strategy.add(new Strategy(name));
-    }
-    public void addTemplateCard(ArrayList<Strategy> strategy, int index, CardTemplate template){
-        strategy.get(index).pushCard(template);
-    }
-    public void addTemplateRequirement(ArrayList<Strategy> strategy, int index, CardTemplate template){
-        strategy.get(index).pushReq(template);
-    }
+
 }

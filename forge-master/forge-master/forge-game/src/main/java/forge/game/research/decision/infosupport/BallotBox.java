@@ -22,6 +22,8 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import static forge.game.research.decision.strategy.DeckStrategies.*;
+
 public class BallotBox {
     public Player controller;
     public ArrayList<SpellAbility> nonlands;
@@ -39,7 +41,7 @@ public class BallotBox {
     }
     public DoublyLinkedList<StrategyNode> getVotes(DeckStrategies deckstrategies){
         DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
-        for(Strategy strategy : deckstrategies.monoredStrats){
+        for(Strategy strategy : monoredStrats.getStrategies()){
             //TODO: make this a general case/put in a specific passed in strategy
             votednodes.pushFront(getViableNode(strategy));
         }
