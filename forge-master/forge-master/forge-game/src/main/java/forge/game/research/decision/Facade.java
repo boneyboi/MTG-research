@@ -10,9 +10,13 @@ package forge.game.research.decision;
 import java.util.ArrayList;
 import forge.game.card.Card;
 import forge.game.player.Player;
+import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.strategy.DeckStrategies;
+import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
+import forge.game.research.decision.strategy.StrategyNode;
+import forge.game.research.decision.strategy.template.CardTemplate;
 
 import static forge.game.ability.AbilityKey.Player;
 
@@ -68,32 +72,42 @@ public class Facade {
      * @return a card to play
       *TODO: fill out body, and have it return a card
      */
-     public Card getNextPlayDecision (DeckStrategies deckstrategy) {
+     public DoublyLinkedList<CardTemplate> getNextPlayDecision (DeckStrategies deckstrategy) {
          //call the decision maker from the other class and pass the card it voted on through here
          BallotBox b = new BallotBox();
-         b.votedCard(deckstrategy);
-         //return decision();
-         return null;
+         //go through the list of card templates and find the exact cards we should play from our hand
+         return b.votedCard(deckstrategy).cards;
      }
 
     /**
      * Play a card to the field
      * @param deckstrategy
      */
-    public void playCard(DeckStrategies deckstrategy){
+    public void playStrategy(StrategyNode strategynode){
         //use ballot box to see what it voted on
         //then play the card
-        playCard(getNextPlayDecision(deckstrategy));
+        DoublyLinkedList<Card> cards = new DoublyLinkedList<Card>();
+        while(strategynode.cards.iterator().hasNext()){
+            //convert each template to an actual card
+            //then play that card
+        }
+        //playCards(getNextPlayDecision(strategynode));
     }
 
     /**
      *
      * @param card
      */
+    public void playCards(DoublyLinkedList<Card> cards){
+        //play the cards
+
+        while(cards.iterator().hasNext()){
+            playCard(cards.iterator().next());
+        }
+    }
+
     public void playCard(Card card){
-        //play the card
-        BallotBox b = new BallotBox(controller);
-        //b.votedCard();
+
     }
 
      /**
