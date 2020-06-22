@@ -8,9 +8,12 @@
 
 package forge.game.research.decision.strategy;
 
+import forge.game.card.Card;
+import forge.game.player.Player;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.spellability.SpellAbility;
+import forge.game.zone.ZoneType;
 
 import java.util.ArrayList;
 
@@ -44,7 +47,28 @@ public class StrategyNode {
         }
     }
 
-    public boolean isViable(ArrayList<SpellAbility> options) {
+    public boolean reqsDone(Player p) {
+        for (CardTemplate req: requirements) {
+            boolean found = false;
+            for (Card c : p.getZone(ZoneType.Battlefield)) {
+                for (SpellAbility sa: c.getSpellAbilities()) {
+                    if (!found && req.matches(sa)) {
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //TODO: Add requirement check.
+    public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
+        if (!reqsDone(controller)) {
+            return false;
+        }
         ArrayList<SpellAbility> optionsleft = options;
         SpellAbility chosen = null;
         for (CardTemplate c: cards) {
