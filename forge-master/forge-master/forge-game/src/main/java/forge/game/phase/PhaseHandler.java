@@ -17,6 +17,7 @@
  */
 package forge.game.phase;
 
+import forge.game.research.PlayCards;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -541,7 +542,7 @@ public class PhaseHandler implements java.io.Serializable {
         System.out.println();
     }
 
-    private void printTemplates() {
+    /**private void printTemplates() {
         System.out.print(getPlayerTurn());
         System.out.print("'s statistics are:");
         System.out.println();
@@ -558,7 +559,7 @@ public class PhaseHandler implements java.io.Serializable {
 
             }
         }
-    }
+     }*/
 
     private void printEvals() {
         //This is the start of our code
@@ -1081,6 +1082,28 @@ public class PhaseHandler implements java.io.Serializable {
 
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
 
+                    /**boolean memnite = false;
+                    boolean hopethisworks = false;
+                    ArrayList toplay = null;*/
+                    if (pPlayerPriority.getName().equals("Ai")) {
+                        /**hopethisworks = true;
+                        for(Card card : playerTurn.getCardsIn(ZoneType.Hand)) {
+                            if (card.getName().equals("Memnite")) {
+                                memnite = true;
+                                toplay.add(card);
+                                chosenSa = toplay;
+                            }
+                        }
+                    }
+
+
+                    boolean diditwork = hopethisworks;
+                    boolean memniteforever = memnite;*/
+
+                    PlayCards pc = new PlayCards(pPlayerPriority);
+                    chosenSa = pc.playMethod();
+
+                    }
                     if (chosenSa == null) {
                         break; // that means 'I pass'
                     }
