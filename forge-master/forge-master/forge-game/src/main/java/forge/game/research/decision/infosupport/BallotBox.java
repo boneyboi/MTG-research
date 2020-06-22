@@ -39,7 +39,8 @@ public class BallotBox {
     }
     public DoublyLinkedList<StrategyNode> getVotes(DeckStrategies deckstrategies){
         DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
-        for(Strategy strategy : deckstrategies.monoredStrats){ //TODO: make this a general case/put in a specific passed in strategy
+        for(Strategy strategy : deckstrategies.monoredStrats){
+            //TODO: make this a general case/put in a specific passed in strategy
             votednodes.pushFront(getViableNode(strategy));
         }
         return votednodes;
@@ -81,13 +82,12 @@ public class BallotBox {
         ViablePlays vp = new ViablePlays(controller);
         nonlands = vp.getNonlandPlays();
         StrategyNode current = strategy.next();
-        StrategyNode next = strategy.next();
-        if (!current.isViable(nonlands)){
-            return null;
-        }
-        while (next.isViable(nonlands)) {
-            current = next;
-            next = strategy.next();
+        if (!current.isViable(nonlands, controller)){
+            if (strategy.hasNext()) {
+                current = strategy.next();
+            } else {
+                return null;
+            }
         }
         return current;
 

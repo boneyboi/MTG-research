@@ -44,6 +44,10 @@ public class Strategy{
         }
     }
 
+    public boolean hasNext(){
+        return path.iterator().hasNext();
+    }
+
 
     public boolean allRequirementsInPlay(){
         return false;
