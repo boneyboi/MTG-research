@@ -19,21 +19,14 @@ public class PlayCards {
     }
 
     public ArrayList playMethod() {
-        boolean memnite = false;
-        boolean hopethisworks = false;
         ArrayList toplay = null;
-
-        if (MplayerPriority.equals("Ai")){
-            hopethisworks = true;
+        if (MplayerPriority.getName().equals("Ai")){
             for (Card card : MplayerPriority.getCardsIn(ZoneType.Hand)) {
                 if (card.getName().equals("Memnite")) {
-                    memnite = true;
-                    toplay.add(card);
+                    toplay.add(card.getFirstSpellAbility());
                 }
             }
         }
-        boolean diditwork = hopethisworks;
-        boolean memniteforever = memnite;
         return toplay;
     }
 }

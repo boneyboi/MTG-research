@@ -73,7 +73,7 @@ public class ViablePlays {
 
     public void addLandOptions(){
         for (Card c: controller.getZone(ZoneType.Hand)) {
-            if (c.isLand()) {
+            if (c.isLand() && controller.canPlayLand(c)) {
                 lands.add(c);
             }
         }

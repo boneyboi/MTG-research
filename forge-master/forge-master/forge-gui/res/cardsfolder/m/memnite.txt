@@ -2,5 +2,6 @@ Name:Memnite
 ManaCost:0
 Types:Artifact Creature Construct
 PT:1/1
+K:A deck can have any number of cards named CARDNAME.
 SVar:Picture:http://www.wizards.com/global/images/magic/general/memnite.jpg
 Oracle:
