@@ -1108,6 +1108,9 @@ public class PhaseHandler implements java.io.Serializable {
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     chosenSa = pc.playLand();
+                    if (chosenSa != null) {
+                        System.out.println(chosenSa.get(0));
+                    }
 
                     }
                     if (chosenSa == null) {
