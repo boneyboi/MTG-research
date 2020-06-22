@@ -1,27 +1,37 @@
+/**
+ * Class that allows for our a.i. to play specific cards, recieves instructions
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since June 22, 2020
+ */
+
 package forge.game.research;
 
 import forge.game.card.Card;
 import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.spellability.LandAbility;
-import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
-
 import java.util.ArrayList;
-
 import forge.game.player.Player;
-
-import forge.game.phase.PhaseHandler;
 
 public class PlayCards {
 
     private Player controller;
-    private Player turn;
 
+    /**
+     *
+     * @param playerPriority
+     */
     public PlayCards(Player playerPriority) {
         controller = playerPriority;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList playFromOptions() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
@@ -34,6 +44,10 @@ public class PlayCards {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList playLand() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
@@ -49,6 +63,10 @@ public class PlayCards {
         return playFromOptions();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList playMethod() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         if (controller.getName().equals("Ai")){
@@ -59,7 +77,6 @@ public class PlayCards {
                         toplay.add(sa);
                         return toplay;
                     }
-
                 }
             }
         }
