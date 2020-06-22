@@ -90,7 +90,7 @@ public class Facade {
     public void playCard(Card card){
         //play the card
         BallotBox b = new BallotBox(controller);
-        b.votedCard();
+        b.votedCard(null);
     }
 
      /**
