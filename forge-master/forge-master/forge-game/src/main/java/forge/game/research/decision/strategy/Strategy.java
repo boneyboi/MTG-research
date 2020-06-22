@@ -18,11 +18,11 @@ public class Strategy{
 
      //TODO: Add variables to let this create a strategy off of a file import.
 
-    public Strategy(String name) {
+    public Strategy(String title) {
         path = new DoublyLinkedList<StrategyNode>();
         path.pushFront(new StrategyNode(new DoublyLinkedList<CardTemplate>(),
                 new DoublyLinkedList<CardTemplate>()));
-        this.name = name;
+        name = title;
     }
 
     public void pushFront(StrategyNode node){

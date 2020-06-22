@@ -20,16 +20,16 @@ public class DeckStrategies {
     public static DeckStrategy monoredStrats;
 
     public DeckStrategies(){
-        this.lifelinkstrats = new DeckStrategy();
-        this.lifelinkstrats.addStrategy("LifeLink");
-        this.lifelinkstrats.addTemplateCard(0, new TemplateName("Daxos"));
+        lifelinkstrats = new DeckStrategy();
+        lifelinkstrats.addStrategy("LifeLink");
+        lifelinkstrats.addTemplateCard(0, new TemplateName("Daxos"));
 
 
-        this.monoredStrats = new DeckStrategy();
-        this.monoredStrats.addStrategy("Monored");
-        this.monoredStrats.addTemplateCard(0, new TemplateCMC(1));
-        this.monoredStrats.addTemplateCard(0, new TemplateCMC(2));
-        this.monoredStrats.addTemplateCard(0, new TemplateCMC(3));
+        monoredStrats = new DeckStrategy();
+        monoredStrats.addStrategy("Monored");
+        monoredStrats.addTemplateCard(0, new TemplateCMC(1));
+        monoredStrats.addTemplateCard(0, new TemplateCMC(2));
+        monoredStrats.addTemplateCard(0, new TemplateCMC(3));
     }
 
 

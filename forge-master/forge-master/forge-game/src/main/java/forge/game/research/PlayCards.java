@@ -9,7 +9,11 @@
 package forge.game.research;
 
 import forge.game.card.Card;
+import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.infosupport.ViablePlays;
+import forge.game.research.decision.strategy.DeckStrategies;
+import forge.game.research.decision.strategy.StrategyNode;
+import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -26,6 +30,25 @@ public class PlayCards {
      */
     public PlayCards(Player playerPriority) {
         controller = playerPriority;
+    }
+
+    public ArrayList playChosenFromHand() {
+        BallotBox voter = new BallotBox();
+        DeckStrategies trial = new DeckStrategies();
+        ArrayList toplay = new ArrayList<SpellAbility>();
+        ViablePlays vp = new ViablePlays(controller);
+        StrategyNode chosen = voter.votedCard(DeckStrategies.monoredStrats);
+        //Find card from node
+        for (CardTemplate template: chosen.getCards()) {
+            for (SpellAbility option : vp.getNonlandPlays()) {
+                if (template.matches(option)) {
+                    toplay.add(vp.getNonlandPlays().get(0));
+                    return toplay;
+                }
+            }
+        }
+        return null;
+
     }
 
     /**
@@ -51,7 +74,8 @@ public class PlayCards {
     public ArrayList playLand() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
-        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays() && controller.canCastSorcery()) {
+        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays()
+                && controller.canCastSorcery()) {
             for (Card c: controller.getZone(ZoneType.Hand)) {
                 if (c.isLand()) {
                     sa = new LandAbility(c, controller, null);
@@ -60,7 +84,7 @@ public class PlayCards {
                 }
             }
         }
-        return playFromOptions();
+        return playChosenFromHand();
     }
 
     /**

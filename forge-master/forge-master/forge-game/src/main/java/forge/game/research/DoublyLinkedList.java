@@ -63,13 +63,13 @@ public class DoublyLinkedList<Item> implements Iterable<Item>
      * Add an element to the tail of the linked list: O(1) operation
      * @param /data
      */
-    public void push_back(Item item)
+    public void pushBack(Item item)
     {
         insert(tail.prev, item, tail);
     }
 
-    public Item peek_front() { return head.next.item; }
-    public Item peek_back() { return tail.prev.item; }
+    public Item peekFront() { return head.next.item; }
+    public Item peekBack() { return tail.prev.item; }
     /**
      * Insert item between left and right nodes
      * @param left -- a node
@@ -115,7 +115,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item>
      * @return an item
      * @throws NoSuchElementException if the list is empty
      */
-    public Item pop_back() throws NoSuchElementException
+    public Item popBack() throws NoSuchElementException
     {
         if (isEmpty()) throw new NoSuchElementException();
 

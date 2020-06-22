@@ -94,6 +94,10 @@ public class StrategyNode {
         return true;
     }
 
+    public DoublyLinkedList<CardTemplate> getCards() {
+        return cards;
+    }
+
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
         if (!reqsDone(controller) || alreadyDone(controller)) {
             return false;

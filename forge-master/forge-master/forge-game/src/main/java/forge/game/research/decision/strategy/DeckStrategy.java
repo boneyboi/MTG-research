@@ -9,10 +9,10 @@ public class DeckStrategy {
     private ArrayList<Strategy> deckStrategy;
 
     public DeckStrategy(){
-        this.deckStrategy = new ArrayList<Strategy>();
+        deckStrategy = new ArrayList<Strategy>();
     }
 
-    public void addStrategy(String name){ this.deckStrategy.add(new Strategy(name));
+    public void addStrategy(String name){deckStrategy.add(new Strategy(name));
     }
     public void addTemplateCard(int index, CardTemplate template){
         this.deckStrategy.get(index).pushCard(template);
