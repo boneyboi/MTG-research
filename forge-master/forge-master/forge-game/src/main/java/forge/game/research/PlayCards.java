@@ -25,14 +25,19 @@ public class PlayCards {
     public ArrayList playFromOptions() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
-        toplay.add(vp.getNonlandPlays().get(0));
-        return toplay;
+        if (!vp.getNonlandPlays().isEmpty()) {
+            toplay.add(vp.getNonlandPlays().get(0));
+            return toplay;
+        } else {
+            return null;
+        }
+
     }
 
     public ArrayList playLand() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
-        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays()) {
+        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays() && controller.canCastSorcery()) {
             for (Card c: controller.getZone(ZoneType.Hand)) {
                 if (c.isLand()) {
                     sa = new LandAbility(c, controller, null);
@@ -41,7 +46,7 @@ public class PlayCards {
                 }
             }
         }
-        return playMethod();
+        return playFromOptions();
     }
 
     public ArrayList playMethod() {

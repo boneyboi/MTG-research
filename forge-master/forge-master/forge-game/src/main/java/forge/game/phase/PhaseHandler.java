@@ -1077,11 +1077,13 @@ public class PhaseHandler implements java.io.Serializable {
                         pFirstPriority = pPlayerPriority;
                     }
 
-                    printOptions(playerTurn);
+                    //printOptions(playerTurn);
 
 
-                    if (pPlayerPriority.getName().equals("Ai"))
+                    if (pPlayerPriority.getName().equals("Ai")) {
                         chosenSa = null;
+                        //TODO: Comment this out.
+                    }
                     else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     }
@@ -1123,7 +1125,7 @@ public class PhaseHandler implements java.io.Serializable {
                         SpellAbility testList = null;
 
                         pPlayerPriority.getController().playChosenSpellAbility(sa);
-                        System.out.print(pPlayerPriority.getCardsIn(ZoneType.Hand));
+                        //System.out.print(pPlayerPriority.getCardsIn(ZoneType.Hand));
 
                         saHost = game.getCardState(saHost);
                         final Zone currentZone = saHost.getZone();
@@ -1138,7 +1140,8 @@ public class PhaseHandler implements java.io.Serializable {
 
                     }
                     loopCount++;
-                } while (loopCount < 999 || !pPlayerPriority.getController().isAI());
+                } while (loopCount < 999 ||
+                        (!pPlayerPriority.getController().isAI() && !pPlayerPriority.getName().equals("Ai")));
 
                 if (loopCount >= 999 && pPlayerPriority.getController().isAI()) {
                     System.out.print("AI looped too much with: " + chosenSa);
