@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 public class BallotBox {
     public Player controller;
@@ -36,10 +37,11 @@ public class BallotBox {
         nonlands = vp.getNonlandPlays();
         lands = vp.getLandPlays();
     }
-    public DoublyLinkedList<Card> getVotes(DeckStrategies deckstrategies){
-        DoublyLinkedList<Card> votednodes = new DoublyLinkedList<Card>();
+    public DoublyLinkedList<StrategyNode> getVotes(DeckStrategies deckstrategies){
+        DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
         for(Strategy strategy : deckstrategies.monoredStrats){
-            //votednodes.pushFront(getViableNode(strategy)); TODO: Get List From Node
+            //TODO: make this a general case/put in a specific passed in strategy
+            votednodes.pushFront(getViableNode(strategy));
         }
         return votednodes;
     }
@@ -49,13 +51,28 @@ public class BallotBox {
      * use this space to describe how a card is voted on
      * @return
      */
-    public Card votedCard(DeckStrategies deckstrategies){
-        Dictionary<String, Integer> votesofcards;
-        /*for(StrategyNode node : getVotes(deckstrategies)){
-            votesofcards.put(node.nextCard().)
-        }*/
-        return null;
+    public StrategyNode votedCard(DeckStrategies deckstrategies){
+        HashMap<StrategyNode, Integer> votesofcards = new HashMap<StrategyNode, Integer>();
+        for(StrategyNode node : getVotes(deckstrategies)){
+            if(votesofcards.get(node).equals(null)){
+                votesofcards.put(node, 0);
+            }
+            int tempvotes = votesofcards.get(node);
+            votesofcards.replace(node, tempvotes+1);
+        }
+
+        int max = 0;
+        StrategyNode votednode = new StrategyNode(null, null);
+        for(StrategyNode node : votesofcards.keySet()){
+            if(votesofcards.get(node) > max){
+                max = votesofcards.get(node);
+                votednode = new StrategyNode(node);
+            }
+        }
+
+        return votednode;
     }
+
 
     /**
      * Go through a strategy and get the last playable node
@@ -65,13 +82,12 @@ public class BallotBox {
         ViablePlays vp = new ViablePlays(controller);
         nonlands = vp.getNonlandPlays();
         StrategyNode current = strategy.next();
-        StrategyNode next = strategy.next();
-        if (!current.isViable(nonlands)){
-            return null;
-        }
-        while (next.isViable(nonlands)) {
-            current = next;
-            next = strategy.next();
+        if (!current.isViable(nonlands, controller)){
+            if (strategy.hasNext()) {
+                current = strategy.next();
+            } else {
+                return null;
+            }
         }
         return current;
 

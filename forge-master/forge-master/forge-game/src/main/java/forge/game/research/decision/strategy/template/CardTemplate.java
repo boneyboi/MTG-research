@@ -32,4 +32,13 @@ public abstract class CardTemplate{
     public boolean matches(SpellAbility sa){
         return false;
     }
+
+    public boolean matches(Card card) {
+        for (SpellAbility sa : card.getSpellAbilities()) {
+            if (matches(sa)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
