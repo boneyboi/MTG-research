@@ -9,25 +9,39 @@
 package forge.game.research.decision.strategy;
 
 
-import forge.game.research.decision.strategy.template.TemplatePermanentCMC;
-import forge.game.research.decision.strategy.template.TemplateName;
+import forge.game.research.decision.strategy.template.*;
+
+import java.util.ArrayList;
 
 public class DeckStrategies {
     public static DeckStrategy lifelinkstrats;
     public static DeckStrategy monoredStrats;
 
     public DeckStrategies(){
-        lifelinkstrats = new DeckStrategy();
-        lifelinkstrats.addStrategy("LifeLink");
-        lifelinkstrats.addTemplateCard(0, new TemplateName("Daxos"));
-
-
-        monoredStrats = new DeckStrategy();
-        monoredStrats.addStrategy("Monored");
-        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(1));
-        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(2));
-        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(3));
+        deckStratInit();
     }
 
+    public void deckStratInit(){
+        this.lifelinkstrats = new DeckStrategy();
+        this.lifelinkstrats.addStrategy("Curve");
+        this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(1));
+        this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(2));
+        this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(3));
+        this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(4));
+        this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(5));
+
+        this.lifelinkstrats.addStrategy("Daxos");
+        this.lifelinkstrats.addTemplateCard(1, new TemplateName("Daxos"));
+
+        this.lifelinkstrats.addStrategy("Life");
+        this.lifelinkstrats.addTemplateCard(2, new TemplateLifelink());
+
+
+        this.monoredStrats = new DeckStrategy();
+        this.monoredStrats.addStrategy("Monored");
+        this.monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(1));
+        this.monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(2));
+        this.monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(3));
+    }
 
 }
