@@ -1087,7 +1087,9 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
-                    chosenSa = pc.playLand();
+                    if (pPlayerPriority.getName().equals("Ai")) {
+                        chosenSa = pc.playLand();
+                    }
                     if (chosenSa != null) {
                         //We can print out what cards/abilities are being played with this function
                         //System.out.println(chosenSa.get(0));

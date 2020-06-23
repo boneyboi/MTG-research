@@ -11,6 +11,7 @@ package forge.game.research.decision.strategy.template;
 import forge.game.card.Card;
 import forge.game.keyword.Keyword;
 import forge.game.spellability.SpellAbility;
+import forge.game.spellability.SpellPermanent;
 import forge.util.collect.FCollectionView;
 
 public class TemplateLifelink extends CardTemplate {
@@ -28,9 +29,12 @@ public class TemplateLifelink extends CardTemplate {
                 return true;
             }
         }
-        return ((card.hasKeyword(Keyword.LIFELINK) ||
-                card.hasSVar("TrigGainLife") ||
-                card.hasSVar("DBGainLife"))
-                && !card.isLand());
+        if (spell instanceof SpellPermanent || card.isInstant() || card.isSorcery()) {
+            return ((card.hasKeyword(Keyword.LIFELINK) ||
+                    card.hasSVar("TrigGainLife") ||
+                    card.hasSVar("DBGainLife"))
+                    && !card.isLand());
+        }
+        return false;
     }
 }

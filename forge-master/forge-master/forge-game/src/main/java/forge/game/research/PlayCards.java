@@ -44,7 +44,7 @@ public class PlayCards {
         DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
-        StrategyNode chosen = voter.votedCard(DeckStrategies.monoredStrats);
+        StrategyNode chosen = voter.votedCard(DeckStrategies.lifelinkstrats);
 
         //Find card from node
         for (CardTemplate template: chosen.getCards()) {

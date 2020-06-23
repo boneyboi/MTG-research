@@ -10,6 +10,7 @@ package forge.game.research.decision.strategy.template;
 
 import forge.game.card.Card;
 import forge.game.spellability.SpellAbility;
+import forge.game.spellability.SpellPermanent;
 import forge.util.collect.FCollectionView;
 
 public class TemplateSurveil extends CardTemplate {
@@ -26,6 +27,9 @@ public class TemplateSurveil extends CardTemplate {
                return true;
            }
        }
-        return (card.hasSVar("TrigSurveil") || card.hasSVar("DBSurveil") );
+       if (spell instanceof SpellPermanent) {
+           return (card.hasSVar("TrigSurveil") || card.hasSVar("DBSurveil"));
+       }
+       return false;
     }
 }
