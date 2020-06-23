@@ -22,6 +22,7 @@ import forge.game.player.Player;
 
 public class PlayCards {
 
+    //the player whose turn it is
     private Player controller;
 
     /**
@@ -34,7 +35,7 @@ public class PlayCards {
     }
 
     /**
-     * Uses viable plays in combination with deck strategies to make the
+     * Uses viable plays in combination with deck strategies to make Ai play specific cards from their hand
      * @param controller
      * @return toplay (which has a list of cards) or null if the player's name is not Ai
      */
@@ -75,14 +76,19 @@ public class PlayCards {
     }
 
     /**
-     *
-     * @return
+     * Method that allows for the playing of lands, then if a land has already been played for the turn or cannot
+     * be played that turn, can return a different card/spell ability
+     * @return toplay -> land that is to be played
+     * @return playChosenFromHand(controller) -> spell ability list if a land has or cannot be played
      */
     public ArrayList playLand() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
+
+        //checks if player has played a land and if a player is able to play a land at this time
         if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays()
                 && controller.canCastSorcery()) {
+            //iterates through hand, checks if land is present, then returns that land
             for (Card c: controller.getZone(ZoneType.Hand)) {
                 if (c.isLand()) {
                     sa = new LandAbility(c, controller, null);
@@ -91,14 +97,15 @@ public class PlayCards {
                 }
             }
         }
+        //else calls playChosenFromHand() to decide on another card
         return playChosenFromHand(controller);
     }
 
     /**
-     *
+     * Initial method of getting Ai to play specific cards by returning a list of spell abilities
      * @return toplay (which has a list of cards) or null if the player's name is not Ai
      */
-    public ArrayList playMethod() {
+    private ArrayList playMethod() {
         ArrayList toplay = new ArrayList<SpellAbility>();
         if (controller.getName().equals("Ai")){
             for (Card card : controller.getCardsIn(ZoneType.Hand)) {
