@@ -60,6 +60,7 @@ public class ViablePlays {
 
 
     public void addZoneOptions(ZoneType z) {
+        //TODO: Fix exile issue
         for (Card c: controller.getZone(z)) {
             for (SpellAbility sa: c.getNonManaAbilities()) {
                 if (sa.getPayCosts().getTotalMana().getCMC() <= (int) manapool.get(0) &&
