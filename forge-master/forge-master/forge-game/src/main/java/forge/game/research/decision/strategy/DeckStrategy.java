@@ -13,6 +13,9 @@ public class DeckStrategy {
     }
 
     public void addStrategy(String name){ this.deckStrategy.add(new Strategy(name)); }
+    public void addNode(int index, StrategyNode node){
+            this.getStrategies().get(index).pushFront(this.getStrategies().get(index), new StrategyNode(node));
+    }
     public void addTemplateCard(int index, CardTemplate template){
         this.deckStrategy.get(index).pushCard(template);
     }

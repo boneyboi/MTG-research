@@ -20,21 +20,26 @@ public class Strategy{
 
     public Strategy(String title) {
         path = new DoublyLinkedList<StrategyNode>();
-        path.push_front(new StrategyNode(new DoublyLinkedList<CardTemplate>(),
+        pushFront(this, new StrategyNode(new DoublyLinkedList<CardTemplate>(),
                 new DoublyLinkedList<CardTemplate>()));
         name = title;
     }
 
-    public void pushFront(StrategyNode node){
-        path.push_front(new StrategyNode(node));
+
+    //create a new strategy node
+    public void pushFront(Strategy strategy, StrategyNode node){
+        strategy.path.push_front(new StrategyNode(node));
     }
     //TODO: remove these 2 functions
+    //pushcard creates a new card in the strategy node
     public void pushCard(CardTemplate template){
         path.iterator().next().cards.push_front(template);
     }
+    //pushreq creates a new requirement in the strategy node
     public void pushReq(CardTemplate template){
         path.iterator().next().requirements.push_front(template);
     }
+
 
     public StrategyNode next(){
         if(path.iterator().hasNext()){
