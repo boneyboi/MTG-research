@@ -9,11 +9,8 @@
 package forge.game.research.decision.strategy;
 
 
-import forge.game.research.decision.strategy.template.CardTemplate;
-import forge.game.research.decision.strategy.template.TemplateCMC;
+import forge.game.research.decision.strategy.template.TemplatePermanentCMC;
 import forge.game.research.decision.strategy.template.TemplateName;
-
-import java.util.ArrayList;
 
 public class DeckStrategies {
     public static DeckStrategy lifelinkstrats;
@@ -27,9 +24,9 @@ public class DeckStrategies {
 
         monoredStrats = new DeckStrategy();
         monoredStrats.addStrategy("Monored");
-        monoredStrats.addTemplateCard(0, new TemplateCMC(1));
-        monoredStrats.addTemplateCard(0, new TemplateCMC(2));
-        monoredStrats.addTemplateCard(0, new TemplateCMC(3));
+        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(1));
+        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(2));
+        monoredStrats.addTemplateCard(0, new TemplatePermanentCMC(3));
     }
 
 
