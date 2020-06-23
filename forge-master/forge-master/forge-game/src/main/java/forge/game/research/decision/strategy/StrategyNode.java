@@ -35,9 +35,17 @@ public class StrategyNode {
      * @param cards
      */
     public StrategyNode(DoublyLinkedList<CardTemplate> requirements,
-                        DoublyLinkedList<CardTemplate> cards){
+                        DoublyLinkedList<CardTemplate> cards, boolean repeated){
         this.requirements = requirements;
         this.cards = cards;
+        repeatable = repeated;
+    }
+
+    public StrategyNode(DoublyLinkedList<CardTemplate> requirements,
+                        DoublyLinkedList<CardTemplate> cards) {
+        this.requirements = requirements;
+        this.cards = cards;
+        repeatable = false;
     }
 
     /**
@@ -45,7 +53,7 @@ public class StrategyNode {
      * @param node
      */
     public StrategyNode(StrategyNode node){
-        this(node.requirements, node.cards);
+        this(node.requirements, node.cards, node.repeatable);
     }
 
     /**
