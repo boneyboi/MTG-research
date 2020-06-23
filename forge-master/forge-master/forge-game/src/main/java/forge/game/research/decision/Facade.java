@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 17 2020
+ * @since June 23, 2020
  */
 package forge.game.research.decision;
 
@@ -81,15 +81,15 @@ public class Facade {
 
     /**
      * Play a card to the field
-     * @param deckstrategy
+     * @param strategynode
      */
-    public void playStrategy(DeckStrategy deckstrategy){
+    public void playStrategy(StrategyNode strategynode){
         //use ballot box to see what it voted on
         //then play the card
-        BallotBox b = new BallotBox();
-        playCards(b.votedCard(deckstrategy).cards);
-        for(Strategy s : deckstrategy.getStrategies()){
-            playCards(s.next().cards);
+        DoublyLinkedList<Card> cards = new DoublyLinkedList<Card>();
+        while(strategynode.cards.iterator().hasNext()){
+            //convert each template to an actual card
+            //then play that card
         }
         //playCards(getNextPlayDecision(strategynode));
     }
@@ -97,18 +97,19 @@ public class Facade {
     /**
      *
      * @param card
-     */
-    public void playCards(DoublyLinkedList<CardTemplate> cards){
+
+    public void playCards(DoublyLinkedList<Card> cards){
         //play the cards
-        //find out what cards in hand match the template
+
         while(cards.iterator().hasNext()){
-            //playCard(cards.iterator().next());
+            playCard(cards.iterator().next());
         }
     }
 
-    public void playCard(Card card){
+    public void playCard(Strategy node){
 
     }
+    */
 
      /**
      * Used when deciding to mulligan and what cards to keep if we do.

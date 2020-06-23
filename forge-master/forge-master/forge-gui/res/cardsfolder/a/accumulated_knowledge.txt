@@ -1,6 +1,7 @@
 Name:Accumulated Knowledge
 ManaCost:1 U
 Types:Instant
+K:A deck can have any number of cards named CARDNAME.
 A:SP$ Draw | Cost$ 1 U | Defined$ You | NumCards$ 1 | SubAbility$ DBDraw | SpellDescription$ Draw a card, then draw cards equal to the number of cards named Accumulated Knowledge in all graveyards.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X | References$ X
 SVar:X:Count$NamedInAllYards.Accumulated Knowledge
