@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 12, 2020
+ * @since June 23, 2020
  */
 
 package forge.game.research.card;
@@ -11,7 +11,9 @@ package forge.game.research.card;
 
 public class ArtifactEval extends CardEvaluator {
 
+    //calls card evaluator constructor
     public ArtifactEval() {
+        super();
     }
 
 }

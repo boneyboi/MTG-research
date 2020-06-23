@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 12, 2020
+ * @since June 23, 2020
  */
 package forge.game.research.card;
 
@@ -15,6 +15,11 @@ public class LandEval extends CardEvaluator{
         super();
     }
 
+    /**
+     * For lands, its value relies on its RareMultiplier
+     * @param card - card object
+     * @return rare multiplier of the land
+     */
     @Override
     public double evaluate (Card card) {
         return getRareMultiplier(card);

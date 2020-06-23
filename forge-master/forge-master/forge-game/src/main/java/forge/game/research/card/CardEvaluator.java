@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 12, 2020
+ * @since June 23, 2020
  */
 package forge.game.research.card;
 
@@ -29,7 +29,6 @@ public abstract class CardEvaluator {
     public static final double COLORVALUE = .25;
 
     public CardEvaluator() {
-
     }
 
     /**
@@ -48,6 +47,8 @@ public abstract class CardEvaluator {
     }
 
     public double getCMCValue (Card card){
+
+        //in case a card has copied another card
         if (card.getCopiedPermanent() != null) {
             return card.getPaperCard().getRules().getMainPart().getManaCost().getCMC() * CMCVALUE;
         } else {
@@ -64,7 +65,6 @@ public abstract class CardEvaluator {
         double rareValue = 1;
 
         //sets multiplier depending on the rarity of the card
-
         switch(card.getRarity().toString()){
             case("L"):
                 rareValue = COMMONMULTIPLIER;

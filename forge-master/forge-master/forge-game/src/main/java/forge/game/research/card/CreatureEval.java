@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 12, 2020
+ * @since June 23, 2020
  */
 
 package forge.game.research.card;
@@ -38,6 +38,7 @@ public class CreatureEval extends CardEvaluator {
     public static final int STATBOOST3 = 3;
     public static final int STATBOOST4 = 4;
 
+    //calls card evaluator constructor
     public CreatureEval() {
         super();
     }
@@ -66,12 +67,22 @@ public class CreatureEval extends CardEvaluator {
         return value;
     }
 
+    /**
+     * Allows for a card's ability or potential to change in power or toughness to be accounted for
+     * @param card
+     * @return
+     */
     public double getStatChange (Card card){
         return this.getPowerChange(card) +
                this.getToughnessChange(card);
     }
 
-    public double getPowerChange (Card card){
+    /**
+     * Helper method that calculates a card's change in power
+     * @param card
+     * @return currentPower - basePower
+     */
+    private double getPowerChange (Card card){
         if (card.getCopiedPermanent() != null) {
             return card.getCurrentPower() - card.getPaperCard().getRules().getMainPart().getIntPower();
         } else {
@@ -79,8 +90,12 @@ public class CreatureEval extends CardEvaluator {
         }
     }
 
-
-    public double getToughnessChange (Card card){
+    /**
+     * Helper method that calculates a card's change in toughness
+     * @param card
+     * @return currentToughness - baseToughness
+     */
+    private double getToughnessChange (Card card){
         if (card.getCopiedPermanent() != null) {
             return card.getCurrentToughness() - card.getPaperCard().getRules().getMainPart().getIntToughness();
         } else {
@@ -89,7 +104,8 @@ public class CreatureEval extends CardEvaluator {
     }
 
     /**
-     *
+     * Gets the types of counters on a card and then multiply those counters by a value associated with
+     * those specific counters (i.e. -P/-T is worth -2)
      * @param card
      * @return
      */
@@ -122,6 +138,7 @@ public class CreatureEval extends CardEvaluator {
         for (KeywordInterface k : card.getKeywords()){
             key = k.getKeyword();
 
+            //looks for the keyword listed on the card, adds associated value
             if (key.equals(Keyword.INDESTRUCTIBLE)) {
                 keyValue += INDESTRUCTIBLEVAL;
             } else if (key.equals(Keyword.PROTECTION)) {
@@ -161,7 +178,7 @@ public class CreatureEval extends CardEvaluator {
     }
 
     /**
-     *
+     * TODO: complete method? or delete it?
      * @param card
      * @return
      */
