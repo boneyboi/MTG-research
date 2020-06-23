@@ -1088,7 +1088,6 @@ public class PhaseHandler implements java.io.Serializable {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     }
 
-                    if (pPlayerPriority.getName().equals("Ai")) {
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     chosenSa = pc.playLand();
@@ -1096,7 +1095,6 @@ public class PhaseHandler implements java.io.Serializable {
                         //System.out.println(chosenSa.get(0));
                     }
 
-                    }
                     if (chosenSa == null) {
                         break; // that means 'I pass'
                     }

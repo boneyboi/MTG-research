@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 17 2020
+ * @since June 23, 2020
  */
 package forge.game.research.decision;
 
@@ -81,7 +81,7 @@ public class Facade {
 
     /**
      * Play a card to the field
-     * @param deckstrategy
+     * @param strategynode
      */
     public void playStrategy(StrategyNode strategynode){
         //use ballot box to see what it voted on
@@ -97,7 +97,7 @@ public class Facade {
     /**
      *
      * @param card
-     */
+
     public void playCards(DoublyLinkedList<Card> cards){
         //play the cards
 
@@ -106,9 +106,10 @@ public class Facade {
         }
     }
 
-    public void playCard(Card card){
+    public void playCard(Strategy node){
 
     }
+    */
 
      /**
      * Used when deciding to mulligan and what cards to keep if we do.
