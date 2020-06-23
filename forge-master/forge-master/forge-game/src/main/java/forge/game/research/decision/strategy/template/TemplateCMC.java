@@ -19,8 +19,17 @@ public class TemplateCMC extends CardTemplate {
         this.cmc = cmc;
     }
 
+
+    /**
+     * Return if the sa is playing the card from hand, and if so, if it is the right cmc
+     * @param sa
+     * @return
+     */
     @Override
     public boolean matches(SpellAbility sa){
-        return (sa.getPayCosts().getTotalMana().getCMC() == cmc);
+        if (sa.equals(sa.getHostCard().getFirstSpellAbility())){
+            return (sa.getPayCosts().getTotalMana().getCMC() == cmc);
+        }
+        return false;
     }
 }

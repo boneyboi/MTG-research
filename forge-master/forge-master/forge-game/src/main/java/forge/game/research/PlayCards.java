@@ -42,7 +42,7 @@ public class PlayCards {
         for (CardTemplate template: chosen.getCards()) {
             for (SpellAbility option : vp.getNonlandPlays()) {
                 if (template.matches(option)) {
-                    toplay.add(vp.getNonlandPlays().get(0));
+                    toplay.add(option);
                     return toplay;
                 }
             }

@@ -188,7 +188,7 @@ public class ManaEvaluation {
                 }
             }
             if (manaAvaliable) {
-                manaPool += 1;
+                //manaPool += 1;
             }
         }
     }
