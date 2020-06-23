@@ -136,8 +136,8 @@ public class StrategyNode {
 
     /**
      * TODO: Description
-     * @param options
-     * @param controller
+     * TODO: @param  options
+     * @param controller - the player who has priority
      * @return boolean true TODO: (description what true means) or false (description what false means)
      */
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
