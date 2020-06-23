@@ -1077,12 +1077,13 @@ public class PhaseHandler implements java.io.Serializable {
                         pFirstPriority = pPlayerPriority;
                     }
 
-                    printOptions(playerTurn);
+
+                    //We can evaluate our option pool manually with this.
+                    //printOptions(playerTurn);
 
 
                     if (pPlayerPriority.getName().equals("Ai")) {
                         chosenSa = null;
-                        //TODO: Comment this out.
                     }
                     else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
@@ -1092,6 +1093,7 @@ public class PhaseHandler implements java.io.Serializable {
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     chosenSa = pc.playLand();
                     if (chosenSa != null) {
+                        //We can print out what cards/abilities are being played with this function
                         //System.out.println(chosenSa.get(0));
                     }
 
@@ -1110,7 +1112,6 @@ public class PhaseHandler implements java.io.Serializable {
                         SpellAbility testList = null;
 
                         pPlayerPriority.getController().playChosenSpellAbility(sa);
-                        //System.out.print(pPlayerPriority.getCardsIn(ZoneType.Hand));
 
                         saHost = game.getCardState(saHost);
                         final Zone currentZone = saHost.getZone();
