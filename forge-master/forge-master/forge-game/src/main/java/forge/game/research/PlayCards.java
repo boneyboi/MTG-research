@@ -48,6 +48,9 @@ public class PlayCards {
         StrategyNode chosen = voter.votedCard(DeckStrategies.lifelinkstrats);
 
         //Find card from node
+        if (chosen.getCards() == null) {
+            return null;
+        }
         for (CardTemplate template: chosen.getCards()) {
             for (SpellAbility option : vp.getNonlandPlays()) {
                 if (template.matches(option)) {

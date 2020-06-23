@@ -69,7 +69,9 @@ public class BallotBox {
         for(StrategyNode node : votesofcards.keySet()){
             if(votesofcards.get(node) > max){
                 max = votesofcards.get(node);
-                votednode = new StrategyNode(node);
+                if (node != null) {
+                    votednode = new StrategyNode(node);
+                }
             }
         }
 
@@ -84,8 +86,8 @@ public class BallotBox {
     public StrategyNode getViableNode(Strategy strategy){
         ViablePlays vp = new ViablePlays(controller);
         nonlands = vp.getNonlandPlays();
-        StrategyNode current = strategy.next();
-        while (!current.isViable(nonlands, controller)){
+        StrategyNode current = new StrategyNode();
+        while (current != null && !current.isViable(nonlands, controller)){
             if (strategy.hasNext()) {
                 current = strategy.next();
             } else {
