@@ -83,13 +83,13 @@ public class Facade {
      * Play a card to the field
      * @param deckstrategy
      */
-    public void playStrategy(StrategyNode strategynode){
+    public void playStrategy(DeckStrategy deckstrategy){
         //use ballot box to see what it voted on
         //then play the card
-        DoublyLinkedList<Card> cards = new DoublyLinkedList<Card>();
-        while(strategynode.cards.iterator().hasNext()){
-            //convert each template to an actual card
-            //then play that card
+        BallotBox b = new BallotBox();
+        playCards(b.votedCard(deckstrategy).cards);
+        for(Strategy s : deckstrategy.getStrategies()){
+            playCards(s.next().cards);
         }
         //playCards(getNextPlayDecision(strategynode));
     }
@@ -98,11 +98,11 @@ public class Facade {
      *
      * @param card
      */
-    public void playCards(DoublyLinkedList<Card> cards){
+    public void playCards(DoublyLinkedList<CardTemplate> cards){
         //play the cards
-
+        //find out what cards in hand match the template
         while(cards.iterator().hasNext()){
-            playCard(cards.iterator().next());
+            //playCard(cards.iterator().next());
         }
     }
 
