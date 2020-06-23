@@ -1,9 +1,9 @@
 /**
- * Description
+ * TODO: Description
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since 17 June 2020
+ * @since 23 June 2020
  */
 
 package forge.game.research.decision.strategy;
@@ -24,17 +24,30 @@ public class StrategyNode {
     public boolean finished = false;
     public boolean repeatable = false;
 
+    /**
+     * Constructs a StrategyNode that has requirements and cards
+     * @param requirements
+     * @param cards
+     */
     public StrategyNode(DoublyLinkedList<CardTemplate> requirements,
                         DoublyLinkedList<CardTemplate> cards){
         this.requirements = requirements;
         this.cards = cards;
     }
 
-
+    /**
+     * TODO: Description
+     * @param node
+     */
     public StrategyNode(StrategyNode node){
         this(node.requirements, node.cards);
     }
 
+    /**
+     * Gets the next requirement of a node
+     * @return the next requirement of a node
+     * @return null (if there is no next requirement)
+     */
     public CardTemplate nextReq(){
         if(this.requirements.iterator().hasNext()){
             return this.requirements.iterator().next();
@@ -42,6 +55,12 @@ public class StrategyNode {
             return null;
         }
     }
+
+    /**
+     * Gets the next card
+     * @return the next card
+     * @return null (description what null means in this case)
+     */
     public CardTemplate nextCard(){
         if(this.cards.iterator().hasNext()){
             return this.cards.iterator().next();
@@ -50,10 +69,18 @@ public class StrategyNode {
         }
     }
 
+    /**
+     * If a node is repeatable, 'repeatable' is set to true
+     */
     public void markRepeatable() {
-        repeatable = true;
+        this.repeatable = true;
     }
 
+    /**
+     * Whether or not requriments have been met for a node
+     * @param p - player
+     * @return boolean true (description what true means) or false (description what false means)
+     */
     public boolean reqsDone(Player p) {
         for (CardTemplate req: requirements) {
             boolean found = false;
@@ -72,6 +99,11 @@ public class StrategyNode {
         return true;
     }
 
+    /**
+     * Determines if a node has already been completed, if a node is repeatable this is false always
+     * @param p - player
+     * @return boolean true (this node has been done) or false (this node has not been done)
+     */
     public boolean alreadyDone(Player p) {
         if (repeatable) {
             return false;
@@ -94,10 +126,20 @@ public class StrategyNode {
         return true;
     }
 
+    /**
+     * TODO: Description
+     * @return boolean true TODO: (description what true means) or false (description what false means)
+     */
     public DoublyLinkedList<CardTemplate> getCards() {
         return cards;
     }
 
+    /**
+     * TODO: Description
+     * @param options
+     * @param controller
+     * @return boolean true TODO: (description what true means) or false (description what false means)
+     */
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
         if (!reqsDone(controller) || alreadyDone(controller)) {
             return false;
