@@ -72,9 +72,9 @@ public class Facade {
      * @return a card to play
       *TODO: fill out body, and have it return a card
      */
-     public DoublyLinkedList<CardTemplate> getNextPlayDecision (DeckStrategy deckstrategy) {
+     public DoublyLinkedList<CardTemplate> getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
          //call the decision maker from the other class and pass the card it voted on through here
-         BallotBox b = new BallotBox();
+         BallotBox b = new BallotBox(controller);
          //go through the list of card templates and find the exact cards we should play from our hand
          return b.votedCard(deckstrategy).cards;
      }

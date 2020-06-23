@@ -32,8 +32,8 @@ public class PlayCards {
         controller = playerPriority;
     }
 
-    public ArrayList playChosenFromHand() {
-        BallotBox voter = new BallotBox();
+    public ArrayList playChosenFromHand(Player controller) {
+        BallotBox voter = new BallotBox(controller);
         DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
@@ -84,7 +84,7 @@ public class PlayCards {
                 }
             }
         }
-        return playChosenFromHand();
+        return playChosenFromHand(controller);
     }
 
     /**
