@@ -57,7 +57,7 @@ public class BallotBox {
     public StrategyNode votedCard(DeckStrategy deckStrategy){
         HashMap<StrategyNode, Integer> votesofcards = new HashMap<StrategyNode, Integer>();
         for(StrategyNode node : getVotes(deckStrategy)){
-            if(votesofcards.get(node).equals(null)){
+            if(votesofcards.get(node)==null){
                 votesofcards.put(node, 0);
             }
             int tempvotes = votesofcards.get(node);
