@@ -1,9 +1,9 @@
 /**
- * Calculates how much mana is available and the potential mana we could have available a turn
+ * Calculates how much mana is available and, possibly in the future, the potential mana we could have available a turn
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since 19 June 2020
+ * @since 23 June 2020
  */
 
 package forge.game.research.decision.infosupport;
@@ -41,7 +41,7 @@ public class ManaEvaluation {
     Player controller;
 
     /**
-     * Evaluates our possible mana pool
+     * Evaluates the mana pool for a player
      * @param p
      */
     public ManaEvaluation(Player p) {
@@ -133,6 +133,7 @@ public class ManaEvaluation {
                     }
 
                 }
+                //Accounts for cards with multiple mana abiities, but can only use one per turn
                 if (!c.getManaAbilities().isEmpty()) {
                     manaPool += 1 - c.getManaAbilities().size();
                 }
@@ -144,7 +145,9 @@ public class ManaEvaluation {
     /**
      * Checks to see if we can play an untapped land this turn, and if so, what colors we can gain
      * from doing so.
+     * TODO: Reimplement this once we can ensure we play a land first.
      */
+
     public void checkPossibleColorPlays() {
         mountainAvaliable = false;
         swampAvaliable = false;
@@ -153,7 +156,7 @@ public class ManaEvaluation {
         islandAvaliable = false;
         manaAvaliable = false;
 
-
+/**
         if (controller.getZone(ZoneType.Hand).contains(Card::isLand)
                 && controller.getLandsPlayedThisTurn() == 0) {
             for (Card c: controller.getZone(ZoneType.Hand)) {
@@ -188,8 +191,10 @@ public class ManaEvaluation {
                 }
             }
             if (manaAvaliable) {
-                //manaPool += 1;
+                manaPool += 1;
             }
         }
+ */
     }
+
 }

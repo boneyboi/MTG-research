@@ -28,25 +28,36 @@ public class ViablePlays {
     public int greenMana;
 
 
-
-    //TODO: add public final string constants for land string literals like "R" or "B"
     public ViablePlays(Player p) {
         controller = p;
     }
 
+    /**
+     * Returns the lands that can be played from the hand.
+     * @return ArrayList<Card>
+     */
     public ArrayList<Card> getLandPlays() {
         lands = new ArrayList<Card>();
         addLandOptions();
         return lands;
     }
 
+    /**
+     * Returns the nonland options we have.
+     * @return ArrayList<SpellAbility>
+     */
     public ArrayList<SpellAbility> getNonlandPlays() {
         emptyOptions();
         buildOptions();
         return plays;
     }
 
-    public boolean areColorsAvaliable(SpellAbility sa) {
+    /**
+     * Determines whether a player has the necessary colors to pay the cost for a card.
+     * @param sa
+     * @return boolean
+     */
+    private boolean areColorsAvaliable(SpellAbility sa) {
         int[] shardsNeeded = sa.getPayCosts().getTotalMana().getColorShardCounts();
         if (shardsNeeded[0] > whiteMana ||
                 shardsNeeded[1] > blueMana ||
@@ -58,8 +69,11 @@ public class ViablePlays {
         return true;
     }
 
-
-    public void addZoneOptions(ZoneType z) {
+    /**
+     * Adds all playable abilities from a zone to the pool of options
+     * @param z
+     */
+    private void addZoneOptions(ZoneType z) {
         //TODO: Fix exile issue
         for (Card c: controller.getZone(z)) {
             for (SpellAbility sa: c.getNonManaAbilities()) {
@@ -72,7 +86,10 @@ public class ViablePlays {
         }
     }
 
-    public void addLandOptions(){
+    /**
+     * Adds the possible land plays to our list of options
+     */
+    private void addLandOptions(){
         for (Card c: controller.getZone(ZoneType.Hand)) {
             if (c.isLand() && controller.canPlayLand(c)) {
                 lands.add(c);
@@ -80,7 +97,10 @@ public class ViablePlays {
         }
     }
 
-    public void buildOptions() {
+    /**
+     * Assembles the list of all possible plays the player can make
+     */
+    private void buildOptions() {
         ManaEvaluation manaOptions = new ManaEvaluation(controller);
         manapool = manaOptions.getReturnValues();
 
@@ -96,7 +116,7 @@ public class ViablePlays {
         addZoneOptions(ZoneType.Exile);
     }
 
-    public void emptyOptions() {
+    private void emptyOptions() {
         plays = new ArrayList<SpellAbility>();
     }
 
