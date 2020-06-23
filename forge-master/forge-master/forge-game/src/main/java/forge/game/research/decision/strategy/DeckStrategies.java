@@ -35,15 +35,15 @@ public class DeckStrategies {
         this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(5));
 
         this.lifelinkstrats.addStrategy("Daxos");
-        this.lifelinkstrats.addNode(1, new StrategyNode());
+        this.lifelinkstrats.addNode(0, new StrategyNode(false));
         this.lifelinkstrats.addTemplateCard(1, new TemplateName("Daxos, Blessed by the Sun"));
 
         this.lifelinkstrats.addStrategy("Life Combo 1");
-        this.lifelinkstrats.addTemplateCard(2, new TemplateLifelink());
-        this.lifelinkstrats.addNode(2, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(2, new TemplateLifeBuff());
+        this.lifelinkstrats.addNode(2, new StrategyNode(false));
+        this.lifelinkstrats.addTemplateCard(2, new TemplateLifelink());
 
-        this.lifelinkstrats.addStrategy("Life Combo 2");
+        /**this.lifelinkstrats.addStrategy("Life Combo 2");
         this.lifelinkstrats.addTemplateCard(3, new TemplateLifelink());
         this.lifelinkstrats.addNode(3, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(3, new TemplateName("Daxos, Blessed by the Sun"));
@@ -52,7 +52,7 @@ public class DeckStrategies {
         this.lifelinkstrats.addNode(3, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(3, new TemplateLifelink());
         this.lifelinkstrats.addNode(3, new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(3, new TemplateName("Twinblade Paladin"));
+        this.lifelinkstrats.addTemplateCard(3, new TemplateName("Twinblade Paladin"));*/
 
         this.monoredStrats = new DeckStrategy();
         this.monoredStrats.addStrategy("Monored");

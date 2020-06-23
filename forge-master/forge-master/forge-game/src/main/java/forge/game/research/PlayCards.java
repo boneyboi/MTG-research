@@ -41,6 +41,7 @@ public class PlayCards {
      */
     public ArrayList playChosenFromHand(Player controller) {
         BallotBox voter = new BallotBox(controller);
+        //TODO: Move this to beginning of game
         DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);

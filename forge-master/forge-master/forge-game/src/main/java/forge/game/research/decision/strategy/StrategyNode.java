@@ -25,8 +25,13 @@ public class StrategyNode {
     public boolean repeatable = false;
 
     public StrategyNode(){
+        this(true);
+    }
+
+    public StrategyNode(boolean repeat) {
         this.requirements = new DoublyLinkedList<CardTemplate>();
         this.cards = new DoublyLinkedList<CardTemplate>();
+        repeatable = repeat;
     }
 
     /**
@@ -154,6 +159,9 @@ public class StrategyNode {
      * @return boolean true TODO: (description what true means) or false (description what false means)
      */
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
+        if (cards.isEmpty() || options.isEmpty()) {
+            return false;
+        }
         if (!reqsDone(controller) || alreadyDone(controller)) {
             return false;
         }

@@ -85,7 +85,7 @@ public class BallotBox {
         ViablePlays vp = new ViablePlays(controller);
         nonlands = vp.getNonlandPlays();
         StrategyNode current = strategy.next();
-        if (!current.isViable(nonlands, controller)){
+        while (!current.isViable(nonlands, controller)){
             if (strategy.hasNext()) {
                 current = strategy.next();
             } else {

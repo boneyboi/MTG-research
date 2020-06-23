@@ -31,12 +31,12 @@ public class ManaEvaluation {
     int forestNum = 0;
     int plainsNum = 0;
 
-    boolean plainsAvaliable;
-    boolean forestAvaliable;
-    boolean islandAvaliable;
-    boolean swampAvaliable;
-    boolean mountainAvaliable;
-    boolean manaAvaliable;
+    boolean plainsAvaliable = false;
+    boolean forestAvaliable = false;
+    boolean islandAvaliable = false;
+    boolean swampAvaliable = false;
+    boolean mountainAvaliable = false;
+    boolean manaAvaliable = false;
 
     Player controller;
 
@@ -47,8 +47,11 @@ public class ManaEvaluation {
     public ManaEvaluation(Player p) {
         controller = p;
         getMana();
-        checkPossibleColorPlays();
+        //checkPossibleColorPlays();
+        //TODO: Uncomment above and create choice to ask for potential vs. Actual plays.
     }
+
+
 
 
     /**
@@ -156,10 +159,10 @@ public class ManaEvaluation {
         islandAvaliable = false;
         manaAvaliable = false;
 
-/**
+
         if (controller.getZone(ZoneType.Hand).contains(Card::isLand)
                 && controller.getLandsPlayedThisTurn() == 0) {
-            for (Card c: controller.getZone(ZoneType.Hand)) {
+            for (Card c : controller.getZone(ZoneType.Hand)) {
                 if (c.isLand()
                         && !c.hasKeyword("ETBReplacement:Other:LandTapped")
                         && !c.hasKeyword("CARDNAME enters the battlefield tapped.")
@@ -194,7 +197,7 @@ public class ManaEvaluation {
                 manaPool += 1;
             }
         }
- */
     }
+
 
 }
