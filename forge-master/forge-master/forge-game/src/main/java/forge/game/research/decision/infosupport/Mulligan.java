@@ -14,13 +14,19 @@ import forge.game.zone.ZoneType;
 
 public class Mulligan {
 
+    //number of times Ai have mulled
     private int timeMull = 0;
 
+    //number of times Ai should mull
     public static final int STOPMULL = 0;
 
     public Mulligan () {
     }
 
+    /**
+     *
+     * @param hand
+     */
     public void mulliganDecision(Zone hand){
         //player get cards in hand
         //mulligan if nonlnads > 65% of the hand or lands are
@@ -28,14 +34,22 @@ public class Mulligan {
 
     }
 
-    public boolean testing (Player player) {
-        //System.out.println(player.getCardsIn(ZoneType.Hand));
-        boolean shouldAiMull = false;
+    /**
+     *
+     * @param player
+     * @return
+     */
+    public boolean shouldMull (Player player) {
         timeMull++;
 
-        return shouldAiMull;
+        //should Ai mull?
+        return false;
     }
 
+    /**
+     * Allows outside classes to get the number of times Ai has made
+     * @return timeMull
+     */
     public int getTimeMull() {
         return timeMull;
     }
