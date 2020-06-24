@@ -69,13 +69,11 @@ public class Facade {
     /**
      * Used when deciding what card or ability to play
      * @param: options : list
-     * @return a card to play
-      *TODO: fill out body, and have it return a card
+     * @return a card to play\
      */
      public DoublyLinkedList<CardTemplate> getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
          //call the decision maker from the other class and pass the card it voted on through here
          BallotBox b = new BallotBox(controller);
-         //go through the list of card templates and find the exact cards we should play from our hand
          return b.votedCard(deckstrategy).cards;
      }
 
