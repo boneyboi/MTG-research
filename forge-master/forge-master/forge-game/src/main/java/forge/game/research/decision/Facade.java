@@ -76,7 +76,7 @@ public class Facade {
          //call the decision maker from the other class and pass the card it voted on through here
          BallotBox b = new BallotBox(controller);
          //go through the list of card templates and find the exact cards we should play from our hand
-         return b.votedCard(deckstrategy);
+         return b.votedCard(deckstrategy, false);
      }
 
     /**

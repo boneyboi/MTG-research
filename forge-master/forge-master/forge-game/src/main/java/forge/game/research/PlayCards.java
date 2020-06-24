@@ -45,7 +45,7 @@ public class PlayCards {
         DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
-        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats);
+        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false);
         if (chosen != null) {
             toplay.add(chosen);
             return toplay;
@@ -79,21 +79,20 @@ public class PlayCards {
      * @return playChosenFromHand(controller) -> spell ability list if a land has or cannot be played
      */
     public ArrayList playLand() {
+        BallotBox voter = new BallotBox(controller);
+        //TODO: Move this to beginning of game
+        DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
+        Card land = voter.choseLand(DeckStrategies.lifelinkstrats);
 
-        //checks if player has played a land and if a player is able to play a land at this time
-        if (controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays()
-                && controller.canCastSorcery()) {
-            //iterates through hand, checks if land is present, then returns that land
-            for (Card c: controller.getZone(ZoneType.Hand)) {
-                if (c.isLand()) {
-                    sa = new LandAbility(c, controller, null);
-                    toplay.add(sa);
-                    return toplay;
-                }
-            }
+        if (land != null) {
+            sa = new LandAbility(land, controller, null);
+            toplay.add(sa);
+            return toplay;
         }
+
+
         //else calls playChosenFromHand() to decide on another card
         return playChosenFromHand(controller);
     }

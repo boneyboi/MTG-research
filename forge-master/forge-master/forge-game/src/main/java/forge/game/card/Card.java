@@ -2394,6 +2394,13 @@ public class Card extends GameEntity implements Comparable<Card> {
         return sb;
     }
 
+    //This is the code of Michael Bowling
+    public boolean entersTapped() {
+        return (hasKeyword("ETBReplacement:Other:LandTapped") ||
+                hasKeyword("CARDNAME enters the battlefield tapped.") ||
+                hasKeyword("ETBReplacement:Other:DBTap"));
+    }
+
     private String formatSpellAbility(final SpellAbility sa) {
         final StringBuilder sb = new StringBuilder();
         final String elementText = sa.toString();

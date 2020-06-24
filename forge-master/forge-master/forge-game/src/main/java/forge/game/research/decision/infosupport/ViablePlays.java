@@ -49,9 +49,16 @@ public class ViablePlays {
      */
     public ArrayList<SpellAbility> getNonlandPlays() {
         emptyOptions();
-        buildOptions();
+        buildOptions(false);
         return plays;
     }
+
+    public ArrayList<SpellAbility> getPotentialPlays() {
+        emptyOptions();
+        buildOptions(true);
+        return plays;
+    }
+
 
     /**
      * Determines whether a player has the necessary colors to pay the cost for a card.
@@ -101,10 +108,13 @@ public class ViablePlays {
     /**
      * Assembles the list of all possible plays the player can make
      */
-    private void buildOptions() {
+    private void buildOptions(boolean withLand) {
         ManaEvaluation manaOptions = new ManaEvaluation(controller);
-        manapool = manaOptions.getReturnValues();
-
+        if (withLand) {
+            manapool = manaOptions.getManaPossible();
+        } else {
+            manapool = manaOptions.getManaCurrent();
+        }
         whiteMana = manapool.get(1);
         blueMana = manapool.get(2);
         blackMana = manapool.get(3);
