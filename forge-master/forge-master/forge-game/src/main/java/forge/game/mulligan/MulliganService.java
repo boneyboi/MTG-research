@@ -9,11 +9,16 @@ import forge.StaticData;
 import forge.game.Game;
 import forge.game.GameType;
 import forge.game.player.Player;
+import forge.game.research.decision.infosupport.Mulligan;
 
 public class MulliganService {
     Player firstPlayer;
     Game game;
     List<AbstractMulligan> mulligans = Lists.newArrayList();
+
+    //reseach variables
+    boolean keep = true;
+    Mulligan m = new Mulligan();
 
     public MulliganService(Player player) {
         firstPlayer = player;
@@ -60,6 +65,7 @@ public class MulliganService {
     }
 
     private void runPlayerMulligans() {
+
         boolean allKept;
         do {
             allKept = true;
@@ -68,7 +74,14 @@ public class MulliganService {
                     continue;
                 }
                 Player p = mulligan.getPlayer();
-                boolean keep = !mulligan.canMulligan() || p.getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsAfterKeepHand());
+
+                //research code if/else
+                if (p.getName().equals("Ai") && m.getTimeMull() < m.STOPMULL) {
+                    this.keep = m.testing(p);
+                }
+                else {
+                    this.keep = !mulligan.canMulligan() || p.getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsAfterKeepHand());
+                }
 
                 if (game.isGameOver()) { // conceded on mulligan prompt
                     return;
