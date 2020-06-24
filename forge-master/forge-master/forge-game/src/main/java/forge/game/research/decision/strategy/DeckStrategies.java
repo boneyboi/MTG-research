@@ -24,6 +24,7 @@ public class DeckStrategies {
     public void deckStratInit(){
         this.lifelinkstrats = new DeckStrategy();
         this.lifelinkstrats.addStrategy("Curve");
+        this.lifelinkstrats.addNode(0, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(1));
         this.lifelinkstrats.addNode(0, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(0, new TemplatePermanentCMC(2));
@@ -39,6 +40,7 @@ public class DeckStrategies {
         this.lifelinkstrats.addTemplateCard(1, new TemplateName("Daxos, Blessed by the Sun"));
 
         this.lifelinkstrats.addStrategy("Life Combo 1");
+        this.lifelinkstrats.addNode(0, new StrategyNode());
         this.lifelinkstrats.addTemplateCard(2, new TemplateLifeBuff());
         this.lifelinkstrats.addNode(2, new StrategyNode(false));
         this.lifelinkstrats.addTemplateCard(2, new TemplateLifelink());
