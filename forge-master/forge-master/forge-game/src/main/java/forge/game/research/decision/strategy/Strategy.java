@@ -53,7 +53,10 @@ public class Strategy{
         return path.iterator().hasNext();
     }
 
-
+    /**
+     * checks if a node has it's requirements met
+     * @return
+     */
     public boolean allRequirementsInPlay(){
         return false;
     }

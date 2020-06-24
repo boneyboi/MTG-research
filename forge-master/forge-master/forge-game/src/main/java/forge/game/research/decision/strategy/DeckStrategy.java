@@ -30,6 +30,11 @@ public class DeckStrategy {
     public void addTemplateRequirement(int index, CardTemplate template){
         this.deckStrategy.get(index).pushReq(template);
     }
+
+    /**
+     * Return the list of strategies
+     * @return
+     */
     public ArrayList<Strategy> getStrategies(){
         return this.deckStrategy;
     }

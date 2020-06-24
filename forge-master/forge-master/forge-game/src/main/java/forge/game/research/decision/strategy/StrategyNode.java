@@ -53,10 +53,6 @@ public class StrategyNode {
         repeatable = false;
     }
 
-    /**
-     * TODO: Description
-     * @param node
-     */
     public StrategyNode(StrategyNode node){
         this(node.requirements, node.cards, node.repeatable);
     }
@@ -145,7 +141,7 @@ public class StrategyNode {
     }
 
     /**
-     * TODO: Description
+     * gets the cards list of this strategy
      * @return boolean true TODO: (description what true means) or false (description what false means)
      */
     public DoublyLinkedList<CardTemplate> getCards() {
@@ -153,10 +149,9 @@ public class StrategyNode {
     }
 
     /**
-     * TODO: Description
-     * TODO: @param  options
+     * Returns a boolean for if a card can or cannot be played
      * @param controller - the player who has priority
-     * @return boolean true TODO: (description what true means) or false (description what false means)
+     * @return boolean true
      */
     public boolean isViable(ArrayList<SpellAbility> options, Player controller) {
         if (cards.isEmpty() || options.isEmpty()) {
