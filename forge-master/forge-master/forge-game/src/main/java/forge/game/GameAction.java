@@ -1606,7 +1606,7 @@ public class GameAction {
 
             // Choose starting hand for each player with multiple hands
             if (game.getRules().getGameType() != GameType.Puzzle) {
-                new MulliganService(first).perform();
+                    new MulliganService(first).perform();
             }
             if (game.isGameOver()) { break; } // conceded during "mulligan" prompt
 
