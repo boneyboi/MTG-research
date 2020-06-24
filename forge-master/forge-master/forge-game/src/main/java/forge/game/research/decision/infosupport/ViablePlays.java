@@ -17,6 +17,7 @@ import forge.game.zone.ZoneType;
 import java.util.ArrayList;
 
 public class ViablePlays {
+
     ArrayList<SpellAbility> plays = new ArrayList<SpellAbility>();
     ArrayList<Card> lands;
     Player controller = null;

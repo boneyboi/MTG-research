@@ -17,7 +17,7 @@ import forge.game.zone.ZoneType;
 public class ExileEval extends ZoneEvaluator {
     //constants
     /**
-     * BATTLEMUL - For comparing zones to other zones
+     * EXILEMUL - For comparing zones to other zones
      */
     public static final double EXILEMUL = .05;
 

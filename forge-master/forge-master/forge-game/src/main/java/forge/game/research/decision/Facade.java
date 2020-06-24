@@ -145,5 +145,4 @@ public class Facade {
          return sacrificeCard;
      }
 
-
 }
