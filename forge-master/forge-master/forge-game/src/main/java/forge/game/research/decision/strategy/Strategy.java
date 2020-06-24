@@ -11,10 +11,13 @@ package forge.game.research.decision.strategy;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.template.CardTemplate;
 
+import java.util.Iterator;
+
 public class Strategy{
 
     private DoublyLinkedList<StrategyNode> path;
     private String name;
+    private Iterator<StrategyNode> iter;
 
      //TODO: Add variables to let this create a strategy off of a file import.
 
@@ -23,6 +26,7 @@ public class Strategy{
         pushFront(this, new StrategyNode(new DoublyLinkedList<CardTemplate>(),
                 new DoublyLinkedList<CardTemplate>()));
         name = title;
+        iter = path.iterator();
     }
 
 
@@ -37,20 +41,20 @@ public class Strategy{
     }
     //pushreq creates a new requirement in the strategy node
     public void pushReq(CardTemplate template){
-        path.iterator().next().requirements.push_front(template);
+        iter.next().requirements.push_front(template);
     }
 
 
     public StrategyNode next(){
-        if(path.iterator().hasNext()){
-            return path.iterator().next();
+        if(iter.hasNext()){
+            return iter.next();
         } else {
             return null;
         }
     }
 
     public boolean hasNext(){
-        return path.iterator().hasNext();
+        return iter.hasNext();
     }
 
 
