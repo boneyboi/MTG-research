@@ -70,8 +70,7 @@ public class Facade {
     /**
      * Used when deciding what card or ability to play
      * @param: options : list
-     * @return a card to play
-      *TODO: fill out body, and have it return a card
+     * @return a card to play\
      */
      public SpellAbility getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
          //call the decision maker from the other class and pass the card it voted on through here

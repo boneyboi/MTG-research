@@ -133,6 +133,7 @@ public class BallotBox {
             if (strategy.hasNext()) {
                 current = strategy.next();
             } else {
+                strategy.next();
                 return null;
             }
         }
