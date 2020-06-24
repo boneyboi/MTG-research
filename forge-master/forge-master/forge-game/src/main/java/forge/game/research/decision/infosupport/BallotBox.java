@@ -129,6 +129,7 @@ public class BallotBox {
      */
     public StrategyNode getViableNode(Strategy strategy){
         StrategyNode current = new StrategyNode();
+        strategy.reset();
         while (current != null && !current.isViable(nonlands, controller)){
             if (strategy.hasNext()) {
                 current = strategy.next();

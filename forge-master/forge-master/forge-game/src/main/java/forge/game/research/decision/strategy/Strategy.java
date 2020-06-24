@@ -29,6 +29,10 @@ public class Strategy{
         iter = path.iterator();
     }
 
+    public void reset(){
+        iter = path.iterator();
+    }
+
 
     //create a new strategy node
     public void pushFront(Strategy strategy, StrategyNode node){
