@@ -47,8 +47,11 @@ public class ManaEvaluation {
     public ManaEvaluation(Player p) {
         controller = p;
         getMana();
-        //checkPossibleColorPlays();
-        //TODO: Uncomment above and create choice to ask for potential vs. Actual plays.
+    }
+
+    public ArrayList<Integer> getManaPossible() {
+        checkPossibleColorPlays();
+        return getManaCurrent();
     }
 
 
@@ -58,7 +61,10 @@ public class ManaEvaluation {
      * Puts all mana pool values to be returned in a list and returns them
      * @return Arraylist of Integers
      */
-    public ArrayList<Integer> getReturnValues() {
+    //TODO: Account for cards that need us to play two or more new colors to be played.
+    //We cant play those kinds of cards this turn, but they still appear as such by
+    //this algorithm.
+    public ArrayList<Integer> getManaCurrent() {
         ArrayList<Integer> returns = new ArrayList<Integer>();
         if (plainsAvaliable) {
             plainsNum += 1;
