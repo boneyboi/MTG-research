@@ -42,7 +42,7 @@ public class ManaEvaluation {
 
     /**
      * Evaluates the mana pool for a player
-     * @param p
+     * @param p - player
      */
     public ManaEvaluation(Player p) {
         controller = p;

@@ -31,16 +31,30 @@ public class BallotBox {
     public ArrayList<SpellAbility> nonlands;
     public ArrayList<Card> lands;
 
+    /**
+     * Takes in the player, assigns it to the controller variable
+     * @param p
+     */
     public BallotBox(Player p){
         controller = p;
     }
 
     public BallotBox(){}
+
+    /**
+     * TODO: description
+     */
     public void getOptions() {
         ViablePlays vp = new ViablePlays(controller);
         nonlands = vp.getNonlandPlays();
         lands = vp.getLandPlays();
     }
+
+    /**
+     * TODO: description
+     * @param deckstrategy
+     * @return TODO
+     */
     public DoublyLinkedList<StrategyNode> getVotes(DeckStrategy deckstrategy){
         DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
         for(Strategy strategy : deckstrategy.getStrategies()){
@@ -53,7 +67,7 @@ public class BallotBox {
     /**
      * Return the card that is voted on
      * use this space to describe how a card is voted on
-     * @return
+     * @return voted node
      */
     public SpellAbility votedCard(DeckStrategy deckStrategy) {
         getOptions();
@@ -129,6 +143,7 @@ public class BallotBox {
      */
     public StrategyNode getViableNode(Strategy strategy){
         StrategyNode current = new StrategyNode();
+        strategy.reset();
         while (current != null && !current.isViable(nonlands, controller)){
             if (strategy.hasNext()) {
                 current = strategy.next();

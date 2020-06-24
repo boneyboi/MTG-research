@@ -115,6 +115,6 @@ public class PlayCards {
                 }
             }
         }
-        return null;
+        return toplay;
     }
 }
