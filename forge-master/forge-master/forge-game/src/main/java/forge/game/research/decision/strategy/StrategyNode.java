@@ -165,12 +165,12 @@ public class StrategyNode {
         if (!reqsDone(controller) || alreadyDone(controller)) {
             return false;
         }
-        ArrayList<SpellAbility> optionsleft = options;
+        ArrayList<SpellAbility> optionsUsed = new ArrayList<SpellAbility>();
         SpellAbility chosen = null;
         for (CardTemplate c: cards) {
             boolean found = false;
-            for (SpellAbility spell: optionsleft) {
-                if (c.matches(spell)) {
+            for (SpellAbility spell: options) {
+                if (c.matches(spell) && !optionsUsed.contains(spell)) {
                     found = true;
                     chosen = spell;
                 }
@@ -178,7 +178,7 @@ public class StrategyNode {
              if (!found) {
                  return false;
              }
-             optionsleft.remove(chosen);
+             optionsUsed.add(chosen);
         }
         return true;
     }
