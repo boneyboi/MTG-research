@@ -17,6 +17,7 @@ import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.research.decision.strategy.template.CardTemplate;
+import forge.game.spellability.SpellAbility;
 
 import static forge.game.ability.AbilityKey.Player;
 
@@ -71,10 +72,11 @@ public class Facade {
      * @param: options : list
      * @return a card to play\
      */
-     public DoublyLinkedList<CardTemplate> getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
+     public SpellAbility getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
          //call the decision maker from the other class and pass the card it voted on through here
          BallotBox b = new BallotBox(controller);
-         return b.votedCard(deckstrategy).cards;
+         //go through the list of card templates and find the exact cards we should play from our hand
+         return b.votedCard(deckstrategy);
      }
 
     /**

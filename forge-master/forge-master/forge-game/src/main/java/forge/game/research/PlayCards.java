@@ -45,21 +45,14 @@ public class PlayCards {
         DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         ViablePlays vp = new ViablePlays(controller);
-        StrategyNode chosen = voter.votedCard(DeckStrategies.lifelinkstrats);
-
-        //Find card from node
-        if (chosen.getCards() == null) {
+        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats);
+        if (chosen != null) {
+            toplay.add(chosen);
+            return toplay;
+        }
+        else {
             return null;
         }
-        for (CardTemplate template: chosen.getCards()) {
-            for (SpellAbility option : vp.getNonlandPlays()) {
-                if (template.matches(option)) {
-                    toplay.add(option);
-                    return toplay;
-                }
-            }
-        }
-        return null;
 
     }
 

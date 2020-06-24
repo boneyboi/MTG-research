@@ -15,6 +15,7 @@ import forge.game.player.Player;
 import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
+import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.spellability.SpellAbility;
 
 import java.util.ArrayList;
@@ -54,9 +55,49 @@ public class BallotBox {
      * use this space to describe how a card is voted on
      * @return
      */
-    public StrategyNode votedCard(DeckStrategy deckStrategy){
-        HashMap<StrategyNode, Integer> votesofcards = new HashMap<StrategyNode, Integer>();
-        for(StrategyNode node : getVotes(deckStrategy)){
+    public SpellAbility votedCard(DeckStrategy deckStrategy) {
+        getOptions();
+        HashMap<SpellAbility, Integer> votesofcards = new HashMap<SpellAbility, Integer>();
+        for (SpellAbility option : nonlands) {
+            votesofcards.put(option, 0);
+        }
+
+        for (Strategy strat : deckStrategy.getStrategies()) {
+            StrategyNode node = getViableNode(strat);
+            //Find card from node
+            if (node != null && node.getCards() != null) {
+                for (CardTemplate template : node.getCards()) {
+                    for (SpellAbility option : nonlands) {
+                        if (template.matches(option)) {
+                            int tempvotes = votesofcards.get(option);
+                            votesofcards.replace(option, tempvotes+1);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        int max = 0;
+        SpellAbility chosen = null;
+        for(SpellAbility option : votesofcards.keySet()){
+            if(votesofcards.get(option) > max){
+                max = votesofcards.get(option);
+                if (option != null) {
+                    chosen = option;
+                }
+            }
+        }
+
+        return chosen;
+
+
+
+    }
+
+
+
+            /**
             if(votesofcards.get(node)==null){
                 votesofcards.put(node, 0);
             }
@@ -77,6 +118,9 @@ public class BallotBox {
 
         return votednode;
     }
+             */
+
+
 
 
     /**
@@ -84,8 +128,6 @@ public class BallotBox {
      * @param strategy
      */
     public StrategyNode getViableNode(Strategy strategy){
-        ViablePlays vp = new ViablePlays(controller);
-        nonlands = vp.getNonlandPlays();
         StrategyNode current = new StrategyNode();
         while (current != null && !current.isViable(nonlands, controller)){
             if (strategy.hasNext()) {
