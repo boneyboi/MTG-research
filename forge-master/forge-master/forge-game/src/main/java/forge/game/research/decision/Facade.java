@@ -111,6 +111,10 @@ public class Facade {
     }
     */
 
+
+    public void playLand(){
+
+    }
      /**
      * Used when deciding to mulligan and what cards to keep if we do.
      * @param mullAlready
