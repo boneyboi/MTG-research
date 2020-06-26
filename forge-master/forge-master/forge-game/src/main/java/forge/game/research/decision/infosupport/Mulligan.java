@@ -24,8 +24,7 @@ public class Mulligan {
     //number of times Ai should mull
     public static final int STOPMULL = 0;
 
-    public Mulligan (Player mullingPlayer) {
-        controller = mullingPlayer;
+    public Mulligan () {
     }
 
     /**
@@ -39,7 +38,7 @@ public class Mulligan {
 
     }
 
-    public CardCollection returnCards(int cardsNeeded) {
+    public CardCollection returnCards(Player mullingPlayer, int cardsNeeded) {
         CardCollection returning = new CardCollection();
         CardCollection hand = new CardCollection();
         for (Card c: controller.getZone(ZoneType.Hand)) {
