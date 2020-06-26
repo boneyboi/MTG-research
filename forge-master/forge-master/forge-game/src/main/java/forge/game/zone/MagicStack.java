@@ -51,6 +51,7 @@ import forge.game.event.GameEventSpellResolved;
 import forge.game.event.GameEventZone;
 import forge.game.keyword.Keyword;
 import forge.game.player.Player;
+import forge.game.research.decision.infosupport.TargetDecider;
 import forge.game.spellability.AbilityStatic;
 import forge.game.spellability.OptionalCost;
 import forge.game.spellability.Spell;
@@ -125,6 +126,8 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     }
 
     public final void addAndUnfreeze(final SpellAbility ability) {
+
+
         final Card source = ability.getHostCard();
 
         if (!ability.isCopied()) {
@@ -227,6 +230,12 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             game.getGameLog().add(GameLogEntryType.MANA, source + " - " + sp.getDescription());
             sp.resetOnceResolved();
             return;
+        }
+
+
+        if (source.getController().getName().equals("Ai")) {
+            TargetDecider td = new TargetDecider();
+            td.assignTargets(sp);
         }
 
         if (!hasLegalTargeting(sp, source)) {
