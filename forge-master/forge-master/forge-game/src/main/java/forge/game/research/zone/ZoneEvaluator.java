@@ -57,4 +57,17 @@ public abstract class ZoneEvaluator {
         }
         return result;
     }
+
+    public Card getHighestValueIn() {
+        double max = 0;
+        Card highest = null;
+        //EvaluateCard for all cards in the zone
+        for(Card c: p.getCardsIn(zone)){
+            if (evaluateCard(c) > max) {
+                highest = c;
+                max = evaluateCard(c);
+            }
+        }
+        return highest;
+    }
 }
