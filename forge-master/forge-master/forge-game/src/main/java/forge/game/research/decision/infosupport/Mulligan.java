@@ -11,6 +11,7 @@ package forge.game.research.decision.infosupport;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.player.Player;
+import forge.game.research.zone.DeckEval;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
@@ -63,8 +64,9 @@ public class Mulligan {
         for(Card c : player.getCardsIn(ZoneType.Hand)){
             if(c.isLand()){lands++;}
         }
+        DeckEval deckeval = new DeckEval(player);
         //take the average mana cost-1 and decide whether or not to mull if we dont have at least that many lands
-        //if(lands < average mana cost -1 || lands > 5){return true;}
+        if(lands < deckeval.averageManaCost()-1 || lands > 5){return true;}
         //should Ai mull?
         return false;
     }

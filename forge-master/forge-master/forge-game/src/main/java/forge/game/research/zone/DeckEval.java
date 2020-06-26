@@ -8,6 +8,7 @@
 
 package forge.game.research.zone;
 
+import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.zone.ZoneType;
 
@@ -27,4 +28,17 @@ public class DeckEval extends ZoneEvaluator {
         double cardNum = p.getZone(ZoneType.Library).size();
         return numLands/cardNum;
     }
+
+    public double averageManaCost(){
+        double sum = 0;
+        int numofnonlands = 0;
+        for(Card c : p.getCardsIn(ZoneType.Library)){
+            if(!c.isLand()){sum+=c.getManaCost().getCMC(); numofnonlands++;}
+        }
+        for(Card c : p.getCardsIn(ZoneType.Hand)){
+            if(!c.isLand()){sum+=c.getManaCost().getCMC(); numofnonlands++;}
+        }
+        return sum/numofnonlands;
+    }
+
 }
