@@ -23,7 +23,7 @@ public class Mulligan {
     private int timeMull = 0;
 
     //number of times Ai should mull
-    public static final int STOPMULL = 1;
+    public static final int STOPMULL = 3;
 
     public static final int NONLANDSNEEDED = 2;
     public static final int STARTINGHANDSIZE = 7;
@@ -62,14 +62,16 @@ public class Mulligan {
      */
     public boolean shouldMull (Player player) {
         timeMull++;
-        if(timeMull==3){return false;}
+        if(timeMull == STOPMULL){return false;}
         int lands = 0;
         for(Card c : player.getCardsIn(ZoneType.Hand)){
             if(c.isLand()){lands++;}
         }
         DeckEval deckeval = new DeckEval(player);
         //take the average mana cost-1 and decide whether or not to mull if we dont have at least that many lands
-        if(lands < deckeval.averageManaCost()-1 || lands > (STARTINGHANDSIZE - NONLANDSNEEDED)){return true;}
+        if(lands < deckeval.averageManaCost()-1 || lands > (STARTINGHANDSIZE - timeMull) - NONLANDSNEEDED){
+            return true;
+        }
         //should Ai mull?
         return false;
     }

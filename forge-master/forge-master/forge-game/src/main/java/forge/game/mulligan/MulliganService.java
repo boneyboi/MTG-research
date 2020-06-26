@@ -76,8 +76,8 @@ public class MulliganService {
                 Player p = mulligan.getPlayer();
 
                 //research code if/else
-                if (p.getName().equals("Ai") && m.getTimeMull() < m.STOPMULL) {
-                    this.keep = !m.shouldMull(p);
+                if (p.getName().equals("Ai")) {
+                    this.keep = !(m.shouldMull(p));
                 }
                 else {
                     this.keep = !mulligan.canMulligan() || p.getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsAfterKeepHand());
