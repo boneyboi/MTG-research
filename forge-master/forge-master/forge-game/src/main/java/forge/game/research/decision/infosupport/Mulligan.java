@@ -22,10 +22,9 @@ public class Mulligan {
     private int timeMull = 0;
 
     //number of times Ai should mull
-    public static final int STOPMULL = 0;
+    public static final int STOPMULL = 1;
 
-    public Mulligan (Player mullingPlayer) {
-        controller = mullingPlayer;
+    public Mulligan () {
     }
 
     /**
@@ -39,11 +38,11 @@ public class Mulligan {
 
     }
 
-    public CardCollection returnCards(int cardsNeeded) {
+    public CardCollection returnCards(Player mullingPlayer, int cardsNeeded) {
         CardCollection returning = new CardCollection();
         CardCollection hand = new CardCollection();
         for (Card c: controller.getZone(ZoneType.Hand)) {
-            returning.add(c);
+            hand.add(c);
         }
         for (int count=0; count<cardsNeeded; count++) {
             //TODO: Find our worst card.

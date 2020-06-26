@@ -23,6 +23,7 @@ public class MulliganService {
     public MulliganService(Player player) {
         firstPlayer = player;
         game = firstPlayer.getGame();
+
     }
 
     public void perform() {
@@ -65,7 +66,6 @@ public class MulliganService {
     }
 
     private void runPlayerMulligans() {
-
         boolean allKept;
         do {
             allKept = true;

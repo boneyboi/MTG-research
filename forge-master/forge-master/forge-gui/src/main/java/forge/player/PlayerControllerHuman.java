@@ -81,7 +81,8 @@ import java.util.Map.Entry;
  *
  * Handles phase skips for now.
  */
-public class PlayerControllerHuman extends PlayerController implements IGameController {
+public class
+PlayerControllerHuman extends PlayerController implements IGameController {
     /**
      * Cards this player may look at right now, for example when searching a
      * library.
@@ -1236,8 +1237,9 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         final InputLondonMulligan inp = new InputLondonMulligan(this, player, cardsToReturn);
         //This is where we are prompted to return cards
         if (mulliganingPlayer.getName().equals("Ai")) {
-            Mulligan mull = new Mulligan(mulliganingPlayer);
-            CardCollection returnCards = mull.returnCards(cardsToReturn);
+            Mulligan mull = new Mulligan();
+            CardCollection returnCards = mull.returnCards(mulliganingPlayer, cardsToReturn);
+            return returnCards;
         }
         inp.showAndWait();
         return inp.getSelectedCards();
