@@ -33,6 +33,7 @@ import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
+import forge.game.research.decision.infosupport.Mulligan;
 import forge.game.spellability.*;
 import forge.game.trigger.WrappedAbility;
 import forge.game.zone.ZoneType;
@@ -538,6 +539,13 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollectionView londonMulliganReturnCards(final Player mulliganingPlayer, int cardsToReturn) {
+        if (mulliganingPlayer.getName().equals("Ai")) {
+            Mulligan mull = new Mulligan();
+            CardCollection returnCards = mull.returnCards(mulliganingPlayer, cardsToReturn);
+            return returnCards;
+        }
+
+
         // TODO This is better than it was before, but still suboptimal (but fast).
         // Maybe score a bunch of hands based on projected hand size and return the "duds"
         CardCollection hand = new CardCollection(player.getCardsIn(ZoneType.Hand));

@@ -42,7 +42,7 @@ public class Mulligan {
     public CardCollection returnCards(Player mullingPlayer, int cardsNeeded) {
         CardCollection returning = new CardCollection();
         CardCollection hand = new CardCollection();
-        for (Card c: controller.getZone(ZoneType.Hand)) {
+        for (Card c: mullingPlayer.getZone(ZoneType.Hand)) {
             hand.add(c);
         }
         for (int count=0; count<cardsNeeded; count++) {
