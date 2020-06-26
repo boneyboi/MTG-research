@@ -47,7 +47,9 @@ public class Mulligan {
         }
         for (int count=0; count<cardsNeeded; count++) {
             //TODO: Find our worst card.
+            returning.add(hand.remove(0));
         }
+        return returning;
     }
 
     /**
