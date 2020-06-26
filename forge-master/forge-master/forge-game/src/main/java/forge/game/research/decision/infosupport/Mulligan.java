@@ -8,11 +8,15 @@
 
 package forge.game.research.decision.infosupport;
 
+import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.player.Player;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
 public class Mulligan {
+
+    Player controller;
 
     //number of times Ai have mulled
     private int timeMull = 0;
@@ -20,7 +24,8 @@ public class Mulligan {
     //number of times Ai should mull
     public static final int STOPMULL = 0;
 
-    public Mulligan () {
+    public Mulligan (Player mullingPlayer) {
+        controller = mullingPlayer;
     }
 
     /**
@@ -32,6 +37,17 @@ public class Mulligan {
         //mulligan if nonlnads > 65% of the hand or lands are
         //do forced discard from facade if we did mulligan(the cards still go to the library)
 
+    }
+
+    public CardCollection returnCards(int cardsNeeded) {
+        CardCollection returning = new CardCollection();
+        CardCollection hand = new CardCollection();
+        for (Card c: controller.getZone(ZoneType.Hand)) {
+            returning.add(c);
+        }
+        for (int count=0; count<cardsNeeded; count++) {
+            //TODO: Find our worst card.
+        }
     }
 
     /**

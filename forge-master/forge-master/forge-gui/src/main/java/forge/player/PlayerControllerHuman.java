@@ -38,6 +38,7 @@ import forge.game.mana.ManaConversionMatrix;
 import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementLayer;
+import forge.game.research.decision.infosupport.Mulligan;
 import forge.game.spellability.*;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.WrappedAbility;
@@ -1233,6 +1234,11 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     @Override
     public CardCollectionView londonMulliganReturnCards(final Player mulliganingPlayer, int cardsToReturn) {
         final InputLondonMulligan inp = new InputLondonMulligan(this, player, cardsToReturn);
+        //This is where we are prompted to return cards
+        if (mulliganingPlayer.getName().equals("Ai")) {
+            Mulligan mull = new Mulligan(mulliganingPlayer);
+            CardCollection returnCards = mull.returnCards(cardsToReturn);
+        }
         inp.showAndWait();
         return inp.getSelectedCards();
     }
