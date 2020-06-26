@@ -81,7 +81,8 @@ import java.util.Map.Entry;
  *
  * Handles phase skips for now.
  */
-public class PlayerControllerHuman extends PlayerController implements IGameController {
+public class
+PlayerControllerHuman extends PlayerController implements IGameController {
     /**
      * Cards this player may look at right now, for example when searching a
      * library.

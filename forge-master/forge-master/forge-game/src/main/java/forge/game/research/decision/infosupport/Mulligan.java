@@ -22,7 +22,7 @@ public class Mulligan {
     private int timeMull = 0;
 
     //number of times Ai should mull
-    public static final int STOPMULL = 0;
+    public static final int STOPMULL = 1;
 
     public Mulligan () {
     }

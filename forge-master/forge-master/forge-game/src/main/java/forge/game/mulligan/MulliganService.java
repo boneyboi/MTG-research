@@ -18,7 +18,7 @@ public class MulliganService {
 
     //reseach variables
     boolean keep = true;
-    Mulligan m;
+    Mulligan m = new Mulligan();
 
     public MulliganService(Player player) {
         firstPlayer = player;
@@ -66,7 +66,6 @@ public class MulliganService {
     }
 
     private void runPlayerMulligans() {
-
         boolean allKept;
         do {
             allKept = true;
@@ -75,7 +74,6 @@ public class MulliganService {
                     continue;
                 }
                 Player p = mulligan.getPlayer();
-                m = new Mulligan(p);
 
                 //research code if/else
                 if (p.getName().equals("Ai") && m.getTimeMull() < m.STOPMULL) {
