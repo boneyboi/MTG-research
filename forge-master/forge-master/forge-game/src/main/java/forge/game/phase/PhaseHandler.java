@@ -40,6 +40,8 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
+import forge.game.research.card.CardEvaluator;
+import forge.game.research.card.CreatureEval;
 import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
@@ -1084,7 +1086,6 @@ public class PhaseHandler implements java.io.Serializable {
                     else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     }
-
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     if (pPlayerPriority.getName().equals("Ai")) {

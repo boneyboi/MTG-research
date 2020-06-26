@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 23, 2020
+ * @since June 26, 2020
  */
 
 package forge.game.research.card;
@@ -14,6 +14,9 @@ import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 
 public class CreatureEval extends CardEvaluator {
+
+    //non-constants
+    private double KeywordsMul = 1.0;
 
     //constants for keywords
     public static final double INDESTRUCTIBLEVAL = 10;
@@ -46,61 +49,34 @@ public class CreatureEval extends CardEvaluator {
 
 
     /**
-     * A card's value depends on its:
-     *  rarity
-     *  number of colors
-     *  number of colored mana symbols in its cost
-     *  CMC
+     * A creatures's value depends on its:
+     *  keywords with number of keywords
      *  base value (.5 to account for 0-cost creatures)
+     *  power and toughness (current)
+     *  counters
      * @param card - card object
      * @return the value of the card
      */
 
     @Override
     public final double evaluate (Card card) {
-        double stats = getStatChange(card);
+        double totalStats = getStatTotal(card);
         double keyword = getKeywordValue(card);
-        double colors = getColorValue(card);
         double counters = getCounters(card);
-        double Cardvalue = (BASE + stats + keyword + colors + counters);
-        double value = (Cardvalue) * getRareMultiplier(card);
+        double Cardvalue = (BASE + totalStats + keyword + counters);
+        double value = (Cardvalue) * KeywordsMul;
         return value;
     }
 
     /**
-     * Allows for a card's ability or potential to change in power or toughness to be accounted for
+     * Calculates the total stats (power and toughness) for a card
      * @param card
      * @return
      */
-    public double getStatChange (Card card){
-        return this.getPowerChange(card) +
-               this.getToughnessChange(card);
-    }
+    public double getStatTotal (Card card) {
+        double statTotal = card.getCurrentPower() + card.getCurrentToughness();
 
-    /**
-     * Helper method that calculates a card's change in power
-     * @param card
-     * @return currentPower - basePower
-     */
-    private double getPowerChange (Card card){
-        if (card.getCopiedPermanent() != null) {
-            return card.getCurrentPower() - card.getPaperCard().getRules().getMainPart().getIntPower();
-        } else {
-            return card.getCurrentPower() - card.getBasePower();
-        }
-    }
-
-    /**
-     * Helper method that calculates a card's change in toughness
-     * @param card
-     * @return currentToughness - baseToughness
-     */
-    private double getToughnessChange (Card card){
-        if (card.getCopiedPermanent() != null) {
-            return card.getCurrentToughness() - card.getPaperCard().getRules().getMainPart().getIntToughness();
-        } else {
-            return card.getCurrentToughness() - card.getBaseToughness();
-        }
+        return statTotal;
     }
 
     /**
@@ -126,8 +102,9 @@ public class CreatureEval extends CardEvaluator {
     }
 
     /**
-     * Calculates the portion of a card's value that is reliant on keywords, cumulative with multiple
-     * keywords
+     * Calculates the portion of a card's value that is reliant on keywords,
+     * cumulative with multiple keywords,
+     * multiplied by a multiplier when a card has more than one
      * @param card
      * @return keyValue
      */
@@ -137,6 +114,7 @@ public class CreatureEval extends CardEvaluator {
 
         for (KeywordInterface k : card.getKeywords()){
             key = k.getKeyword();
+            this.KeywordsMul += .05;
 
             //looks for the keyword listed on the card, adds associated value
             if (key.equals(Keyword.INDESTRUCTIBLE)) {
@@ -174,18 +152,8 @@ public class CreatureEval extends CardEvaluator {
             }
         }
 
+        //double testMul = numKeywordsMul;
         return keyValue;
-    }
-
-    /**
-     * TODO: complete method? or delete it?
-     * @param card
-     * @return
-     */
-    public double getStatTotal (Card card) {
-        double statTotal = 0;
-
-        return statTotal;
     }
 
 }
