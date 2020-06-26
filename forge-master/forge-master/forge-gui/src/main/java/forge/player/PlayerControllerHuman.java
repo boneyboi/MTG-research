@@ -1238,6 +1238,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         if (mulliganingPlayer.getName().equals("Ai")) {
             Mulligan mull = new Mulligan(mulliganingPlayer);
             CardCollection returnCards = mull.returnCards(cardsToReturn);
+            return returnCards;
         }
         inp.showAndWait();
         return inp.getSelectedCards();

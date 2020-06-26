@@ -43,7 +43,7 @@ public class Mulligan {
         CardCollection returning = new CardCollection();
         CardCollection hand = new CardCollection();
         for (Card c: controller.getZone(ZoneType.Hand)) {
-            returning.add(c);
+            hand.add(c);
         }
         for (int count=0; count<cardsNeeded; count++) {
             //TODO: Find our worst card.
