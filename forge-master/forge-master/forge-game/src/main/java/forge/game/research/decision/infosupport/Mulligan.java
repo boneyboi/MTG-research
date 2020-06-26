@@ -59,7 +59,13 @@ public class Mulligan {
      */
     public boolean shouldMull (Player player) {
         timeMull++;
-
+        if(timeMull==3){return false;}
+        int lands = 0;
+        for(Card c : player.getCardsIn(ZoneType.Hand)){
+            if(c.isLand()){lands++;}
+        }
+        //take the average mana cost-1 and decide whether or not to mull if we dont have at least that many lands
+        //if(lands < average mana cost -1 || lands > 5){return true;}
         //should Ai mull?
         return false;
     }
