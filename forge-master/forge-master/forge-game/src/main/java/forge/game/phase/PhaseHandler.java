@@ -17,6 +17,7 @@
  */
 package forge.game.phase;
 
+import forge.game.ability.effects.DestroyAllEffect;
 import forge.game.research.PlayCards;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
@@ -1091,7 +1092,7 @@ public class PhaseHandler implements java.io.Serializable {
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     if (pPlayerPriority.getName().equals("Ai")) {
                         Facade face = new Facade(pPlayerPriority);
-                        face.getNextPlay();
+                        chosenSa = face.getNextPlay();
                     }
                     if (chosenSa != null) {
                         //We can print out what cards/abilities are being played with this function
