@@ -18,6 +18,8 @@
 package forge.game.phase;
 
 import forge.game.ability.effects.DestroyAllEffect;
+import forge.game.research.decision.infosupport.RemovalChecker;
+
 import forge.game.research.PlayCards;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
@@ -1090,6 +1092,14 @@ public class PhaseHandler implements java.io.Serializable {
                     }
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
+                    RemovalChecker rc = new RemovalChecker();
+
+                    for (Card card : pPlayerPriority.getCardsIn(ZoneType.Hand)) {
+                        for (SpellAbility spab : card.getSpellAbilities()) {
+                            System.out.println(rc.doTargetOthers(spab));
+                        }
+                    }
+
                     if (pPlayerPriority.getName().equals("Ai")) {
                         Facade face = new Facade(pPlayerPriority);
                         chosenSa = face.getNextPlay();
