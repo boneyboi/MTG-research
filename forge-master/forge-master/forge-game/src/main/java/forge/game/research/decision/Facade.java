@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.research.DoublyLinkedList;
+import forge.game.research.PlayCards;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
@@ -97,19 +98,16 @@ public class Facade {
     /**
      *
      * @param card
-
-    public void playCards(DoublyLinkedList<Card> cards){
-        //play the cards
-
-        while(cards.iterator().hasNext()){
-            playCard(cards.iterator().next());
-        }
+    */
+    public ArrayList<SpellAbility> getNextPlay(){
+        PlayCards pc = new PlayCards(controller);
+        return pc.playLand();
     }
 
     public void playCard(Strategy node){
 
     }
-    */
+
 
 
     public void playLand(){

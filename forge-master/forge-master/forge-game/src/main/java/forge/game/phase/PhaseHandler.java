@@ -42,6 +42,7 @@ import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
 import forge.game.research.card.CardEvaluator;
 import forge.game.research.card.CreatureEval;
+import forge.game.research.decision.Facade;
 import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
@@ -1089,7 +1090,8 @@ public class PhaseHandler implements java.io.Serializable {
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
                     if (pPlayerPriority.getName().equals("Ai")) {
-                        chosenSa = pc.playLand();
+                        Facade face = new Facade(pPlayerPriority);
+                        face.getNextPlay();
                     }
                     if (chosenSa != null) {
                         //We can print out what cards/abilities are being played with this function
