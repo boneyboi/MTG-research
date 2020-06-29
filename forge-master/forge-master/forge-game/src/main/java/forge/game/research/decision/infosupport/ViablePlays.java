@@ -59,6 +59,17 @@ public class ViablePlays {
         return plays;
     }
 
+    /**
+     * Determines the number of plays possible with a current hand
+     * This is for mulliganing purposes
+     * @return
+     */
+    public ArrayList<SpellAbility> getPossibilities() {
+        emptyOptions();
+        buildPossibleOptions();
+        return plays;
+    }
+
 
     /**
      * Determines whether a player has the necessary colors to pay the cost for a card.
@@ -125,6 +136,17 @@ public class ViablePlays {
         addZoneOptions(ZoneType.Battlefield);
         addZoneOptions(ZoneType.Graveyard);
         addZoneOptions(ZoneType.Exile);
+    }
+
+    private void buildPossibleOptions() {
+        ManaEvaluation manaOptions = new ManaEvaluation(controller);
+        manapool = manaOptions.getManaFromHand();
+        whiteMana = manapool.get(1);
+        blueMana = manapool.get(2);
+        blackMana = manapool.get(3);
+        redMana = manapool.get(4);
+        greenMana = manapool.get(5);
+        addZoneOptions(ZoneType.Hand);
     }
 
     private void emptyOptions() {

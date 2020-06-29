@@ -49,6 +49,11 @@ public class ManaEvaluation {
         getMana();
     }
 
+    public ArrayList<Integer> getManaFromHand() {
+        getMana(ZoneType.Hand);
+        return getManaCurrent();
+    }
+
     public ArrayList<Integer> getManaPossible() {
         checkPossibleColorPlays();
         return getManaCurrent();
@@ -105,10 +110,16 @@ public class ManaEvaluation {
     }
      */
 
-    /**
-     * Tallies our current on the battlefield mana, and the possible colors of that mana.
-     */
     public void getMana() {
+        getMana(ZoneType.Battlefield);
+    }
+
+    /**
+     * Tallies our current on the battlefield mana
+     * (or another zone if necessary, such as in deciding to mulligan),
+     * and the possible colors of that mana.
+     */
+    public void getMana(ZoneType zone) {
         manaPool = 0;
         mountainNum = 0;
         swampNum = 0;
@@ -116,7 +127,7 @@ public class ManaEvaluation {
         forestNum = 0;
         plainsNum = 0;
 
-        for (Card c: controller.getZone(ZoneType.Battlefield)) {
+        for (Card c: controller.getZone(zone)) {
             if (!c.isTapped()) {
                 for (SpellAbility sa : c.getManaAbilities()) {
                     String type = sa.getMapParams().get("Produced");
