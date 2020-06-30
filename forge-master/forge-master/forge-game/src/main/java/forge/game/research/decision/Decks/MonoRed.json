@@ -1,0 +1,17 @@
+[
+  {
+    "Strategies": {
+      "Strategy": {
+        "TemplateName": "Gingerbrute",
+        "TemplatePermanentCMC": 2,
+        "TemplateLifelink": "lifelink",
+        "TemplateLifeBuff": "lifebuff"
+      }
+    }
+  },
+  {
+    "Parameters" : {
+      "name" : "MonoRed"
+    }
+  }
+]

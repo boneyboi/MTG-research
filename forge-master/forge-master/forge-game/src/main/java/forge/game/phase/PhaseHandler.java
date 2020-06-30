@@ -541,6 +541,10 @@ public class PhaseHandler implements java.io.Serializable {
         for (Card c: lands) {
             System.out.println(c);
         }
+        if(p.getCardsActivableInExternalZones(false).size()!=0) {
+            System.out.println("light up the stage worked");
+        }
+
         System.out.println();
     }
 
@@ -1081,7 +1085,7 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     //We can evaluate our option pool manually with this.
-                    //printOptions(playerTurn);
+                    printOptions(playerTurn);
 
 
                     if (pPlayerPriority.getName().equals("Ai")) {

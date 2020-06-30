@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="json-20200518">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/json-20200518.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="https://mvnrepository.com/artifact/com.google.code.gson/gson" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

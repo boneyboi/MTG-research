@@ -25,7 +25,7 @@ public class Strategy{
         path = new DoublyLinkedList<StrategyNode>();
         pushFront(this, new StrategyNode(new DoublyLinkedList<CardTemplate>(),
                 new DoublyLinkedList<CardTemplate>()));
-        name = title;
+        this.name = title;
         iter = path.iterator();
     }
 
@@ -69,5 +69,7 @@ public class Strategy{
         return false;
     }
 
-
+    public String getName(){
+        return this.name;
+    }
 }
