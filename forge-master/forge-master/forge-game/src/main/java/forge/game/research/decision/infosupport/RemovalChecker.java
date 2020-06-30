@@ -1,13 +1,13 @@
 package forge.game.research.decision.infosupport;
 
+import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.CardTraitBase;
 import forge.game.card.Card;
 import forge.game.ability.SpellAbilityEffect;
+import forge.game.spellability.SpellAbilityVariables;
 
 public class RemovalChecker {
-
-    private SpellAbility sa;
 
     public RemovalChecker(){
     }
@@ -19,12 +19,23 @@ public class RemovalChecker {
      * hasparam("Destroy" & "DestroyAll")
      * getParam
      */
+    public boolean isTargetOthers(Card card) {
+        boolean shallTargetOthers = false;
+
+        for (SpellAbility sa : card.getSpellAbilities()) {
+            if (doTargetOthers(sa)) {
+                shallTargetOthers = true;
+            }
+        }
+
+        return shallTargetOthers;
+    }
+
 
     public boolean doTargetOthers(SpellAbility spellability) {
         boolean targetOthers = false;
-        Card card = spellability.getHostCard();
 
-        sa = spellability;
+        SpellAbility sa = spellability;
         String destination = sa.getParam("Destination");
 
         if (sa.hasParam("Destination") && !(destination.equals("Battlefield"))) {
@@ -33,8 +44,18 @@ public class RemovalChecker {
         else if (sa.getApi().name().equals("Destroy")) {
             targetOthers = true;
         }
+        else if (sa.getApi().name().equals("DestroyAll")) {
+            targetOthers = true;
+        }
         else if (sa.getHostCard().isEnchantment() && sa.isCurse()) {
             targetOthers = true;
+        }
+        else if (sa.getApi().name().equals("Charm")) {
+         for (String svar : sa.getSVars()) {
+             if (svar.contains("Destroy")) {
+                 targetOthers = true;
+             }
+         }
         }
         else {
             System.out.println("?");
@@ -43,4 +64,6 @@ public class RemovalChecker {
 
         return targetOthers;
     }
+
+
 }
