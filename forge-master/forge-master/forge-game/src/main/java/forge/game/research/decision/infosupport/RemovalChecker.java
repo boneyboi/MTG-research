@@ -5,7 +5,6 @@ import forge.game.spellability.SpellAbility;
 import forge.game.CardTraitBase;
 import forge.game.card.Card;
 import forge.game.ability.SpellAbilityEffect;
-import forge.game.spellability.SpellAbilityVariables;
 
 public class RemovalChecker {
 
@@ -47,12 +46,16 @@ public class RemovalChecker {
         else if (sa.getApi().name().equals("DestroyAll")) {
             targetOthers = true;
         }
-        else if (sa.getHostCard().isEnchantment() && sa.isCurse()) {
+        else if (sa.getApi().name().equals("ChangeZone") || sa.getApi().name().equals("ChangeZoneAll")) {
+            targetOthers = true;
+        }
+        else if (sa.hasParam("AILogic") && sa.getParam(
+                "AILogic").equals("Curse")) {
             targetOthers = true;
         }
         else if (sa.getApi().name().equals("Charm")) {
-         for (String svar : sa.getSVars()) {
-             if (svar.contains("Destroy")) {
+         for (AbilitySub ab: sa.getAdditionalAbilityLists().get("Choices")) {
+             if (ab.toString().contains("Destroy all") || ab.toString().contains("Exile all")) {
                  targetOthers = true;
              }
          }
