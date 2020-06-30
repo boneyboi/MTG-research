@@ -17,7 +17,6 @@
  */
 package forge.game.phase;
 
-import forge.game.ability.effects.DestroyAllEffect;
 import forge.game.research.decision.infosupport.RemovalChecker;
 
 import forge.game.research.PlayCards;
@@ -50,6 +49,7 @@ import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
+import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
 import forge.game.staticability.StaticAbility;
@@ -1120,14 +1120,14 @@ public class PhaseHandler implements java.io.Serializable {
 
                         // TODO it has no return value if successful
                         SpellAbility testList = null;
-
                         pPlayerPriority.getController().playChosenSpellAbility(sa);
 
                         saHost = game.getCardState(saHost);
                         final Zone currentZone = saHost.getZone();
 
                         // Need to check if Zone did change
-                        if (currentZone != null && originZone != null && !currentZone.equals(originZone) && (sa.isSpell() || sa instanceof LandAbility)) {
+                        if (currentZone != null && originZone != null && !currentZone.equals(originZone)
+                                && (sa.isSpell() || sa instanceof LandAbility)) {
                             // currently there can be only one Spell put on the Stack at once, or Land Abilities be played
                             final CardZoneTable triggerList = new CardZoneTable();
                             triggerList.put(originZone.getZoneType(), currentZone.getZoneType(), saHost);
@@ -1137,7 +1137,8 @@ public class PhaseHandler implements java.io.Serializable {
                     }
                     loopCount++;
                 } while (loopCount < 999 ||
-                        (!pPlayerPriority.getController().isAI() && !pPlayerPriority.getName().equals("Ai")));
+                        (!pPlayerPriority.getController().isAI()
+                                && !pPlayerPriority.getName().equals("Ai")));
 
                 if (loopCount >= 999 && pPlayerPriority.getController().isAI()) {
                     System.out.print("AI looped too much with: " + chosenSa);

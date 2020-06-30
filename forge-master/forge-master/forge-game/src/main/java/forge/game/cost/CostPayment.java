@@ -22,6 +22,7 @@ import com.google.common.collect.Maps;
 import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.mana.ManaConversionMatrix;
+import forge.game.research.decision.infosupport.PayForCosts;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -204,6 +205,11 @@ public class CostPayment extends ManaConversionMatrix {
             // wrap the payment and push onto the cost stack
             game.costPaymentStack.push(part, this);
 
+            if (decisionMaker.getPlayer().getName().equals("Ai")) {
+                //TODO: Uncomment this.
+                PayForCosts payer = new PayForCosts();
+                //return payer.payTheManaCost(decisionMaker.getPlayer(), parts);
+            }
             if (!part.payAsDecided(decisionMaker.getPlayer(), decisions.get(part), this.ability)) {
                 game.costPaymentStack.pop(); // cost is resolved
                 return false;
