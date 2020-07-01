@@ -145,20 +145,24 @@ public class Facade {
      }
 
     /**
-     *
-     * @return
+     * Evaluates the opponent's battlefield and determines what is the biggest threat through
+     * highest value card
+     * @return card with the biggest value on the opponent's side of the field
      */
      public Card isBiggestThreat () {
+         Front f = new Front();
 
+         //obtains the opponent
          Player opponent = this.controller.getSingleOpponent();
          Card threat = null;
          double cardvalue = NEGATIVE_INFINITY;
 
+         //iterates through opponent's battelfield
          for (Card card : opponent.getCardsIn(ZoneType.Battlefield)) {
             if (!(card.isLand())) {
-                Front f = new Front(card);
-                if (f.chooser() > cardvalue) {
-                    cardvalue = f.chooser();
+                //if there is a card that is valued higher, assigns that card to be returned
+                if (f.chooser(card) > cardvalue) {
+                    cardvalue = f.chooser(card);
                     threat = card;
                 }
              }

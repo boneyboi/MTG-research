@@ -72,9 +72,6 @@ public class RemovalChecker {
              }
          }
         }
-        else {
-            System.out.println("This card is either not accounted for.");
-        }
 
         return targetOthers;
     }

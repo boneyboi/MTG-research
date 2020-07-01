@@ -1103,8 +1103,10 @@ public class PhaseHandler implements java.io.Serializable {
                     }
 
                     if (pPlayerPriority.getName().equals("Ai")) {
-                        Facade face = pPlayerPriority.getFacade();
+                        Facade fde = new Facade(pPlayerPriority);
+                        Facade face = new Facade(pPlayerPriority);
                         chosenSa = face.getNextPlay();
+                        fde.isBiggestThreat();
                     }
                     if (chosenSa != null) {
                         //We can print out what cards/abilities are being played with this function

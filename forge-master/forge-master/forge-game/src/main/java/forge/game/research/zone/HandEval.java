@@ -38,8 +38,8 @@ public class HandEval extends ZoneEvaluator {
     @Override
     public double evaluateCard(Card card){
 
-            Front frontC = new Front(card);
-            double value = frontC.chooser();
+            Front frontC = new Front();
+            double value = frontC.chooser(card);
             double cardCMC = card.getCMC();
             double landsHad = p.getLandsAvaliable();
             //TODO: Account for if we have the right colors

@@ -38,8 +38,8 @@ public abstract class ZoneEvaluator {
     public double evaluateCard(Card c){
         double result = 0;
         //evaluate card * this.multiplier;
-        Front frontC = new Front(c);
-        double value = frontC.chooser();
+        Front frontC = new Front();
+        double value = frontC.chooser(c);
         result += value;
 
         return result;

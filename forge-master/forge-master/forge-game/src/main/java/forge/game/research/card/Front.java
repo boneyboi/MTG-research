@@ -13,18 +13,15 @@ import forge.game.card.Card;
 
 public class Front {
 
-    private Card card;
     private EvaluatorStrategy evaluator;
 
-    public Front(Card card){
-        this.card = card;
-    }
+    public Front(){}
 
     /**
      * Chooses a 'strategy' or what evaluator to do use
      * @return value - value of a card
      */
-    public double chooser () {
+    public double chooser (Card card) {
         //choose a strategy based on card 'type'
         if(card.isCreature()){
             evaluator = new EvaluatorStrategy(new CreatureEval());
