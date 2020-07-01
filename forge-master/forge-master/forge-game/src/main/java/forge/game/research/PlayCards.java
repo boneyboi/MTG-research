@@ -43,7 +43,6 @@ public class PlayCards {
     public ArrayList playChosenFromHand(Player controller) {
         BallotBox voter = new BallotBox(controller);
         ArrayList toplay = new ArrayList<SpellAbility>();
-        ViablePlays vp = new ViablePlays(controller);
         SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false);
         if (chosen != null) {
             toplay.add(chosen);

@@ -61,7 +61,21 @@ public class ManaEvaluation {
     }
 
     public ArrayList<Integer> getManaRemaining(ArrayList<SpellAbility> plays) {
-        getManaCurrent();
+        if (plainsAvaliable) {
+            plainsNum += 1;
+        }
+        if (islandAvaliable) {
+            islandNum += 1;
+        }
+        if (swampAvaliable) {
+            swampNum += 1;
+        }
+        if (mountainAvaliable) {
+            mountainNum += 1;
+        }
+        if (forestAvaliable) {
+            forestNum += 1;
+        }
         for (SpellAbility sa: plays) {
             for (ManaCostShard shard: sa.getPayCosts().getCostMana().getMana()) {
                 if (shard.isWhite()) {
@@ -105,30 +119,7 @@ public class ManaEvaluation {
     //We cant play those kinds of cards this turn, but they still appear as such by
     //this algorithm.
     public ArrayList<Integer> getManaCurrent() {
-        ArrayList<Integer> returns = new ArrayList<Integer>();
-        if (plainsAvaliable) {
-            plainsNum += 1;
-        }
-        if (islandAvaliable) {
-            islandNum += 1;
-        }
-        if (swampAvaliable) {
-            swampNum += 1;
-        }
-        if (mountainAvaliable) {
-            mountainNum += 1;
-        }
-        if (forestAvaliable) {
-            forestNum += 1;
-        }
-        returns.add(manaPool);
-        returns.add(plainsNum);
-        returns.add(islandNum);
-        returns.add(swampNum);
-        returns.add(mountainNum);
-        returns.add(forestNum);
-
-        return returns;
+        return getManaRemaining(new ArrayList<SpellAbility>());
     }
 
 
