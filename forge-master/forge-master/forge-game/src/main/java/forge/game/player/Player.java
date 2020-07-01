@@ -44,6 +44,7 @@ import forge.game.phase.PhaseType;
 import forge.game.replacement.ReplacementHandler;
 import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
+import forge.game.research.decision.Facade;
 import forge.game.research.zone.*;
 import forge.game.research.zone.ZoneEvaluator;
 import forge.game.spellability.SpellAbility;
@@ -170,8 +171,11 @@ public class Player extends GameEntity implements Comparable<Player> {
     private final AchievementTracker achievementTracker = new AchievementTracker();
     private final PlayerView view;
 
+    private Facade front;
+
     public Player(String name0, Game game0, final int id0) {
         super(id0);
+        front = new Facade(this);
 
         game = game0;
         for (final ZoneType z : Player.ALL_ZONES) {
@@ -187,6 +191,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (id0 >= 0) {
             game.addPlayer(id, this);
         }
+    }
+
+    public Facade getFacade() {
+        return front;
     }
 
     public final AchievementTracker getAchievementTracker() {

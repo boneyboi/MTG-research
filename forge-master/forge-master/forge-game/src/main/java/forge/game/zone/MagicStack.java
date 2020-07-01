@@ -232,12 +232,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             return;
         }
 
-
-        if (source.getController().getName().equals("Ai")) {
-            TargetDecider td = new TargetDecider();
-            td.assignTargets(sp);
-        }
-
         if (!hasLegalTargeting(sp, source)) {
             String str = source + " - [Couldn't add to stack, failed to target] - " + sp.getDescription();
             System.err.println(str + sp.getAllTargetChoices());
