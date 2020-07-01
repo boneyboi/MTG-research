@@ -3,7 +3,7 @@
  * @author Michael Bowling
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since 24 June 2020
+ * @since 30 June 2020
  */
 
 package forge.game.research.decision.infosupport;
@@ -33,15 +33,10 @@ public class Mulligan {
 
     /**
      *
-     * @param hand
+     * @param mullingPlayer
+     * @param cardsNeeded
+     * @return
      */
-    public void mulliganDecision(Zone hand){
-        //player get cards in hand
-        //mulligan if nonlnads > 65% of the hand or lands are
-        //do forced discard from facade if we did mulligan(the cards still go to the library)
-
-    }
-
     public CardCollection returnCards(Player mullingPlayer, int cardsNeeded) {
         CardCollection returning = new CardCollection();
         CardCollection hand = new CardCollection();
@@ -58,12 +53,16 @@ public class Mulligan {
     /**
      *
      * @param player
-     * @return
+     * @return boolean
      */
     public boolean shouldMull (Player player) {
-        timeMull++;
+        //controls the max number of times Ai should mulligan
         if(timeMull == STOPMULL){return false;}
+
+        timeMull++;
+        
         int lands = 0;
+
         for(Card c : player.getCardsIn(ZoneType.Hand)){
             if(c.isLand()){lands++;}
         }

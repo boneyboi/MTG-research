@@ -10,8 +10,11 @@ package forge.game.research.decision;
 import java.util.ArrayList;
 import forge.game.card.Card;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.PlayCards;
+import forge.game.research.card.CardEvaluator;
+import forge.game.research.card.Front;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
@@ -19,8 +22,10 @@ import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.spellability.SpellAbility;
+import forge.game.zone.ZoneType;
 
 import static forge.game.ability.AbilityKey.Player;
+import static java.lang.Double.NEGATIVE_INFINITY;
 
 public class Facade {
 
@@ -97,22 +102,13 @@ public class Facade {
 
     /**
      *
-     * @param card
-    */
+     * @return
+     */
     public ArrayList<SpellAbility> getNextPlay(){
         PlayCards pc = new PlayCards(controller);
         return pc.playLand();
     }
 
-    public void playCard(Strategy node){
-
-    }
-
-
-
-    public void playLand(){
-
-    }
      /**
      * Used when deciding to mulligan and what cards to keep if we do.
      * @param mullAlready
@@ -146,6 +142,29 @@ public class Facade {
          Card sacrificeCard = null;
 
          return sacrificeCard;
+     }
+
+    /**
+     *
+     * @return
+     */
+     public Card isBiggestThreat () {
+
+         Player opponent = this.controller.getSingleOpponent();
+         Card threat = null;
+         double cardvalue = NEGATIVE_INFINITY;
+
+         for (Card card : opponent.getCardsIn(ZoneType.Battlefield)) {
+            if (!(card.isLand())) {
+                Front f = new Front(card);
+                if (f.chooser() > cardvalue) {
+                    cardvalue = f.chooser();
+                    threat = card;
+                }
+             }
+         }
+
+         return threat;
      }
 
 }
