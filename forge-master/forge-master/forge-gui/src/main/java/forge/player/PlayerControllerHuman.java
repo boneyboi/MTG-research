@@ -9,6 +9,7 @@ import forge.GuiBase;
 import forge.LobbyPlayer;
 import forge.StaticData;
 import forge.achievement.AchievementCollection;
+import forge.ai.ComputerUtil;
 import forge.ai.GameState;
 import forge.assets.FSkinProp;
 import forge.card.*;
@@ -1341,6 +1342,16 @@ PlayerControllerHuman extends PlayerController implements IGameController {
 
     @Override
     public void playChosenSpellAbility(final SpellAbility chosenSa) {
+        if (player.getName().equals("Ai")) {
+            if (chosenSa instanceof LandAbility) {
+                if (chosenSa.canPlay()) {
+                    chosenSa.resolve();
+                    game.updateLastStateForCard(chosenSa.getHostCard());
+                }
+            } else {
+                ComputerUtil.handlePlayingSpellAbility(player, chosenSa, game);
+            }
+        }
         HumanPlay.playSpellAbility(this, player, chosenSa);
     }
 

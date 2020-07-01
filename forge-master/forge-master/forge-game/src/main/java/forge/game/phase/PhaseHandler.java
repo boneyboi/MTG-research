@@ -1099,11 +1099,11 @@ public class PhaseHandler implements java.io.Serializable {
                     RemovalChecker rc = new RemovalChecker();
 
                     for (Card card : pPlayerPriority.getCardsIn(ZoneType.Hand)) {
-                        rc.shouldTargetOthers(card);
+                        //rc.shouldTargetOthers(card);
                     }
 
                     if (pPlayerPriority.getName().equals("Ai")) {
-                        Facade face = new Facade(pPlayerPriority);
+                        Facade face = pPlayerPriority.getFacade();
                         chosenSa = face.getNextPlay();
                     }
                     if (chosenSa != null) {

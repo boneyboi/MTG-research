@@ -169,6 +169,8 @@ public class BallotBox {
             } else if (pool.get(0) >= chosen.getPayCosts().getTotalMana().getCMC()) {
                 canPlayTappedLand = true;
             }
+        } else {
+            canPlayTappedLand = true;
         }
 
         //Now that we know what kind of land we need, we must look for that land.

@@ -84,7 +84,7 @@ public class PayForCosts {
                 }
             }
         }
-        return false;
+        return done;
     }
 
     public boolean payForGeneric(Player p, int cost) {
