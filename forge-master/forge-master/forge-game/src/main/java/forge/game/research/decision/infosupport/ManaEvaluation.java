@@ -8,6 +8,7 @@
 
 package forge.game.research.decision.infosupport;
 
+import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -38,7 +39,7 @@ public class ManaEvaluation {
     boolean mountainAvaliable = false;
     boolean manaAvaliable = false;
 
-    Player controller;
+    public Player controller;
 
     /**
      * Evaluates the mana pool for a player
@@ -57,6 +58,40 @@ public class ManaEvaluation {
     public ArrayList<Integer> getManaPossible() {
         checkPossibleColorPlays();
         return getManaCurrent();
+    }
+
+    public ArrayList<Integer> getManaRemaining(ArrayList<SpellAbility> plays) {
+        getManaCurrent();
+        for (SpellAbility sa: plays) {
+            for (ManaCostShard shard: sa.getPayCosts().getCostMana().getMana()) {
+                if (shard.isWhite()) {
+                    plainsNum--;
+                    manaPool--;
+                } else if(shard.isBlue()) {
+                    islandNum--;
+                    manaPool--;
+                } else if (shard.isBlack()){
+                    swampNum--;
+                    manaPool--;
+                } else if (shard.isRed()){
+                    mountainNum--;
+                    manaPool--;
+                } else if (shard.isGreen()) {
+                    forestNum--;
+                    manaPool--;
+                }
+            }
+            manaPool -= sa.getPayCosts().getCostMana().getMana().getGenericCost();
+        }
+        ArrayList<Integer> returns = new ArrayList<>();
+        returns.add(manaPool);
+        returns.add(plainsNum);
+        returns.add(islandNum);
+        returns.add(swampNum);
+        returns.add(mountainNum);
+        returns.add(forestNum);
+
+        return returns;
     }
 
 
@@ -95,6 +130,7 @@ public class ManaEvaluation {
 
         return returns;
     }
+
 
     /**
      * Puts our boolean values in our Integer ArrayList
