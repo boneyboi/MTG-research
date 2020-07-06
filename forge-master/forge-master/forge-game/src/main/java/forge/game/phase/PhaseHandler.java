@@ -17,7 +17,7 @@
  */
 package forge.game.phase;
 
-import forge.game.research.decision.infosupport.RemovalChecker;
+import forge.game.research.decision.infosupport.removal.RemovalChecker;
 
 import forge.game.research.PlayCards;
 import com.google.common.collect.ArrayListMultimap;
@@ -42,14 +42,11 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
-import forge.game.research.card.CardEvaluator;
-import forge.game.research.card.CreatureEval;
 import forge.game.research.decision.Facade;
 import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
-import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.LandAbility;
 import forge.game.staticability.StaticAbility;

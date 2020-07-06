@@ -1,4 +1,4 @@
-package forge.game.research.decision.infosupport;
+package forge.game.research.decision.infosupport.removal;
 
 import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
@@ -34,7 +34,7 @@ public class RemovalChecker {
      * destroying a card/all cards
      * prohibits a card from doing certain actions (i.e. Pacifism)
      * debuffs a card (i.e. Dead Weight or Disfigure)
-     * @param spellability
+     * @param spellability -
      * @return
      */
     private boolean isRemoval(SpellAbility spellability) {
@@ -55,9 +55,11 @@ public class RemovalChecker {
         else if (sa.getApi().name().equals("DestroyAll")) {
             targetOthers = true;
         }
-        else if (sa.getApi().name().equals("ChangeZoneAll") || sa.getApi().name().equals("ChangeZoneAll")) {
+        else if (sa.getApi().name().equals("ChangeZone") || sa.getApi().name().equals("ChangeZoneAll")) {
             targetOthers = true;
         }
+        //checks to see if the parameter AILogic and IsCurse exists to prevent any null exceptions
+        //then gets either parameter if they exist and checks if they contain Curse or True
         else if (sa.hasParam("AILogic") && sa.getParam(
                 "AILogic").equals("Curse") || sa.hasParam("IsCurse") && sa.getParam(
                         "IsCurse").equals("True")) {
