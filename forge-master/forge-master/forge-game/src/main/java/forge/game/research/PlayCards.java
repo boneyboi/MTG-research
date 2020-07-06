@@ -24,6 +24,7 @@ public class PlayCards {
 
     //the player whose turn it is
     private Player controller;
+    private ArrayList<SpellAbility> playing;
 
     /**
      * Allows for the class to obtain whose priority it is currently
@@ -41,10 +42,7 @@ public class PlayCards {
      */
     public ArrayList playChosenFromHand(Player controller) {
         BallotBox voter = new BallotBox(controller);
-        //TODO: Move this to beginning of game
-        DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
-        ViablePlays vp = new ViablePlays(controller);
         SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false);
         if (chosen != null) {
             toplay.add(chosen);
@@ -80,8 +78,6 @@ public class PlayCards {
      */
     public ArrayList playLand() {
         BallotBox voter = new BallotBox(controller);
-        //TODO: Move this to beginning of game
-        DeckStrategies trial = new DeckStrategies();
         ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
         Card land = voter.choseLand(DeckStrategies.lifelinkstrats);

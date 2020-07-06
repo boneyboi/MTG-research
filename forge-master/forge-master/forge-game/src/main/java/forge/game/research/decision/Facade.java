@@ -157,7 +157,7 @@ public class Facade {
          Card threat = null;
          double cardvalue = NEGATIVE_INFINITY;
 
-         //iterates through opponent's battelfield
+         //iterates through opponent's battlefield
          for (Card card : opponent.getCardsIn(ZoneType.Battlefield)) {
             if (!(card.isLand())) {
                 //if there is a card that is valued higher, assigns that card to be returned

@@ -49,13 +49,22 @@ public class ViablePlays {
      */
     public ArrayList<SpellAbility> getNonlandPlays() {
         emptyOptions();
-        buildOptions(false);
+        setManaPool(false);
+        buildOptions();
+        return plays;
+    }
+
+    public ArrayList<SpellAbility> getNonlandPlaysAfter(ArrayList<SpellAbility> sa){
+        emptyOptions();
+        setManaAfter(sa);
+        buildOptions();
         return plays;
     }
 
     public ArrayList<SpellAbility> getPotentialPlays() {
         emptyOptions();
-        buildOptions(true);
+        setManaPool(true);
+        buildOptions();
         return plays;
     }
 
@@ -119,13 +128,7 @@ public class ViablePlays {
     /**
      * Assembles the list of all possible plays the player can make
      */
-    private void buildOptions(boolean withLand) {
-        ManaEvaluation manaOptions = new ManaEvaluation(controller);
-        if (withLand) {
-            manapool = manaOptions.getManaPossible();
-        } else {
-            manapool = manaOptions.getManaCurrent();
-        }
+    private void buildOptions() {
         whiteMana = manapool.get(1);
         blueMana = manapool.get(2);
         blackMana = manapool.get(3);
@@ -147,6 +150,20 @@ public class ViablePlays {
         redMana = manapool.get(4);
         greenMana = manapool.get(5);
         addZoneOptions(ZoneType.Hand);
+    }
+
+    public void setManaAfter(ArrayList<SpellAbility> sa) {
+        ManaEvaluation manaOptions = new ManaEvaluation(controller);
+        manapool = manaOptions.getManaRemaining(sa);
+    }
+
+    public void setManaPool(boolean withLand) {
+        ManaEvaluation manaOptions = new ManaEvaluation(controller);
+        if (withLand) {
+            manapool = manaOptions.getManaPossible();
+        } else {
+            manapool = manaOptions.getManaCurrent();
+        }
     }
 
     private void emptyOptions() {

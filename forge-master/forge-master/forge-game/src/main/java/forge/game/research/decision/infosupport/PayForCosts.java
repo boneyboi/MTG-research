@@ -10,6 +10,7 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PayForCosts {
@@ -18,6 +19,9 @@ public class PayForCosts {
     public static final String BLUE = "U";
     public static final String BLACK = "B";
     public static final String WHITE = "W";
+
+    private ArrayList<Card> needed;
+
     public PayForCosts() {
 
     }

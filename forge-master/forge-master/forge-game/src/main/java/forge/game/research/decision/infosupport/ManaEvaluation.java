@@ -8,6 +8,7 @@
 
 package forge.game.research.decision.infosupport;
 
+import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -38,7 +39,7 @@ public class ManaEvaluation {
     boolean mountainAvaliable = false;
     boolean manaAvaliable = false;
 
-    Player controller;
+    public Player controller;
 
     /**
      * Evaluates the mana pool for a player
@@ -59,18 +60,7 @@ public class ManaEvaluation {
         return getManaCurrent();
     }
 
-
-
-
-    /**
-     * Puts all mana pool values to be returned in a list and returns them
-     * @return Arraylist of Integers
-     */
-    //TODO: Account for cards that need us to play two or more new colors to be played.
-    //We cant play those kinds of cards this turn, but they still appear as such by
-    //this algorithm.
-    public ArrayList<Integer> getManaCurrent() {
-        ArrayList<Integer> returns = new ArrayList<Integer>();
+    public ArrayList<Integer> getManaRemaining(ArrayList<SpellAbility> plays) {
         if (plainsAvaliable) {
             plainsNum += 1;
         }
@@ -86,6 +76,28 @@ public class ManaEvaluation {
         if (forestAvaliable) {
             forestNum += 1;
         }
+        for (SpellAbility sa: plays) {
+            for (ManaCostShard shard: sa.getPayCosts().getCostMana().getMana()) {
+                if (shard.isWhite()) {
+                    plainsNum--;
+                    manaPool--;
+                } else if(shard.isBlue()) {
+                    islandNum--;
+                    manaPool--;
+                } else if (shard.isBlack()){
+                    swampNum--;
+                    manaPool--;
+                } else if (shard.isRed()){
+                    mountainNum--;
+                    manaPool--;
+                } else if (shard.isGreen()) {
+                    forestNum--;
+                    manaPool--;
+                }
+            }
+            manaPool -= sa.getPayCosts().getCostMana().getMana().getGenericCost();
+        }
+        ArrayList<Integer> returns = new ArrayList<>();
         returns.add(manaPool);
         returns.add(plainsNum);
         returns.add(islandNum);
@@ -95,6 +107,21 @@ public class ManaEvaluation {
 
         return returns;
     }
+
+
+
+
+    /**
+     * Puts all mana pool values to be returned in a list and returns them
+     * @return Arraylist of Integers
+     */
+    //TODO: Account for cards that need us to play two or more new colors to be played.
+    //We cant play those kinds of cards this turn, but they still appear as such by
+    //this algorithm.
+    public ArrayList<Integer> getManaCurrent() {
+        return getManaRemaining(new ArrayList<SpellAbility>());
+    }
+
 
     /**
      * Puts our boolean values in our Integer ArrayList

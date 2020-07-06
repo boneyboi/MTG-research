@@ -44,6 +44,7 @@ import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.player.PlayerController.ManaPaymentPurpose;
 import forge.game.research.decision.Facade;
 import forge.game.research.decision.infosupport.ViablePlays;
+import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.zone.BattlefieldEval;
 import forge.game.research.zone.HandEval;
 import forge.game.research.zone.ZoneEvaluator;
@@ -1039,6 +1040,7 @@ public class PhaseHandler implements java.io.Serializable {
 
     public void startFirstTurn(Player goesFirst, Runnable startGameHook) {
         StopWatch sw = new StopWatch();
+        DeckStrategies trial = new DeckStrategies();
 
         if (phase != null) {
             throw new IllegalStateException("Turns already started, call this only once per game");
