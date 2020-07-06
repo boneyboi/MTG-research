@@ -183,6 +183,7 @@ public class PhaseHandler implements java.io.Serializable {
             game.updateTurnForView();
             game.fireEvent(new GameEventTurnBegan(playerTurn, turn));
 
+
             // Tokens starting game in play should suffer from Sum. Sickness
             final CardCollectionView list = playerTurn.getCardsIncludePhasingIn(ZoneType.Battlefield);
             for (final Card c : list) {
@@ -196,6 +197,7 @@ public class PhaseHandler implements java.io.Serializable {
 
             final List<Card> lands = CardLists.filter(playerTurn.getLandsInPlay(), Presets.UNTAPPED);
             playerTurn.setNumPowerSurgeLands(lands.size());
+
         }
         //update tokens
         game.fireEvent(new GameEventTokenStateUpdate(playerTurn.getTokensInPlay()));
@@ -255,6 +257,7 @@ public class PhaseHandler implements java.io.Serializable {
                     givePriorityToPlayer = false;
                     game.getUntap().executeUntil(playerTurn);
                     game.getUntap().executeAt();
+
                     break;
 
                 case UPKEEP:
@@ -269,6 +272,9 @@ public class PhaseHandler implements java.io.Serializable {
                     break;
 
                 case MAIN1:
+                    if (playerTurn.getFacade()!= null) {
+                        playerTurn.getFacade().getTurnPlays();
+                    }
                     if (isPreCombatMain()) {
                         if (playerTurn.isArchenemy()) {
                             playerTurn.setSchemeInMotion();
@@ -1084,10 +1090,10 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     //We can evaluate our option pool manually with this.
-                    printOptions(playerTurn);
+                    //printOptions(playerTurn);
 
 
-                    if (pPlayerPriority.getName().equals("Ai")) {
+                    if (pPlayerPriority.getFacade() != null) {
                         chosenSa = null;
                     }
                     else {
@@ -1095,22 +1101,14 @@ public class PhaseHandler implements java.io.Serializable {
                     }
 
                     PlayCards pc = new PlayCards(pPlayerPriority);
-                    RemovalChecker rc = new RemovalChecker();
 
-                    for (Card card : pPlayerPriority.getCardsIn(ZoneType.Hand)) {
-                        //rc.shouldTargetOthers(card);
-                    }
 
-                    if (pPlayerPriority.getName().equals("Ai")) {
+                    if (pPlayerPriority.getFacade()!= null) {
                         Facade fde = new Facade(pPlayerPriority);
-                        Facade face = new Facade(pPlayerPriority);
-                        chosenSa = face.getNextPlay();
+                        chosenSa = pPlayerPriority.getFacade().getNextPlay();
                         fde.isBiggestThreat();
                     }
-                    if (chosenSa != null) {
-                        //We can print out what cards/abilities are being played with this function
-                        //System.out.println(chosenSa.get(0));
-                    }
+
 
                     if (chosenSa == null) {
                         break; // that means 'I pass'
@@ -1143,7 +1141,7 @@ public class PhaseHandler implements java.io.Serializable {
                     loopCount++;
                 } while (loopCount < 999 ||
                         (!pPlayerPriority.getController().isAI()
-                                && !pPlayerPriority.getName().equals("Ai")));
+                                && pPlayerPriority.getFacade() == null));
 
                 if (loopCount >= 999 && pPlayerPriority.getController().isAI()) {
                     System.out.print("AI looped too much with: " + chosenSa);

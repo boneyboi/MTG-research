@@ -30,6 +30,9 @@ public class CostAdjustment {
 
     public static Cost adjust(final Cost cost, final SpellAbility sa) {
         final Player player = sa.getActivatingPlayer();
+        if (player == null) {
+            sa.getHostCard().getController();
+        }
         final Card host = sa.getHostCard();
         final Game game = player.getGame();
 

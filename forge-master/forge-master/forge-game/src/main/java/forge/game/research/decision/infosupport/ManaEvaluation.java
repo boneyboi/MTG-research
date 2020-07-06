@@ -11,6 +11,7 @@ package forge.game.research.decision.infosupport;
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.player.Player;
+import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -61,6 +62,7 @@ public class ManaEvaluation {
     }
 
     public ArrayList<Integer> getManaRemaining(ArrayList<SpellAbility> plays) {
+        checkForPlayingLands(plays);
         if (plainsAvaliable) {
             plainsNum += 1;
         }
@@ -77,6 +79,9 @@ public class ManaEvaluation {
             forestNum += 1;
         }
         for (SpellAbility sa: plays) {
+            if (sa instanceof LandAbility){
+                continue;
+            }
             for (ManaCostShard shard: sa.getPayCosts().getCostMana().getMana()) {
                 if (shard.isWhite()) {
                     plainsNum--;
@@ -189,6 +194,8 @@ public class ManaEvaluation {
 
     }
 
+
+
     /**
      * Checks to see if we can play an untapped land this turn, and if so, what colors we can gain
      * from doing so.
@@ -240,6 +247,57 @@ public class ManaEvaluation {
             if (manaAvaliable) {
                 manaPool += 1;
             }
+        }
+    }
+
+    public void checkForPlayingLands(ArrayList<SpellAbility> spellList) {
+        mountainAvaliable = false;
+        swampAvaliable = false;
+        forestAvaliable = false;
+        plainsAvaliable = false;
+        islandAvaliable = false;
+        manaAvaliable = false;
+
+        ArrayList<Card> lands = new ArrayList<Card>();
+        for (SpellAbility spell: spellList) {
+            if (spell instanceof LandAbility) {
+                lands.add(spell.getHostCard());
+            }
+        }
+
+        for (Card c : lands) {
+            if (c.isLand()
+                    && !c.hasKeyword("ETBReplacement:Other:LandTapped")
+                    && !c.hasKeyword("CARDNAME enters the battlefield tapped.")
+                    && !c.hasKeyword("ETBReplacement:Other:DBTap")) {
+                for (SpellAbility sa : c.getManaAbilities()) {
+                    String type = sa.getMapParams().get("Produced");
+                    if (type.contains(RED)) {
+                        mountainAvaliable = true;
+                        manaAvaliable = true;
+                    }
+                    if (type.contains(BLACK)) {
+                        swampAvaliable = true;
+                        manaAvaliable = true;
+                    }
+                    if (type.contains(BLUE)) {
+                        islandAvaliable = true;
+                        manaAvaliable = true;
+                    }
+                    if (type.contains(GREEN)) {
+                        forestAvaliable = true;
+                        manaAvaliable = true;
+                    }
+                    if (type.contains(WHITE)) {
+                        plainsAvaliable = true;
+                        manaAvaliable = true;
+                    }
+
+                }
+            }
+        }
+        if (manaAvaliable) {
+            manaPool += 1;
         }
     }
 

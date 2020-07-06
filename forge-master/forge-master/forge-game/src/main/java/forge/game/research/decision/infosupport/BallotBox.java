@@ -17,6 +17,7 @@ import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.research.decision.strategy.template.CardTemplate;
+import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -60,14 +61,13 @@ public class BallotBox {
     /**
      * TODO: description
      */
-    public void getOptions(boolean potential) {
+    public void getOptions(boolean potential, ArrayList<SpellAbility> plays) {
         ViablePlays vp = new ViablePlays(controller);
         if (potential) {
             nonlands = vp.getPotentialPlays();
         } else {
-            nonlands = vp.getNonlandPlays();
+            nonlands = vp.getNonlandPlaysAfter(plays);
         }
-        lands = vp.getLandPlays();
     }
 
     /**
@@ -76,7 +76,7 @@ public class BallotBox {
      * @return TODO
      */
     public DoublyLinkedList<StrategyNode> getVotes(DeckStrategy deckstrategy){
-        DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<StrategyNode>();
+        DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<>();
         for(Strategy strategy : deckstrategy.getStrategies()){
             //TODO: make this a general case/put in a specific passed in strategy
             votednodes.push_front(getViableNode(strategy));
@@ -89,9 +89,10 @@ public class BallotBox {
      * use this space to describe how a card is voted on
      * @return voted node
      */
-    public SpellAbility votedCard(DeckStrategy deckStrategy, boolean potential) {
-        getOptions(potential);
-        HashMap<SpellAbility, Integer> votesofcards = new HashMap<SpellAbility, Integer>();
+    public SpellAbility votedCard(DeckStrategy deckStrategy,
+                                  boolean potential, ArrayList<SpellAbility> plays) {
+        getOptions(potential, plays);
+        HashMap<SpellAbility, Integer> votesofcards = new HashMap<>();
         for (SpellAbility option : nonlands) {
             votesofcards.put(option, 0);
         }
@@ -128,12 +129,20 @@ public class BallotBox {
 
 
     //TODO: Please break this into pieces. Please... Please.
-    public Card choseLand(DeckStrategy deckStrategy) {
+    public Card choseLand(DeckStrategy deckStrategy, ArrayList<SpellAbility> playing) {
         //Checks to see if we can play a land at all
         if (!(controller.getLandsPlayedThisTurn() < controller.getMaxLandPlays())
-                || !controller.canCastSorcery()
                 || controller.getZone(ZoneType.Hand).getNumLandsIn() == 0) {
             return null;
+        }
+
+        ViablePlays vp = new ViablePlays(controller);
+        lands = vp.getLandPlays();
+
+        for (SpellAbility sa: playing) {
+            if (sa instanceof LandAbility) {
+                return null;
+            }
         }
 
         //Initialize variables
@@ -146,7 +155,7 @@ public class BallotBox {
 
 
         //More varaible initialization
-        SpellAbility chosen = votedCard(deckStrategy, true);
+        SpellAbility chosen = votedCard(deckStrategy, true, new ArrayList<>());
 
         ManaEvaluation manaEval = new ManaEvaluation(controller);
         ArrayList<Integer> pool = manaEval.getManaCurrent();
@@ -174,17 +183,18 @@ public class BallotBox {
         }
 
         //Now that we know what kind of land we need, we must look for that land.
-        for (Card land: lands) {
+
+        for (Card land : lands) {
             if (canPlayTappedLand &&
-                            land.entersTapped()) {
+                    land.entersTapped()) {
                 return land;
-            } else  if ((needBlack ||
-                        needBlue ||
-                        needGreen ||
-                        needRed ||
-                        needWhite) &&
-                        !land.entersTapped()){
-                for (SpellAbility sa: land.getManaAbilities()) {
+            } else if ((needBlack ||
+                    needBlue ||
+                    needGreen ||
+                    needRed ||
+                    needWhite) &&
+                    !land.entersTapped()) {
+                for (SpellAbility sa : land.getManaAbilities()) {
                     String type = sa.getMapParams().get("Produced");
                     if (type.contains(RED) && needRed) {
                         return land;

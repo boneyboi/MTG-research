@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ViablePlays {
 
-    ArrayList<SpellAbility> plays = new ArrayList<SpellAbility>();
+    ArrayList<SpellAbility> plays = new ArrayList<>();
     ArrayList<Card> lands;
     Player controller = null;
     ArrayList<Integer> manapool;
@@ -58,6 +58,9 @@ public class ViablePlays {
         emptyOptions();
         setManaAfter(sa);
         buildOptions();
+        for (SpellAbility spell: sa) {
+            plays.remove(spell);
+        }
         return plays;
     }
 
@@ -119,7 +122,7 @@ public class ViablePlays {
      */
     private void addLandOptions(){
         for (Card c: controller.getZone(ZoneType.Hand)) {
-            if (c.isLand() && controller.canPlayLand(c)) {
+            if (c.isLand()) {
                 lands.add(c);
             }
         }

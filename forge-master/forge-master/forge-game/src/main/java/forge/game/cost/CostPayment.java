@@ -201,10 +201,8 @@ public class CostPayment extends ManaConversionMatrix {
             decisions.put(part, decision);
         }
 
-        if (decisionMaker.getPlayer().getName().equals("Ai")) {
-            //TODO: Uncomment this.
-            PayForCosts payer = new PayForCosts();
-            return payer.payTheManaCost(decisionMaker.getPlayer(), parts, ability);
+        if (decisionMaker.getPlayer().getFacade() != null) {
+            return decisionMaker.getPlayer().getFacade().payCosts(parts, ability);
         }
 
         for (final CostPart part : parts) {

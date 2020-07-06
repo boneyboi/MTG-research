@@ -539,7 +539,7 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollectionView londonMulliganReturnCards(final Player mulliganingPlayer, int cardsToReturn) {
-        if (mulliganingPlayer.getName().equals("Ai")) {
+        if (mulliganingPlayer.getFacade()!= null) {
             Mulligan mull = new Mulligan();
             CardCollection returnCards = mull.returnCards(mulliganingPlayer, cardsToReturn);
             return returnCards;

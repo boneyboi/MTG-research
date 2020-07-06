@@ -171,11 +171,13 @@ public class Player extends GameEntity implements Comparable<Player> {
     private final AchievementTracker achievementTracker = new AchievementTracker();
     private final PlayerView view;
 
-    private Facade front;
+    private Facade facade = null;
 
     public Player(String name0, Game game0, final int id0) {
         super(id0);
-        front = new Facade(this);
+        if (name0.startsWith("Ai:")) {
+            facade = new Facade(this);
+        }
 
         game = game0;
         for (final ZoneType z : Player.ALL_ZONES) {
@@ -194,7 +196,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public Facade getFacade() {
-        return front;
+        return facade;
     }
 
     public final AchievementTracker getAchievementTracker() {

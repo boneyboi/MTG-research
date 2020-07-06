@@ -8,7 +8,10 @@
 package forge.game.research.decision;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import forge.game.card.Card;
+import forge.game.cost.CostPart;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.research.DoublyLinkedList;
@@ -16,11 +19,13 @@ import forge.game.research.PlayCards;
 import forge.game.research.card.CardEvaluator;
 import forge.game.research.card.Front;
 import forge.game.research.decision.infosupport.BallotBox;
+import forge.game.research.decision.infosupport.PayForCosts;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.research.decision.strategy.template.CardTemplate;
+import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -30,6 +35,7 @@ import static java.lang.Double.NEGATIVE_INFINITY;
 public class Facade {
 
     public Player controller;
+    public ArrayList<SpellAbility> plays = new ArrayList<>();
 
     public Facade(Player p) {
         controller = p;
@@ -74,39 +80,46 @@ public class Facade {
 
 
     /**
-     * Used when deciding what card or ability to play
-     * @param: options : list
-     * @return a card to play\
-     */
-     public SpellAbility getNextPlayDecision (DeckStrategy deckstrategy, Player controller) {
-         //call the decision maker from the other class and pass the card it voted on through here
-         BallotBox b = new BallotBox(controller);
-         //go through the list of card templates and find the exact cards we should play from our hand
-         return b.votedCard(deckstrategy, false);
-     }
-
-    /**
-     * Play a card to the field
-     * @param strategynode
-     */
-    public void playStrategy(StrategyNode strategynode){
-        //use ballot box to see what it voted on
-        //then play the card
-        DoublyLinkedList<Card> cards = new DoublyLinkedList<Card>();
-        while(strategynode.cards.iterator().hasNext()){
-            //convert each template to an actual card
-            //then play that card
-        }
-        //playCards(getNextPlayDecision(strategynode));
-    }
-
-    /**
      *
      * @return
      */
     public ArrayList<SpellAbility> getNextPlay(){
-        PlayCards pc = new PlayCards(controller);
-        return pc.playLand();
+        if (plays.isEmpty() || !plays.get(0).canPlay())
+            return null;
+        else {
+            ArrayList<SpellAbility> playNow = new ArrayList<>();
+            playNow.add(plays.get(0));
+            plays.remove(0);
+            return playNow;
+        }
+    }
+
+    public void getTurnPlays(){
+        plays = new ArrayList<>();
+        SpellAbility chosen;
+        do {
+            PlayCards pc = new PlayCards(controller);
+            chosen = (pc.playLand(plays));
+            if (chosen!= null) {
+                plays.add(chosen);
+            }
+        } while(chosen!= null);
+
+        printPlays();
+
+    }
+
+    private void printPlays(){
+        System.out.println("     This turn, " + controller + " will play: ");
+        for (SpellAbility sa: plays) {
+            System.out.print(sa.getHostCard().getName() + " | ");
+        }
+        System.out.println();
+    }
+
+    public boolean payCosts(List<CostPart> costs, SpellAbility sp) {
+        PayForCosts payer = new PayForCosts();
+        return payer.payTheManaCost(controller, costs, sp, plays);
     }
 
      /**

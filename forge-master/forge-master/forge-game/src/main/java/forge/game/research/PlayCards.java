@@ -24,7 +24,6 @@ public class PlayCards {
 
     //the player whose turn it is
     private Player controller;
-    private ArrayList<SpellAbility> playing;
 
     /**
      * Allows for the class to obtain whose priority it is currently
@@ -40,33 +39,10 @@ public class PlayCards {
      * @param controller
      * @return toplay (which has a list of cards) or null if the player's name is not Ai
      */
-    public ArrayList playChosenFromHand(Player controller) {
+    public SpellAbility playChosenFromHand(Player controller, ArrayList<SpellAbility> playing) {
         BallotBox voter = new BallotBox(controller);
-        ArrayList toplay = new ArrayList<SpellAbility>();
-        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false);
-        if (chosen != null) {
-            toplay.add(chosen);
-            return toplay;
-        }
-        else {
-            return null;
-        }
-
-    }
-
-    /**
-     * Allows for 'Ai' to play cards only from certain options/viable plays
-     * @return toplay (which has a list of cards) or null if the player's name is not Ai
-     */
-    public ArrayList playFromOptions() {
-        ArrayList toplay = new ArrayList<SpellAbility>();
-        ViablePlays vp = new ViablePlays(controller);
-        if (!vp.getNonlandPlays().isEmpty()) {
-            toplay.add(vp.getNonlandPlays().get(0));
-            return toplay;
-        } else {
-            return null;
-        }
+        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false, playing);
+        return chosen;
 
     }
 
@@ -76,40 +52,20 @@ public class PlayCards {
      * @return toplay -> land that is to be played
      * @return playChosenFromHand(controller) -> spell ability list if a land has or cannot be played
      */
-    public ArrayList playLand() {
+    public SpellAbility playLand(ArrayList<SpellAbility> playing) {
         BallotBox voter = new BallotBox(controller);
-        ArrayList toplay = new ArrayList<SpellAbility>();
         SpellAbility sa;
-        Card land = voter.choseLand(DeckStrategies.lifelinkstrats);
+        Card land = null;
+
+        land = voter.choseLand(DeckStrategies.lifelinkstrats, playing);
 
         if (land != null) {
             sa = new LandAbility(land, controller, null);
-            toplay.add(sa);
-            return toplay;
+            return sa;
         }
 
 
         //else calls playChosenFromHand() to decide on another card
-        return playChosenFromHand(controller);
-    }
-
-    /**
-     * Initial method of getting Ai to play specific cards by returning a list of spell abilities
-     * @return toplay (which has a list of cards) or null if the player's name is not Ai
-     */
-    private ArrayList playMethod() {
-        ArrayList toplay = new ArrayList<SpellAbility>();
-        if (controller.getName().equals("Ai")){
-            for (Card card : controller.getCardsIn(ZoneType.Hand)) {
-                if (card.getName().equals("Memnite")) {
-                    SpellAbility sa = card.getFirstSpellAbility();
-                    if (sa.canPlay()) {
-                        toplay.add(sa);
-                        return toplay;
-                    }
-                }
-            }
-        }
-        return toplay;
+        return playChosenFromHand(controller, playing);
     }
 }

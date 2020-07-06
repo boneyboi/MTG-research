@@ -1237,7 +1237,7 @@ PlayerControllerHuman extends PlayerController implements IGameController {
     public CardCollectionView londonMulliganReturnCards(final Player mulliganingPlayer, int cardsToReturn) {
         final InputLondonMulligan inp = new InputLondonMulligan(this, player, cardsToReturn);
         //This is where we are prompted to return cards
-        if (mulliganingPlayer.getName().equals("Ai")) {
+        if (mulliganingPlayer.getFacade()!= null) {
             Mulligan mull = new Mulligan();
             CardCollection returnCards = mull.returnCards(mulliganingPlayer, cardsToReturn);
             return returnCards;
@@ -1342,7 +1342,7 @@ PlayerControllerHuman extends PlayerController implements IGameController {
 
     @Override
     public void playChosenSpellAbility(final SpellAbility chosenSa) {
-        if (player.getName().equals("Ai")) {
+        if (player.getFacade() != null) {
             if (chosenSa instanceof LandAbility) {
                 if (chosenSa.canPlay()) {
                     chosenSa.resolve();

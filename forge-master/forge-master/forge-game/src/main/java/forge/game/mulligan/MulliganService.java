@@ -76,7 +76,7 @@ public class MulliganService {
                 Player p = mulligan.getPlayer();
 
                 //research code if/else
-                if (p.getName().equals("Ai")) {
+                if (p.getFacade()!= null) {
                     this.keep = !(m.shouldMull(p));
                 }
                 else {
