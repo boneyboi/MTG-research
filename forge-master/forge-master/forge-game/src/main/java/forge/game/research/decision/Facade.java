@@ -95,6 +95,7 @@ public class Facade {
     }
 
     public void getTurnPlays(){
+        //Does this show up now?
         plays = new ArrayList<>();
         SpellAbility chosen;
         do {
