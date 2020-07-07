@@ -17,11 +17,12 @@ import forge.game.spellability.SpellAbility;
 
 public abstract class CardTemplate{
 
-
+    private String name;
     /**
      * A template for what kinds of cards are played in the strategy class
      */
     public CardTemplate() {
+        this.name = "Card Template";
     }
 
     /**
@@ -40,5 +41,10 @@ public abstract class CardTemplate{
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return this.getClass().toString();
     }
 }

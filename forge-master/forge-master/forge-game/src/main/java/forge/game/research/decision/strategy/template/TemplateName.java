@@ -12,7 +12,7 @@ import forge.game.card.Card;
 import forge.game.spellability.SpellAbility;
 
 public class TemplateName extends CardTemplate {
-    String name;
+    private String name;
 
     public TemplateName(String name) {
         this.name = name;
@@ -21,5 +21,12 @@ public class TemplateName extends CardTemplate {
     @Override
     public boolean matches(SpellAbility sa){
         return sa.getHostCard().getName().equals(name);
+    }
+
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 }

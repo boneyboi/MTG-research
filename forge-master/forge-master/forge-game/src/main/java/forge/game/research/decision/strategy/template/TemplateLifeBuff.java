@@ -14,8 +14,9 @@ import forge.game.spellability.SpellPermanent;
 import forge.game.trigger.Trigger;
 
 public class TemplateLifeBuff extends CardTemplate {
-    public TemplateLifeBuff() {
 
+
+    public TemplateLifeBuff() {
     }
 
     @Override

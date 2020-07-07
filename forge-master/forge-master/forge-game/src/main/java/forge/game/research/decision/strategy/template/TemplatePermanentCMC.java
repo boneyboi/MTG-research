@@ -34,4 +34,12 @@ public class TemplatePermanentCMC extends CardTemplate {
         }
         return false;
     }
+
+    public int getCMC(){
+        return this.cmc;
+    }
+    public void setCMC(int cmc){
+        this.cmc = cmc;
+    }
+
 }

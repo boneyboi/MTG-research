@@ -1,0 +1,28 @@
+[
+  {
+    "Strategies": {
+      "Curve": {
+        "TemplatePermanentCMC" : 1,
+        "TemplatePermanentCMC" : 2,
+        "TemplatePermanentCMC" : 3,
+        "TemplatePermanentCMC" : 4,
+        "TemplatePermanentCMC" : 5
+      },
+      "Daxos":{
+        "TemplateName" : "Daxos, Blessed by the Sun"
+      },
+      "lifecombo1": {
+        "TemplateLifeBuff" : "buffcard",
+        "TemplateLifelink" : "lifecard"
+      },
+      "removal" : {
+        "TemplateRemoval" : "removalcard"
+      }
+    }
+  },
+  {
+    "Parameters" : {
+      "name" : "MonoRed"
+    }
+  }
+]

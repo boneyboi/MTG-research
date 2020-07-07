@@ -145,7 +145,7 @@ public class StrategyNode {
      * @return boolean true TODO: (description what true means) or false (description what false means)
      */
     public DoublyLinkedList<CardTemplate> getCards() {
-        return cards;
+        return this.cards;
     }
 
     /**
