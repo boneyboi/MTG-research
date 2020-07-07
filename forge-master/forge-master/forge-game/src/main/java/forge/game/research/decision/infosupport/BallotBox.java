@@ -162,10 +162,14 @@ public class BallotBox {
             return null;
         }
 
+        //Get avaliable lands
         ViablePlays vp = new ViablePlays(controller);
         lands = vp.getLandPlays();
 
-        for (SpellAbility sa: playing) {
+        //See if we are already playing a land
+        //TODO: this needs a better solution, since sometimes we can
+        //play multiple lands a turn.
+        for (SpellAbility sa : playing) {
             if (sa instanceof LandAbility) {
                 return null;
             }
@@ -180,7 +184,8 @@ public class BallotBox {
         canPlayTappedLand = false;
 
 
-        //More varaible initialization
+        //Find the first spell we want to play
+        //TODO: Adjust this for multiple cards to play.
         SpellAbility chosen = votedCard(deckStrategy, true, new ArrayList<>());
 
         ManaEvaluation manaEval = new ManaEvaluation(controller);
@@ -202,6 +207,7 @@ public class BallotBox {
             } else if (pool.get(5) < colors[4]) {
                 needGreen = true;
             } else if (pool.get(0) >= chosen.getPayCosts().getTotalMana().getCMC()) {
+                //If we don't need a color, we can play a tap land
                 canPlayTappedLand = true;
             }
         } else {
@@ -210,11 +216,16 @@ public class BallotBox {
 
         //Now that we know what kind of land we need, we must look for that land.
 
+        //Can we play a tap land?
         for (Card land : lands) {
             if (canPlayTappedLand &&
                     land.entersTapped()) {
                 return land;
-            } else if ((needBlack ||
+            }
+        }
+        //Do we need a certain color?
+        for (Card land : lands) {
+            if ((needBlack ||
                     needBlue ||
                     needGreen ||
                     needRed ||
@@ -238,30 +249,31 @@ public class BallotBox {
                         return land;
                     }
                 }
-            } else {
-                for (SpellAbility sa : land.getManaAbilities()) {
-                    String type = sa.getMapParams().get("Produced");
-                    if (type.contains(WHITE) && pool.get(1).equals(0)) {
-                        return land;
-                    }
-                    if (type.contains(BLUE) && pool.get(2).equals(0)) {
-                        return land;
-                    }
-                    if (type.contains(BLACK) && pool.get(3).equals(0)) {
-                        return land;
-                    }
-                    if (type.contains(RED) && pool.get(4).equals(0)) {
-                        return land;
-                    }
-                    if (type.contains(GREEN) && pool.get(5).equals(0)) {
-                        return land;
-                    }
+            }
+        }
+        //Can we get more colors into our pool?
+        for (Card land : lands) {
+            for (SpellAbility sa : land.getManaAbilities()) {
+                String type = sa.getMapParams().get("Produced");
+                if (type.contains(WHITE) && pool.get(1).equals(0)) {
+                    return land;
+                }
+                if (type.contains(BLUE) && pool.get(2).equals(0)) {
+                    return land;
+                }
+                if (type.contains(BLACK) && pool.get(3).equals(0)) {
+                    return land;
+                }
+                if (type.contains(RED) && pool.get(4).equals(0)) {
+                    return land;
+                }
+                if (type.contains(GREEN) && pool.get(5).equals(0)) {
+                    return land;
                 }
             }
         }
         //If we don't need or can utilize a specific land, just play the first one.
         return lands.get(0);
-
     }
 
     /**
