@@ -84,6 +84,30 @@ public class BallotBox {
         return votednodes;
     }
 
+    public void printStrategy(DeckStrategy deckStrategy) {
+        for (Strategy strat: deckStrategy.getStrategies()) {
+            System.out.print("Strategy: " + strat.getName());
+            System.out.println();
+            StrategyNode current;
+            strat.reset();
+            while (strat.hasNext()) {
+                current = strat.next();
+                if (current.getCards().isEmpty()) {
+                    System.out.print('E');
+                }
+                if (current.isDone(controller) && !current.getCards().isEmpty()) {
+                    System.out.print('O');
+                } else if(current.isPossible(controller)){
+                    System.out.print('P');
+                } else {
+                    System.out.print('X');
+                }
+                System.out.print('-');
+            }
+            System.out.println('|');
+        }
+    }
+
     /**
      * Return the card that is voted on
      * use this space to describe how a card is voted on
@@ -98,7 +122,10 @@ public class BallotBox {
         }
 
         for (Strategy strat : deckStrategy.getStrategies()) {
+            //Account for depth of strategy, progression of strategy, and
+            //possibly index of strategy (prioritization)
             StrategyNode node = getViableNode(strat);
+            ArrayList<Integer> depth = getDepth(strat);
             //Find card from node
             if (node != null && node.getCards() != null) {
                 for (CardTemplate template : node.getCards()) {
@@ -255,5 +282,33 @@ public class BallotBox {
         }
         return current;
 
+    }
+
+    /**
+     * Determines the length of a strategy, how much we have already done,
+     * and how many nodes we can do this turn. Returns what we have done, what we can do,
+     * and how many nodes there are in that order.
+     */
+    public ArrayList<Integer> getDepth(Strategy strat) {
+        StrategyNode current;
+        int done = 0;
+        int possible = 0;
+        ArrayList<Integer> returns = new ArrayList<>();
+        strat.reset();
+        if (strat.hasNext()) {
+            do {
+                current = strat.next();
+                if (current != null && current.isDone(controller)) {
+                    done++;
+                }
+                if (current != null && current.isPossible(controller)) {
+                    possible++;
+                }
+            } while (strat.hasNext());
+        }
+        returns.add(done);
+        returns.add(possible);
+        returns.add(strat.size());
+        return returns;
     }
 }

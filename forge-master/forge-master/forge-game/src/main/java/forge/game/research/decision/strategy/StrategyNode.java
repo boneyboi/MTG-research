@@ -122,7 +122,6 @@ public class StrategyNode {
         if (repeatable) {
             return false;
         }
-        int count = 0;
         for (CardTemplate c: cards) {
             boolean found = false;
             for (Card card : p.getZone(ZoneType.Battlefield)) {
@@ -146,6 +145,42 @@ public class StrategyNode {
      */
     public DoublyLinkedList<CardTemplate> getCards() {
         return cards;
+    }
+
+    /**
+     * Determines whether this node has an instance of it already on the field.
+     * @param controller
+     * @return
+     */
+    public boolean isDone(Player controller) {
+        for (CardTemplate c: cards) {
+            boolean found = false;
+            for (Card card : controller.getZone(ZoneType.Battlefield)) {
+                for (SpellAbility sa: card.getSpellAbilities()) {
+                    if (!found && c.matches(sa)) {
+                        found = true;
+                    }
+
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isPossible(Player controller) {
+        //TODO: Replace this to check future options in all zones
+        ArrayList<SpellAbility> options = new ArrayList<>();
+        for (Card c: controller.getCardsIn(ZoneType.Hand)){
+            for (SpellAbility sa: c.getSpellAbilities()) {
+                if (sa.canPlay()) {
+                    options.add(sa);
+                }
+            }
+        }
+        return isViable(options, controller);
     }
 
     /**

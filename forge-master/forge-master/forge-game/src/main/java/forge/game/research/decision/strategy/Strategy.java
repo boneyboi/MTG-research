@@ -33,6 +33,9 @@ public class Strategy{
         iter = path.iterator();
     }
 
+    public int size() {
+        return path.size();
+    }
 
     //create a new strategy node
     public void pushFront(Strategy strategy, StrategyNode node){
