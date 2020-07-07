@@ -11,6 +11,7 @@ package forge.game.research.decision.strategy;
 import forge.game.research.DoublyLinkedList;
 import forge.game.research.decision.strategy.template.CardTemplate;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Strategy{
@@ -23,8 +24,6 @@ public class Strategy{
 
     public Strategy(String title) {
         path = new DoublyLinkedList<StrategyNode>();
-        pushFront(new StrategyNode(new DoublyLinkedList<CardTemplate>(),
-                new DoublyLinkedList<CardTemplate>()));
         this.name = title;
         iter = path.iterator();
     }
@@ -43,7 +42,18 @@ public class Strategy{
     }
     //TODO: remove these 2 functions
     //pushcard creates a new card in the strategy node
+
+    public void pushCard(CardTemplate template){
+        pushCard(0, template);
+    }
+
     public void pushCard(int index, CardTemplate template){
+        ArrayList<CardTemplate> temp = new ArrayList<>();
+        temp.add(template);
+        pushCard(index, temp);
+    }
+
+    public void pushCard(int index, ArrayList<CardTemplate> template){
         for(int i = 0; i < index; i++){
             if(this.path.iterator().hasNext()){
                 this.path.iterator().next();
@@ -51,14 +61,37 @@ public class Strategy{
         }
         if(this.path.iterator().hasNext()){
             ///!!!!!!!!!!!!!!!!this might be where the error of replacing the node with a new card comes from
-            this.path.iterator().next().cards.push_front(template);
+            this.path.iterator().next().addCards(template);
         } else {
             System.out.println("There was no next strategynode");
         }
     }
-    //pushreq creates a new requirement in the strategy node
+
     public void pushReq(CardTemplate template){
-        iter.next().requirements.push_front(template);
+        ArrayList<CardTemplate> temp = new ArrayList<>();
+        temp.add(template);
+        pushReq(0, temp);
+    }
+
+    public void pushReq(int index, CardTemplate template){
+        ArrayList<CardTemplate> temp = new ArrayList<>();
+        temp.add(template);
+        pushReq(index, temp);
+    }
+
+    //pushreq creates a new requirement in the strategy node
+    public void pushReq(int index, ArrayList<CardTemplate> template){
+        for(int i = 0; i < index; i++){
+            if(this.path.iterator().hasNext()){
+                this.path.iterator().next();
+            }
+        }
+        if(this.path.iterator().hasNext()){
+            ///!!!!!!!!!!!!!!!!this might be where the error of replacing the node with a new card comes from
+            this.path.iterator().next().addReqs(template);
+        } else {
+            System.out.println("There was no next strategynode");
+        }
     }
 
 

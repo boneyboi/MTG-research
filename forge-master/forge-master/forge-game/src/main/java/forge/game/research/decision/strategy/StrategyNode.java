@@ -29,9 +29,25 @@ public class StrategyNode {
     }
 
     public StrategyNode(boolean repeat) {
-        this.requirements = new DoublyLinkedList<CardTemplate>();
-        this.cards = new DoublyLinkedList<CardTemplate>();
+        this.requirements = new DoublyLinkedList<>();
+        this.cards = new DoublyLinkedList<>();
         repeatable = repeat;
+    }
+
+    public void addCard(CardTemplate stuff) {
+        cards.push_back(stuff);
+    }
+
+    public void addCards(ArrayList<CardTemplate> stuff) {
+        for (CardTemplate temp: stuff) {
+            cards.push_back(temp);
+        }
+    }
+
+    public void addReqs(ArrayList<CardTemplate> stuff) {
+        for (CardTemplate temp: stuff) {
+            requirements.push_back(temp);
+        }
     }
 
     /**

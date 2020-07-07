@@ -94,8 +94,7 @@ public class BallotBox {
                 current = strat.next();
                 if (current.getCards().isEmpty()) {
                     System.out.print('E');
-                }
-                if (current.isDone(controller) && !current.getCards().isEmpty()) {
+                } else if (current.isDone(controller)) {
                     System.out.print('O');
                 } else if(current.isPossible(controller)){
                     System.out.print('P');
