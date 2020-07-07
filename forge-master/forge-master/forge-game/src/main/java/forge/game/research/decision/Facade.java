@@ -106,8 +106,13 @@ public class Facade {
             }
         } while(chosen!= null);
 
-        printPlays();
+        printStrategies(DeckStrategies.lifelinkstrats);
 
+    }
+
+    public void printStrategies(DeckStrategy deckstrat){
+        BallotBox box = new BallotBox(controller);
+        box.printStrategy(deckstrat);
     }
 
     private void printPlays(){
