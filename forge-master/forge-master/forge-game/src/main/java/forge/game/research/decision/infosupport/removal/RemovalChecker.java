@@ -2,9 +2,7 @@ package forge.game.research.decision.infosupport.removal;
 
 import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
-import forge.game.CardTraitBase;
 import forge.game.card.Card;
-import forge.game.ability.SpellAbilityEffect;
 
 public class RemovalChecker {
 
@@ -14,11 +12,12 @@ public class RemovalChecker {
     /**
      * Main method, checks to see if a card is removal, should be used to target opponent's creatures
      * @param card
-     * @return
+     * @return ture if a card should be used against an opponent, not on our creatures
      */
     public boolean shouldTargetOthers(Card card) {
         boolean shallTargetOthers = false;
 
+        //looks through a card's spell abilities and see if any one of them counts as 'removal'
         for (SpellAbility sa : card.getSpellAbilities()) {
             if (isRemoval(sa)) {
                 shallTargetOthers = true;

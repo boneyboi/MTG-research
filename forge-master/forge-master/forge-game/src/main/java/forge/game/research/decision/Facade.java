@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since June 23, 2020
+ * @since July 07, 2020
  */
 package forge.game.research.decision;
 
@@ -20,6 +20,7 @@ import forge.game.research.card.CardEvaluator;
 import forge.game.research.card.Front;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.infosupport.PayForCosts;
+import forge.game.research.decision.infosupport.removal.RemovalList;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.Strategy;
@@ -164,30 +165,23 @@ public class Facade {
      }
 
     /**
-     * Evaluates the opponent's battlefield and determines what is the biggest threat through
-     * highest value card
+     * Method that tests removalList and removalChecker.
      * @return card with the biggest value on the opponent's side of the field
      */
-     public Card isBiggestThreat () {
-         Front f = new Front();
+     public void testMethod () {
 
          //obtains the opponent
          Player opponent = this.controller.getSingleOpponent();
-         Card threat = null;
-         double cardvalue = NEGATIVE_INFINITY;
+         RemovalList rl = new RemovalList();
+         ArrayList<Card> battleList = new ArrayList<>();
 
          //iterates through opponent's battlefield
          for (Card card : opponent.getCardsIn(ZoneType.Battlefield)) {
-            if (!(card.isLand())) {
-                //if there is a card that is valued higher, assigns that card to be returned
-                if (f.chooser(card) > cardvalue) {
-                    cardvalue = f.chooser(card);
-                    threat = card;
-                }
-             }
+             battleList.add(card);
          }
 
-         return threat;
+         rl.sortList(battleList);
+         Card threat = rl.getBiggestThreat();
      }
 
 }
