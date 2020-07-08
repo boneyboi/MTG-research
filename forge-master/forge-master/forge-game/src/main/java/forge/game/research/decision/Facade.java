@@ -13,25 +13,12 @@ import java.util.List;
 import forge.game.card.Card;
 import forge.game.cost.CostPart;
 import forge.game.player.Player;
-import forge.game.player.PlayerCollection;
-import forge.game.research.DoublyLinkedList;
 import forge.game.research.PlayCards;
-import forge.game.research.card.CardEvaluator;
-import forge.game.research.card.Front;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.infosupport.PayForCosts;
-import forge.game.research.decision.infosupport.removal.RemovalList;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
-import forge.game.research.decision.strategy.Strategy;
-import forge.game.research.decision.strategy.StrategyNode;
-import forge.game.research.decision.strategy.template.CardTemplate;
-import forge.game.spellability.LandAbility;
 import forge.game.spellability.SpellAbility;
-import forge.game.zone.ZoneType;
-
-import static forge.game.ability.AbilityKey.Player;
-import static java.lang.Double.NEGATIVE_INFINITY;
 
 public class Facade {
 
@@ -130,17 +117,6 @@ public class Facade {
     }
 
      /**
-     * Used when deciding to mulligan and what cards to keep if we do.
-     * @param mullAlready
-      * @oaram
-     * @return List of cards to put back, or null if we want to mulligan
-      * TODO: decide on return, create 'hand' parameter somehow, fill out body
-     */
-     public void mulligan(int mullAlready) {
-
-     }
-
-     /**
      * Used when we have to discard a card but can choose which card to discard.
      * @param
      * @return discardCard
@@ -165,23 +141,14 @@ public class Facade {
      }
 
     /**
-     * Method that tests removalList and removalChecker.
-     * @return card with the biggest value on the opponent's side of the field
+     * Method gets the name of a deck.
+     * @return String, name of Ai's deck
      */
-     public void testMethod () {
+     public String getNameStrategy () {
 
-         //obtains the opponent
-         Player opponent = this.controller.getSingleOpponent();
-         RemovalList rl = new RemovalList();
-         ArrayList<Card> battleList = new ArrayList<>();
+         String deckName = this.controller.getRegisteredPlayer().getDeck().getName();
 
-         //iterates through opponent's battlefield
-         for (Card card : opponent.getCardsIn(ZoneType.Battlefield)) {
-             battleList.add(card);
-         }
-
-         rl.sortList(battleList);
-         Card threat = rl.getBiggestThreat();
+         return deckName;
      }
 
 }
