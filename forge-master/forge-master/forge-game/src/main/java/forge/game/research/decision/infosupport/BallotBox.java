@@ -48,6 +48,7 @@ public class BallotBox {
     public static final String BLACK = "B";
     public static final String WHITE = "W";
 
+    public static final double STRATSIZEMULTIPLIER = 5;
     /**
      * Takes in the player, assigns it to the controller variable
      * @param p
@@ -70,19 +71,6 @@ public class BallotBox {
         }
     }
 
-    /**
-     * TODO: description
-     * @param deckstrategy
-     * @return TODO
-     */
-    public DoublyLinkedList<StrategyNode> getVotes(DeckStrategy deckstrategy){
-        DoublyLinkedList<StrategyNode> votednodes = new DoublyLinkedList<>();
-        for(Strategy strategy : deckstrategy.getStrategies()){
-            //TODO: make this a general case/put in a specific passed in strategy
-            votednodes.push_front(getViableNode(strategy));
-        }
-        return votednodes;
-    }
 
     public void printStrategy(DeckStrategy deckStrategy) {
         for (Strategy strat: deckStrategy.getStrategies()) {
@@ -116,6 +104,9 @@ public class BallotBox {
                                   boolean potential, ArrayList<SpellAbility> plays) {
         getOptions(potential, plays);
         HashMap<SpellAbility, Integer> votesofcards = new HashMap<>();
+        if (nonlands.isEmpty()) {
+            return null;
+        }
         for (SpellAbility option : nonlands) {
             votesofcards.put(option, 0);
         }
@@ -123,20 +114,31 @@ public class BallotBox {
         for (Strategy strat : deckStrategy.getStrategies()) {
             //Account for depth of strategy, progression of strategy, and
             //possibly index of strategy (prioritization)
-            StrategyNode node = getViableNode(strat);
+            ArrayList<StrategyNode> viables = getViableNode(strat);
+
+            //depth is (#done, #possible, #total)
             ArrayList<Integer> depth = getDepth(strat);
+            double completeable = depth.get(0) + depth.get(1);
+            double total = depth.get(2);
+            double ratio = completeable/total;
+            double stratWeight = ratio*100+ STRATSIZEMULTIPLIER*total;
+            double count = 0;
+
             //Find card from node
-            if (node != null && node.getCards() != null) {
-                for (CardTemplate template : node.getCards()) {
-                    for (SpellAbility option : nonlands) {
-                        if (template.matches(option)) {
-                            int tempvotes = votesofcards.get(option);
-                            votesofcards.replace(option, tempvotes+1);
+            for (StrategyNode node: viables) {
+                if (node != null && node.getCards() != null) {
+                    double nodeWeight = (1.0 - count/viables.size());
+                    int voteWeight = (int) (stratWeight * nodeWeight);
+                    for (CardTemplate template : node.getCards()) {
+                        for (SpellAbility option : nonlands) {
+                            if (template.matches(option)) {
+                                int tempvotes = votesofcards.get(option);
+                                votesofcards.replace(option, tempvotes + voteWeight);
+                            }
                         }
                     }
                 }
             }
-
         }
 
         int max = 0;
@@ -153,6 +155,10 @@ public class BallotBox {
         return chosen;
     }
 
+
+    public void printVotes(SpellAbility sa, int votes) {
+            System.out.println(sa + " got " + votes + " votes.");
+    }
 
     //TODO: Please break this into pieces. Please... Please.
     public Card choseLand(DeckStrategy deckStrategy, ArrayList<SpellAbility> playing) {
@@ -280,18 +286,21 @@ public class BallotBox {
      * Go through a strategy and get the last playable node
      * @param strategy
      */
-    public StrategyNode getViableNode(Strategy strategy){
+    public ArrayList<StrategyNode> getViableNode(Strategy strategy){
+        ArrayList<StrategyNode> viables = new ArrayList<>();
         StrategyNode current = new StrategyNode();
         strategy.reset();
-        while (current != null && !current.isViable(nonlands, controller)){
+        while (current != null){
+            if (current.isViable(nonlands, controller)){
+                viables.add(new StrategyNode(current));
+            }
             if (strategy.hasNext()) {
                 current = strategy.next();
             } else {
-                strategy.next();
-                return null;
+                current = null;
             }
         }
-        return current;
+        return viables;
 
     }
 

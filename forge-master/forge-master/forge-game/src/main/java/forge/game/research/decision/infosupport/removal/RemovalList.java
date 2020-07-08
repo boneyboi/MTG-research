@@ -73,7 +73,8 @@ public class RemovalList {
      * Method that obtains the highest value card or "threat" on the opponent's battlefield
      * @return the card that has the highest value on opponent's board
      */
-    public Card getBiggestThreat() {
+    public Card getBiggestThreat(ArrayList<Card> cards) {
+        sortList(cards);
         Card bigThreat = null;
 
         //makes sure list is not empty
