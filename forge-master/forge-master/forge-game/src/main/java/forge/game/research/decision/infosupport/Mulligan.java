@@ -66,6 +66,9 @@ public class Mulligan {
         for(Card c : player.getCardsIn(ZoneType.Hand)){
             if(c.isLand()){lands++;}
         }
+        if (doesNotHaveLands(player)) {
+            return false;
+        }
         DeckEval deckeval = new DeckEval(player);
         //take the average mana cost-1 and decide whether or not to mull if we dont have at least that many lands
         if(lands < deckeval.averageManaCost()-1 || lands > (STARTINGHANDSIZE - timeMull) - NONLANDSNEEDED){
@@ -81,5 +84,19 @@ public class Mulligan {
      */
     public int getTimeMull() {
         return timeMull;
+    }
+
+    /**
+     * Helper method that determines if a player's library does not have lands
+     * @param player
+     * @return
+     */
+    private boolean doesNotHaveLands(Player player) {
+        for (Card card: player.getCardsIn(ZoneType.Library)) {
+            if (card.isLand()) {
+              return false;
+            }
+        }
+        return true;
     }
 }
