@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since July 07, 2020
+ * @since July 09, 2020
  */
 package forge.game.research.decision;
 
@@ -31,9 +31,12 @@ public class Facade {
     public Facade(Player p) {
         controller = p;
     }
+
+    /**
+     * Initalizes strategies
+     */
     public void initalizeStrat() {
         trial = new DeckStrategies();
-        int testing = trial.getDecks().size();
         plan = getDeckStrat(trial.getDecks());
         System.out.println(plan.getName());
     }
@@ -185,6 +188,8 @@ public class Facade {
             }
         }
 
+        //if there is not a strategy that fits our deck, calls first strategy
+        //temporary, as we will call a more 'generic' strategy when implemented
         if (ds == null) {
             ds = allDS.get(0);
         }
