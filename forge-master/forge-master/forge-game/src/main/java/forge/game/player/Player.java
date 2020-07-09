@@ -175,9 +175,6 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public Player(String name0, Game game0, final int id0) {
         super(id0);
-        if (name0.startsWith("Ai:")) {
-            facade = new Facade(this);
-        }
 
         game = game0;
         for (final ZoneType z : Player.ALL_ZONES) {
@@ -192,6 +189,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         setName(chooseName(name0));
         if (id0 >= 0) {
             game.addPlayer(id, this);
+        }
+
+        if (name0.startsWith("Ai:")) {
+            facade = new Facade(this);
         }
     }
 

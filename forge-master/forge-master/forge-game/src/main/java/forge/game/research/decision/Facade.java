@@ -30,10 +30,14 @@ public class Facade {
 
     public Facade(Player p) {
         controller = p;
+    }
+    public void initalizeStrat() {
         trial = new DeckStrategies();
+        int testing = trial.getDecks().size();
         plan = getDeckStrat(trial.getDecks());
         System.out.println(plan.getName());
     }
+
 
     /**
      * Use this constructor only for testing reasons really.
@@ -171,9 +175,11 @@ public class Facade {
         String deckName = getNameDeckAi();
         ArrayList<DeckStrategy> allDS = deckStrategyList;
 
-        for (DeckStrategy strat : allDS) {
-            if (deckName.equalsIgnoreCase(strat.getName())) {
-                ds = strat;
+        if(allDS.size() > 0) {
+            for (DeckStrategy strat : allDS) {
+                if (deckName.equalsIgnoreCase(strat.getName())) {
+                    ds = strat;
+                }
             }
         }
 

@@ -1091,9 +1091,9 @@ public class PhaseHandler implements java.io.Serializable {
                     //We can evaluate our option pool manually with this.
                     //printOptions(playerTurn);
 
-
                     if (pPlayerPriority.getFacade() != null) {
                         chosenSa = null;
+                        pPlayerPriority.getFacade().initalizeStrat();
                     }
                     else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
