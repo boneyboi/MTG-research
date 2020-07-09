@@ -132,54 +132,13 @@ public class JsonDeckStrategy {
                 if(!inParameters){
 
                     if(layer==2){stratindex++; deckStrategyResult.addStrategy(name);}
-                    //^-- this line is the source of the bug of not creating strategies in the deckstrategy
                     if(layer==3){
-                        //Strategy tempstrat = deckStrategyResult.getStrategies().get(stratindex);
-                    /*tempstrat.pushFront(new StrategyNode());
-                    tempstrat.reset();
-                    tempstrat.pushCard(cardindex, templateconversion.get(name));
-                    tempstrat.reset();*/
                         deckStrategyResult.getStrategies().get(stratindex).pushFront(new StrategyNode());
                         deckStrategyResult.getStrategies().get(stratindex).pushCard(cardindex,
                                 chooseNewTemplate(gsonreader, name));
-                        //deckStrategyResult.getStrategies().get(stratindex).reset();
-                        //if(cardindex>0){deckStrategyResult.addNode(stratindex, new StrategyNode());}
-                        //deckStrategyResult.addNode(stratindex, new StrategyNode());
-                        //if(cardindex==0){deckStrategyResult.getStrategies().get(stratindex).next();}
-                    /*if(templateconversion.containsKey(name)){
-                        deckStrategyResult.addTemplateCard(stratindex, templateconversion.get(name));
-                    }*/
-                        deckStrategyResult.getStrategies().get(stratindex).reset();
-                    /*if (name.equals("TemplateName")){
-                        TemplateName tempname =
-                        (TemplateName)
-                        deckStrategyResult.getStrategies().get(stratindex).get(cardindex).nextCard();
-                        tempname.setName(gsonreader.nextString());
-                        //this.cardname = gsonreader.nextString();
-                    } else if (name.equals("TemplateNonPermanentCMC")){
-                        TemplateNonPermanentCMC tempnonperm =
-                        (TemplateNonPermanentCMC)
-                        deckStrategyResult.getStrategies().get(stratindex).get(cardindex).nextCard();
-                        tempnonperm.setCMC(gsonreader.nextInt());
-                        //this.nonpermCMC = gsonreader.nextInt();
-                    } else if (name.equals("TemplatePermanentCMC")){
-                        //System.out.println(deckStrategyResult.getStrategies().get(stratindex).next());
-                        //Strategy tempstrat = deckStrategyResult.getStrategies().get(0);
-                        //tempstrat.reset();
-                        //DoublyLinkedList<CardTemplate> templist = tempstrat.next().getCards();
-                        //System.out.println(templist.peek_front());
-                        //DoublyLinkedList<CardTemplate> ctemp = deckStrategyResult.getStrategies().get(stratindex).get(cardindex).getCards();
 
-                        TemplatePermanentCMC tempperm =
-                        (TemplatePermanentCMC)
-                        deckStrategyResult.getStrategies().get(stratindex).get(cardindex).nextCard();
-                        int tempint = gsonreader.nextInt();
-                        tempperm.setCMC(tempint);
-                        System.out.println(tempint);
-                        tempperm = null;
-                        //((TemplatePermanentCMC)deckStrategyResult.getStrategies().get(stratindex).get(cardindex).nextCard()).setCMC(gsonreader.nextInt());
-                        //this.permCMC = gsonreader.nextInt();
-                    }*/
+                        deckStrategyResult.getStrategies().get(stratindex).reset();
+
                         cardindex++;
                     }
                 }
@@ -187,13 +146,10 @@ public class JsonDeckStrategy {
             else if(data.equals(JsonToken.STRING)){
                 System.out.println(data);
                 gsonreader.skipValue();
-                //deckStrategyResult.addTemplateCard(stratindex, new TemplateName(gsonreader.nextString()));
-                //cardindex++;
             }
             else if(data.equals(JsonToken.NUMBER)){
                 System.out.println(data);
                 gsonreader.skipValue();
-                //cardindex++;
             }
             else if(data.equals(JsonToken.END_OBJECT)){
                 System.out.println();
