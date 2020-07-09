@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since July 07, 2020
+ * @since July 09, 2020
  */
 package forge.game.research.decision;
 
@@ -31,11 +31,18 @@ public class Facade {
     public Facade(Player p) {
         controller = p;
     }
+
+    /**
+     * Initalizes strategies
+     */
     public void initalizeStrat() {
         trial = new DeckStrategies();
-        int testing = trial.getDecks().size();
         plan = getDeckStrat(trial.getDecks());
         System.out.println(plan.getName());
+    }
+
+    public DeckStrategy getPlan() {
+        return plan;
     }
 
 
@@ -165,7 +172,6 @@ public class Facade {
          return deckName;
      }
 
-     //TODO: Finish this when we can obtain a list of deck strategy
     /**
      * Method gets the name of a strategy based on name of a deck
      * @return Strategy
@@ -178,16 +184,16 @@ public class Facade {
         //checks to make sure list is not empty
         if(allDS.size() > 0) {
 
+            //iterates through the list of deck strategies, determines what strategy is selected
             for (DeckStrategy strat : allDS) {
-                if (deckName.equalsIgnoreCase("monoRed")) {
-                    ds = strat;
-                }
-                else if (deckName.equalsIgnoreCase("Lifelink")) {
+                if (deckName.equalsIgnoreCase(strat.getName())) {
                     ds = strat;
                 }
             }
         }
 
+        //if there is not a strategy that fits our deck, calls first strategy
+        //temporary, as we will call a more 'generic' strategy when implemented
         if (ds == null) {
             ds = allDS.get(0);
         }
