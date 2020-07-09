@@ -165,7 +165,6 @@ public class Facade {
          return deckName;
      }
 
-     //TODO: Finish this when we can obtain a list of deck strategy
     /**
      * Method gets the name of a strategy based on name of a deck
      * @return Strategy
@@ -178,11 +177,9 @@ public class Facade {
         //checks to make sure list is not empty
         if(allDS.size() > 0) {
 
+            //iterates through the list of deck strategies, determines what strategy is selected
             for (DeckStrategy strat : allDS) {
-                if (deckName.equalsIgnoreCase("monoRed")) {
-                    ds = strat;
-                }
-                else if (deckName.equalsIgnoreCase("Lifelink")) {
+                if (deckName.equalsIgnoreCase(strat.getName())) {
                     ds = strat;
                 }
             }
