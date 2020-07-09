@@ -1101,7 +1101,6 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     if (pPlayerPriority.getFacade()!= null) {
-                        Facade fde = new Facade(pPlayerPriority);
                         chosenSa = pPlayerPriority.getFacade().getNextPlay();
                     }
 
