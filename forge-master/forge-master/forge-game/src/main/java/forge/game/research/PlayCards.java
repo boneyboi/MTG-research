@@ -20,11 +20,13 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import java.util.ArrayList;
 import forge.game.player.Player;
+import forge.game.research.decision.Facade;
 
 public class PlayCards {
 
     //the player whose turn it is
     private Player controller;
+    private Facade f = new Facade(controller);
     private DeckStrategy plan;
 
     /**

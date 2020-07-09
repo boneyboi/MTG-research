@@ -30,10 +30,14 @@ public class Facade {
 
     public Facade(Player p) {
         controller = p;
+    }
+    public void initalizeStrat() {
         trial = new DeckStrategies();
-        plan = trial.getDecks().get(0);
+        int testing = trial.getDecks().size();
+        plan = getDeckStrat(trial.getDecks());
         System.out.println(plan.getName());
     }
+
 
     /**
      * Use this constructor only for testing reasons really.
@@ -154,7 +158,7 @@ public class Facade {
      * Method gets the name of a deck.
      * @return String, name of Ai's deck
      */
-     public String getNameStrategy () {
+     private String getNameDeckAi () {
 
          String deckName = this.controller.getRegisteredPlayer().getDeck().getName();
 
@@ -166,16 +170,29 @@ public class Facade {
      * Method gets the name of a strategy based on name of a deck
      * @return Strategy
      */
-    /**
-    public DeckStrategy getDeckStrat() {
+    public DeckStrategy getDeckStrat(ArrayList<DeckStrategy> deckStrategyList) {
         DeckStrategy ds = null;
-        String deckName = getNameStrategy();
-        ArrayList<Strategy> allDS = getStrategies();
+        String deckName = getNameDeckAi();
+        ArrayList<DeckStrategy> allDS = deckStrategyList;
 
-        for
+        //checks to make sure list is not empty
+        if(allDS.size() > 0) {
+
+            for (DeckStrategy strat : allDS) {
+                if (deckName.equalsIgnoreCase("monoRed")) {
+                    ds = strat;
+                }
+                else if (deckName.equalsIgnoreCase("Lifelink")) {
+                    ds = strat;
+                }
+            }
+        }
+
+        if (ds == null) {
+            ds = allDS.get(0);
+        }
 
         return ds;
     }
-    */
 
 }

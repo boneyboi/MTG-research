@@ -1047,6 +1047,11 @@ public class PhaseHandler implements java.io.Serializable {
     public void startFirstTurn(Player goesFirst, Runnable startGameHook) {
         StopWatch sw = new StopWatch();
 
+        for (Player p: goesFirst.getGame().getPlayers()) {
+            if (p.getFacade() != null)
+            p.getFacade().initalizeStrat();
+        }
+
         if (phase != null) {
             throw new IllegalStateException("Turns already started, call this only once per game");
         }
@@ -1091,7 +1096,6 @@ public class PhaseHandler implements java.io.Serializable {
                     //We can evaluate our option pool manually with this.
                     //printOptions(playerTurn);
 
-
                     if (pPlayerPriority.getFacade() != null) {
                         chosenSa = null;
                     }
@@ -1101,7 +1105,6 @@ public class PhaseHandler implements java.io.Serializable {
 
 
                     if (pPlayerPriority.getFacade()!= null) {
-                        Facade fde = new Facade(pPlayerPriority);
                         chosenSa = pPlayerPriority.getFacade().getNextPlay();
                     }
 
