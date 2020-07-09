@@ -11,15 +11,18 @@ package forge.game.research.decision.strategy;
 import forge.game.research.decision.strategy.template.CardTemplate;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
 public class DeckStrategy {
 
     private ArrayList<Strategy> deckStrategy;
-    private String name;
+    private HashMap<String, Object> parameters = new HashMap<String, Object>();
 
     public DeckStrategy(String name){
         this.deckStrategy = new ArrayList<Strategy>();
-        this.name = name;
+        this.addParameter("name", name);
     }
 
     public void addStrategy(String name){ this.deckStrategy.add(new Strategy(name)); }
@@ -85,6 +88,30 @@ public class DeckStrategy {
     }
 
     public String getName(){
-        return this.name;
+        return (String)this.getParameter("name");
+    }
+
+    public void addParameter(String key, Object value){
+        parameters.put(key, value);
+    }
+    public void setParameter(String key, Object value){
+        parameters.replace(key, value);
+    }
+    public Object getParameter(String key){
+        if(parametersContains(key)){
+            return parameters.get(key);
+        } else {
+            return "No such key found";
+        }
+
+    }
+    public Set<String> getParameterKeys(){
+        return parameters.keySet();
+    }
+    public Collection<Object> getParameterValues(){
+        return parameters.values();
+    }
+    public boolean parametersContains(String key){
+        return parameters.containsKey(key);
     }
 }

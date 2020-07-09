@@ -70,6 +70,7 @@ public class JsonDeckStrategy {
         int layer = 0;
         int stratindex = -1; //start at -1 so this first strat found is indexed as 0
         int cardindex = 0;
+        boolean inParameters = true;
         CardTemplate cardtemplate = null;
         while(!gsonreader.peek().equals(JsonToken.END_DOCUMENT)){
             JsonToken data = gsonreader.peek();
@@ -80,36 +81,75 @@ public class JsonDeckStrategy {
             else if (data.equals(JsonToken.BEGIN_OBJECT)){
                 System.out.println();
                 gsonreader.beginObject();
+                if(layer==0){
+                    inParameters = !inParameters;
+                }
                 if(layer==1){
-                    String name = gsonreader.nextName();
-                    deckStrategyResult.addStrategy(name);
-                    stratindex++;
-                    System.out.println(name);
+                    if(!inParameters){
+                        String name = gsonreader.nextName();
+                        deckStrategyResult.addStrategy(name);
+                        stratindex++;
+                        System.out.println(name);
+                    }
                 }
                 layer++;
             }
             else if(data.equals(JsonToken.NAME)){
                 System.out.println(data);
                 String name = gsonreader.nextName();
-                if(layer==2){stratindex++; deckStrategyResult.addStrategy(name);}
-                //^-- this line is the source of the bug of not creating strategies in the deckstrategy
-                if(layer==3){
-                    //Strategy tempstrat = deckStrategyResult.getStrategies().get(stratindex);
+                if(layer==2){
+                    if(inParameters) {
+                        JsonToken datatemp = gsonreader.peek();
+                        if(datatemp.equals(JsonToken.STRING)){
+                            if(deckStrategyResult.parametersContains(name)){
+                                deckStrategyResult.setParameter(name, gsonreader.nextString());
+                            } else {
+                                deckStrategyResult.addParameter(name, gsonreader.nextString());
+                            }
+                        } else if(datatemp.equals(JsonToken.NUMBER)){
+                            if(deckStrategyResult.parametersContains(name)){
+                                deckStrategyResult.setParameter(name, gsonreader.nextDouble());
+                            } else {
+                                deckStrategyResult.addParameter(name, gsonreader.nextDouble());
+                            }
+                        } else if(datatemp.equals(JsonToken.BOOLEAN)){
+                            if(deckStrategyResult.parametersContains(name)){
+                                deckStrategyResult.setParameter(name, gsonreader.nextBoolean());
+                            } else {
+                                deckStrategyResult.addParameter(name, gsonreader.nextBoolean());
+                            }
+                        } else if(datatemp.equals(JsonToken.NULL)){
+                            gsonreader.nextNull();
+                            if(deckStrategyResult.parametersContains(name)){
+                                deckStrategyResult.setParameter(name, null);
+                            } else {
+                                deckStrategyResult.addParameter(name, null);
+                            }
+                        }
+
+                    }
+                }
+                if(!inParameters){
+
+                    if(layer==2){stratindex++; deckStrategyResult.addStrategy(name);}
+                    //^-- this line is the source of the bug of not creating strategies in the deckstrategy
+                    if(layer==3){
+                        //Strategy tempstrat = deckStrategyResult.getStrategies().get(stratindex);
                     /*tempstrat.pushFront(new StrategyNode());
                     tempstrat.reset();
                     tempstrat.pushCard(cardindex, templateconversion.get(name));
                     tempstrat.reset();*/
-                    deckStrategyResult.getStrategies().get(stratindex).pushFront(new StrategyNode());
-                    deckStrategyResult.getStrategies().get(stratindex).pushCard(cardindex,
-                            chooseNewTemplate(gsonreader, name));
-                    //deckStrategyResult.getStrategies().get(stratindex).reset();
-                    //if(cardindex>0){deckStrategyResult.addNode(stratindex, new StrategyNode());}
-                    //deckStrategyResult.addNode(stratindex, new StrategyNode());
-                    //if(cardindex==0){deckStrategyResult.getStrategies().get(stratindex).next();}
+                        deckStrategyResult.getStrategies().get(stratindex).pushFront(new StrategyNode());
+                        deckStrategyResult.getStrategies().get(stratindex).pushCard(cardindex,
+                                chooseNewTemplate(gsonreader, name));
+                        //deckStrategyResult.getStrategies().get(stratindex).reset();
+                        //if(cardindex>0){deckStrategyResult.addNode(stratindex, new StrategyNode());}
+                        //deckStrategyResult.addNode(stratindex, new StrategyNode());
+                        //if(cardindex==0){deckStrategyResult.getStrategies().get(stratindex).next();}
                     /*if(templateconversion.containsKey(name)){
                         deckStrategyResult.addTemplateCard(stratindex, templateconversion.get(name));
                     }*/
-                    deckStrategyResult.getStrategies().get(stratindex).reset();
+                        deckStrategyResult.getStrategies().get(stratindex).reset();
                     /*if (name.equals("TemplateName")){
                         TemplateName tempname =
                         (TemplateName)
@@ -140,7 +180,8 @@ public class JsonDeckStrategy {
                         //((TemplatePermanentCMC)deckStrategyResult.getStrategies().get(stratindex).get(cardindex).nextCard()).setCMC(gsonreader.nextInt());
                         //this.permCMC = gsonreader.nextInt();
                     }*/
-                    cardindex++;
+                        cardindex++;
+                    }
                 }
             }
             else if(data.equals(JsonToken.STRING)){

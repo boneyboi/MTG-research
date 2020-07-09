@@ -17,9 +17,13 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
 public class DeckStrategies {
     public static ArrayList<DeckStrategy> decks = new ArrayList<>();
+
 
     public DeckStrategies(){
         deckStratInit();
@@ -27,9 +31,9 @@ public class DeckStrategies {
 
     public void deckStratInit(){
         JsonDeckStrategy builder = new JsonDeckStrategy();
-        File path = new File("./");
+        File path = new File("../..");
         System.out.println(path.getAbsolutePath());
-        File folder = new File("forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks");
+        File folder = new File("..\\..\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks");
         Path dir = folder.toPath();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)){
             for (Path file: stream) {
@@ -57,5 +61,6 @@ public class DeckStrategies {
         }
         return null;
     }
+
 
 }

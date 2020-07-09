@@ -2,9 +2,9 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2020-07-09T15:01:26.168872500Z</date>
-  <millis>1594306886168</millis>
-  <nanos>872500</nanos>
+  <date>2020-07-09T17:22:25.990127800Z</date>
+  <millis>1594315345990</millis>
+  <nanos>127800</nanos>
   <sequence>0</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -14,9 +14,9 @@
   <message>Deck Strategy: src\main\java\forge\game\research\decision\Decks\MonoRed.json</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.211758300Z</date>
-  <millis>1594306886211</millis>
-  <nanos>758300</nanos>
+  <date>2020-07-09T17:22:26.035007700Z</date>
+  <millis>1594315346035</millis>
+  <nanos>7700</nanos>
   <sequence>1</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -28,9 +28,9 @@ Cards in this strategy:
 </message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.212755100Z</date>
-  <millis>1594306886212</millis>
-  <nanos>755100</nanos>
+  <date>2020-07-09T17:22:26.036005400Z</date>
+  <millis>1594315346036</millis>
+  <nanos>5400</nanos>
   <sequence>2</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -40,9 +40,9 @@ Cards in this strategy:
   <message>3</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.213751900Z</date>
-  <millis>1594306886213</millis>
-  <nanos>751900</nanos>
+  <date>2020-07-09T17:22:26.037002300Z</date>
+  <millis>1594315346037</millis>
+  <nanos>2300</nanos>
   <sequence>3</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -52,9 +52,9 @@ Cards in this strategy:
   <message>2</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.214749800Z</date>
-  <millis>1594306886214</millis>
-  <nanos>749800</nanos>
+  <date>2020-07-09T17:22:26.037999400Z</date>
+  <millis>1594315346037</millis>
+  <nanos>999400</nanos>
   <sequence>4</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -64,9 +64,9 @@ Cards in this strategy:
   <message>1</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.215747500Z</date>
-  <millis>1594306886215</millis>
-  <nanos>747500</nanos>
+  <date>2020-07-09T17:22:26.038997400Z</date>
+  <millis>1594315346038</millis>
+  <nanos>997400</nanos>
   <sequence>5</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -78,9 +78,9 @@ Cards in this strategy:
 </message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.216744500Z</date>
-  <millis>1594306886216</millis>
-  <nanos>744500</nanos>
+  <date>2020-07-09T17:22:26.038997400Z</date>
+  <millis>1594315346038</millis>
+  <nanos>997400</nanos>
   <sequence>6</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -90,9 +90,9 @@ Cards in this strategy:
   <message>Cavalcade of Calamity</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.217742900Z</date>
-  <millis>1594306886217</millis>
-  <nanos>742900</nanos>
+  <date>2020-07-09T17:22:26.039994800Z</date>
+  <millis>1594315346039</millis>
+  <nanos>994800</nanos>
   <sequence>7</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -102,9 +102,9 @@ Cards in this strategy:
   <message>Chandra's Spitfire</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.217742900Z</date>
-  <millis>1594306886217</millis>
-  <nanos>742900</nanos>
+  <date>2020-07-09T17:22:26.040996600Z</date>
+  <millis>1594315346040</millis>
+  <nanos>996600</nanos>
   <sequence>8</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -116,9 +116,9 @@ Cards in this strategy:
 </message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.218740500Z</date>
-  <millis>1594306886218</millis>
-  <nanos>740500</nanos>
+  <date>2020-07-09T17:22:26.040996600Z</date>
+  <millis>1594315346040</millis>
+  <nanos>996600</nanos>
   <sequence>9</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -128,9 +128,9 @@ Cards in this strategy:
   <message>3</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.219736800Z</date>
-  <millis>1594306886219</millis>
-  <nanos>736800</nanos>
+  <date>2020-07-09T17:22:26.041989300Z</date>
+  <millis>1594315346041</millis>
+  <nanos>989300</nanos>
   <sequence>10</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -140,9 +140,9 @@ Cards in this strategy:
   <message>2</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.220734Z</date>
-  <millis>1594306886220</millis>
-  <nanos>734000</nanos>
+  <date>2020-07-09T17:22:26.042986800Z</date>
+  <millis>1594315346042</millis>
+  <nanos>986800</nanos>
   <sequence>11</sequence>
   <logger>global</logger>
   <level>INFO</level>
@@ -152,9 +152,9 @@ Cards in this strategy:
   <message>1</message>
 </record>
 <record>
-  <date>2020-07-09T15:01:26.220734Z</date>
-  <millis>1594306886220</millis>
-  <nanos>734000</nanos>
+  <date>2020-07-09T17:22:26.042986800Z</date>
+  <millis>1594315346042</millis>
+  <nanos>986800</nanos>
   <sequence>12</sequence>
   <logger>global</logger>
   <level>INFO</level>

@@ -19,7 +19,8 @@
   },
   {
     "Parameters" : {
-      "name" : "MonoRed"
+      "name" : "MonoRed",
+      "TestParameter" : "this parameter works"
     }
   }
 ]

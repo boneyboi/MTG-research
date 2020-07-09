@@ -1,6 +1,7 @@
 package forge.game.research;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import forge.deck.Deck;
 import forge.game.card.Card;
 import forge.game.research.decision.strategy.*;
@@ -105,7 +106,7 @@ public class DeckFileReaderTest {
     public void FullTest() {
         ArrayList<DeckStrategy> decks = new ArrayList<>();
         JsonDeckStrategy builder = new JsonDeckStrategy();
-        File folder = new File("src\\main\\java\\forge\\game\\research\\decision\\Decks");
+        File folder = new File("..\\..\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks");
         Path dir = folder.toPath();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)){
             for (Path file: stream) {
@@ -119,6 +120,15 @@ public class DeckFileReaderTest {
         }
         for (DeckStrategy strat: decks) {
             System.out.println(strat.getName());
+        }
+    }
+
+    @Test
+    public void parameterdeckstrategytest() throws IOException {
+        JsonDeckStrategy jsondeck = new JsonDeckStrategy();
+        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
+        for(String paramkey : deckstrategy.getParameterKeys()){
+            System.out.println(paramkey + ":" + deckstrategy.getParameter(paramkey));
         }
     }
 }
