@@ -27,7 +27,7 @@ public class DeckStrategies {
 
     public void deckStratInit(){
         JsonDeckStrategy builder = new JsonDeckStrategy();
-        File folder = new File("..\\..\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks");
+        File folder = new File("../../forge-master/forge-game/src/main/java/forge/game/research/decision/Decks");
         Path dir = folder.toPath();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)){
             for (Path file: stream) {

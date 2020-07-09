@@ -175,9 +175,14 @@ public class Facade {
         String deckName = getNameDeckAi();
         ArrayList<DeckStrategy> allDS = deckStrategyList;
 
+        //checks to make sure list is not empty
         if(allDS.size() > 0) {
+
             for (DeckStrategy strat : allDS) {
-                if (deckName.equalsIgnoreCase(strat.getName())) {
+                if (deckName.equalsIgnoreCase("monoRed")) {
+                    ds = strat;
+                }
+                else if (deckName.equalsIgnoreCase("Lifelink")) {
                     ds = strat;
                 }
             }
