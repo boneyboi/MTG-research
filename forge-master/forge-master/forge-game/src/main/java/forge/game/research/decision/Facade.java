@@ -25,10 +25,19 @@ public class Facade {
 
     public Player controller;
     public ArrayList<SpellAbility> plays = new ArrayList<>();
+    public DeckStrategies trial;
+    private DeckStrategy plan;
 
     public Facade(Player p) {
         controller = p;
+        trial = new DeckStrategies();
+        plan = trial.getDecks().get(0);
+        System.out.println(plan.getName());
     }
+
+    /**
+     * Use this constructor only for testing reasons really.
+     */
 
     /**
      * Used when deciding attackers
@@ -88,14 +97,14 @@ public class Facade {
         plays = new ArrayList<>();
         SpellAbility chosen;
         do {
-            PlayCards pc = new PlayCards(controller);
+            PlayCards pc = new PlayCards(controller, plan);
             chosen = (pc.playLand(plays));
             if (chosen!= null) {
                 plays.add(chosen);
             }
         } while(chosen!= null);
 
-        printStrategies(DeckStrategies.lifelinkstrats);
+        printStrategies(plan);
 
     }
 

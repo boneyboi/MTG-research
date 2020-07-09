@@ -1046,7 +1046,6 @@ public class PhaseHandler implements java.io.Serializable {
 
     public void startFirstTurn(Player goesFirst, Runnable startGameHook) {
         StopWatch sw = new StopWatch();
-        DeckStrategies trial = new DeckStrategies();
 
         if (phase != null) {
             throw new IllegalStateException("Turns already started, call this only once per game");
@@ -1099,8 +1098,6 @@ public class PhaseHandler implements java.io.Serializable {
                     else {
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     }
-
-                    PlayCards pc = new PlayCards(pPlayerPriority);
 
 
                     if (pPlayerPriority.getFacade()!= null) {

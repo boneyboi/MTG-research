@@ -12,6 +12,7 @@ import forge.game.card.Card;
 import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.infosupport.ViablePlays;
 import forge.game.research.decision.strategy.DeckStrategies;
+import forge.game.research.decision.strategy.DeckStrategy;
 import forge.game.research.decision.strategy.StrategyNode;
 import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.spellability.LandAbility;
@@ -24,14 +25,16 @@ public class PlayCards {
 
     //the player whose turn it is
     private Player controller;
+    private DeckStrategy plan;
 
     /**
      * Allows for the class to obtain whose priority it is currently
      * @param playerPriority
      * @return toplay (which has a list of cards) or null if the player's name is not Ai
      */
-    public PlayCards(Player playerPriority) {
+    public PlayCards(Player playerPriority, DeckStrategy strat) {
         controller = playerPriority;
+        plan = strat;
     }
 
     /**
@@ -41,7 +44,7 @@ public class PlayCards {
      */
     public SpellAbility playChosenFromHand(Player controller, ArrayList<SpellAbility> playing) {
         BallotBox voter = new BallotBox(controller);
-        SpellAbility chosen = voter.votedCard(DeckStrategies.lifelinkstrats, false, playing);
+        SpellAbility chosen = voter.votedCard(plan, false, playing);
         return chosen;
 
     }
@@ -57,7 +60,7 @@ public class PlayCards {
         SpellAbility sa;
         Card land = null;
 
-        land = voter.choseLand(DeckStrategies.lifelinkstrats, playing);
+        land = voter.choseLand(plan, playing);
 
         if (land != null) {
             sa = new LandAbility(land, controller, null);

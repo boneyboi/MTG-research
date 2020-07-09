@@ -11,66 +11,51 @@ package forge.game.research.decision.strategy;
 
 import forge.game.research.decision.strategy.template.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class DeckStrategies {
-    public static DeckStrategy lifelinkstrats;
-    public static DeckStrategy monoredStrats;
+    public static ArrayList<DeckStrategy> decks = new ArrayList<>();
 
     public DeckStrategies(){
         deckStratInit();
     }
 
     public void deckStratInit(){
-        this.lifelinkstrats = new DeckStrategy("LifeLink");
-        this.lifelinkstrats.addStrategy("Curve");
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(1));
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(2));
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(3));
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(4));
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(5));
+        JsonDeckStrategy builder = new JsonDeckStrategy();
+        File path = new File("./");
+        System.out.println(path.getAbsolutePath());
+        File folder = new File("forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks");
+        Path dir = folder.toPath();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)){
+            for (Path file: stream) {
+                DeckStrategy temp = builder.createDeckStrategy(file.toString());
+                decks.add(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public ArrayList<DeckStrategy> getDecks() {
+        return decks;
+    }
 
-        this.lifelinkstrats.addStrategy("Daxos");
-        this.lifelinkstrats.addNode(new StrategyNode(false));
-        this.lifelinkstrats.addTemplateCard(new TemplateName("Daxos, Blessed by the Sun"));
+    public int getNumDecks() {
+        return decks.size();
+    }
 
-        this.lifelinkstrats.addStrategy("Life Combo 1");
-        //TODO: This is put in one Node?
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplateLifeBuff());
-        this.lifelinkstrats.addNode(new StrategyNode(false));
-        this.lifelinkstrats.addTemplateCard(new TemplateLifelink());
-
-        this.lifelinkstrats.addStrategy("Removal");
-        //TODO: Repeat set to false by default?
-        this.lifelinkstrats.addNode(new StrategyNode());
-        this.lifelinkstrats.addTemplateCard(new TemplateRemoval());
-
-
-        this.monoredStrats = new DeckStrategy("MonoRed");
-        this.monoredStrats.addStrategy("Monored");
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateCard(new TemplatePermanentCMC(1));
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateCard(new TemplatePermanentCMC(2));
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateCard(new TemplatePermanentCMC(3));
-
-        this.monoredStrats.addStrategy("ChandraCade");
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateCard(new TemplateName( "Charndra's Spitfire"));
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateCard(new TemplateName("Cavalcade of Calamity"));
-        this.monoredStrats.addNode(new StrategyNode());
-        this.monoredStrats.addTemplateRequirement(new TemplateName("Chandra's Spitfire"));
-
-
+    public DeckStrategy getDeckNamed(String name) {
+        for (DeckStrategy strat: decks) {
+            if (strat.getName().equals(name)) {
+                return strat;
+            }
+        }
+        return null;
     }
 
 }

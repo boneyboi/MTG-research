@@ -10,7 +10,11 @@ import forge.game.research.decision.strategy.template.TemplateNonPermanentCMC;
 import forge.game.research.decision.strategy.template.TemplatePermanentCMC;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
@@ -32,7 +36,7 @@ public class DeckFileReaderTest {
     public void DeckConversionFromJsonTest() throws IOException {
 
         JsonDeckStrategy jsondeck = new JsonDeckStrategy();
-        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("C:\\Users\\deric\\Desktop\\MTG-research\\forge-master\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
+        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
         System.out.println(deckstrategy.getStrategies().get(0).getName());
         //Strategy temp = deckstrategy.getStrategies().get(0).;
         for(Strategy s : deckstrategy.getStrategies()){
@@ -95,5 +99,26 @@ public class DeckFileReaderTest {
         DeckStrategy deckstrategy = jsondeck.createDeckStrategy("src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
         DeckStrategyLogger dsl = new DeckStrategyLogger("src\\test\\java\\forge\\game\\research\\test\\test.log");
         dsl.logDeckStrategy(deckstrategy);
+    }
+
+    @Test
+    public void FullTest() {
+        ArrayList<DeckStrategy> decks = new ArrayList<>();
+        JsonDeckStrategy builder = new JsonDeckStrategy();
+        File folder = new File("src\\main\\java\\forge\\game\\research\\decision\\Decks");
+        Path dir = folder.toPath();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)){
+            for (Path file: stream) {
+                DeckStrategy temp = builder.createDeckStrategy(file.toString());
+                decks.add(temp);
+                assert(true) : "We added decks";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            assert(false) : "We didn't add decks";
+        }
+        for (DeckStrategy strat: decks) {
+            System.out.println(strat.getName());
+        }
     }
 }
