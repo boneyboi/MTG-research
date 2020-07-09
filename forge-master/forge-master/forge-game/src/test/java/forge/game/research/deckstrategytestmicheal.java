@@ -9,13 +9,13 @@ public class deckstrategytestmicheal {
 
     @Test
     public void testBuild() {
-        DeckStrategy testing = new DeckStrategy();
+        DeckStrategy testing = new DeckStrategy("test strat");
         assert  (testing.getStrategies().isEmpty()) : "testing not created";
     }
 
     @Test
     public void testAddStrategy() {
-        DeckStrategy testing = new DeckStrategy();
+        DeckStrategy testing = new DeckStrategy("test strat");
         testing.addStrategy("Curve");
         testing.addStrategy("Test");
         assert (testing.getStrategies().size() == 2) : "There are not enough strategies";
@@ -26,7 +26,7 @@ public class deckstrategytestmicheal {
 
     @Test
     public void testAddNodes() {
-        DeckStrategy testing = new DeckStrategy();
+        DeckStrategy testing = new DeckStrategy("test strat");
         testing.addStrategy("Curve");
         StrategyNode node = new StrategyNode(false);
         node.addCard(new TemplatePermanentCMC(1));

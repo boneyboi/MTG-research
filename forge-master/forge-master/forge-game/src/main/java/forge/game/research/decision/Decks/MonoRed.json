@@ -1,11 +1,19 @@
 [
   {
     "Strategies": {
-      "Strategy": {
-        "TemplateName": "Gingerbrute",
+      "Curve": {
+        "TemplatePermanentCMC": 1,
         "TemplatePermanentCMC": 2,
-        "TemplateLifelink": "lifelink",
-        "TemplateLifeBuff": "lifebuff"
+        "TemplatePermanentCMC": 3
+      },
+      "Main Damage Combo": {
+        "TemplateName": "Chandra's Spitfire",
+        "TemplateName": "Cavalcade of Calamity"
+      },
+      "Spell curve": {
+        "TemplateNonPermanentCMC": 1,
+        "TemplateNonPermanentCMC": 2,
+        "TemplateNonPermanentCMC": 3
       }
     }
   },

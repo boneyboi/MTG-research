@@ -15,7 +15,7 @@ import forge.game.spellability.SpellPermanent;
 
 public class TemplateNonPermanentCMC extends CardTemplate {
 
-    int cmc;
+    private int cmc;
     //TODO: Should this template include playing nonpermanent spells?
     //TODO: Make a new template for abilities?
     public TemplateNonPermanentCMC(int cmc) {

@@ -45,6 +45,6 @@ public abstract class CardTemplate{
 
     @Override
     public String toString(){
-        return this.getClass().toString();
+        return this.getClass().getSimpleName();
     }
 }

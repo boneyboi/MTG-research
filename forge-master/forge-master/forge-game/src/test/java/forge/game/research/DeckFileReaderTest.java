@@ -6,6 +6,7 @@ import forge.game.card.Card;
 import forge.game.research.decision.strategy.*;
 import forge.game.research.decision.strategy.template.CardTemplate;
 import forge.game.research.decision.strategy.template.TemplateName;
+import forge.game.research.decision.strategy.template.TemplateNonPermanentCMC;
 import forge.game.research.decision.strategy.template.TemplatePermanentCMC;
 import org.junit.Test;
 
@@ -31,13 +32,25 @@ public class DeckFileReaderTest {
     public void DeckConversionFromJsonTest() throws IOException {
 
         JsonDeckStrategy jsondeck = new JsonDeckStrategy();
-        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("C:\\Users\\deric\\Desktop\\MTG-research\\forge-master\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks\\LifeLink.json");
+        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("C:\\Users\\deric\\Desktop\\MTG-research\\forge-master\\forge-master\\forge-game\\src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
         System.out.println(deckstrategy.getStrategies().get(0).getName());
         //Strategy temp = deckstrategy.getStrategies().get(0).;
         for(Strategy s : deckstrategy.getStrategies()){
             s.reset();
-            for(CardTemplate c : s.get(0).getCards()){
-                System.out.println(((TemplatePermanentCMC) c).getCMC());
+            while(s.hasNext()){
+                StrategyNode snode = s.next();
+                DoublyLinkedList<CardTemplate> cards = snode.getCards();
+                CardTemplate c = snode.nextCard();
+                System.out.println(c.toString());
+                if(c.getClass().equals(TemplateName.class)){
+                    System.out.println(((TemplateName)c).getName());
+                }
+                else if(c.getClass().equals(TemplatePermanentCMC.class)){
+                    System.out.println(((TemplatePermanentCMC)c).getCMC());
+                }
+                else if(c.getClass().equals(TemplateNonPermanentCMC.class)){
+                    System.out.println(((TemplateNonPermanentCMC)c).getCMC());
+                }
             }
         }
         /*or(CardTemplate c : deckstrategy.getStrategies().get(0).next().getCards()){
@@ -66,7 +79,7 @@ public class DeckFileReaderTest {
 
     @Test
     public void addinggettingcardtest(){
-        DeckStrategy deckStrategy = new DeckStrategy();
+        DeckStrategy deckStrategy = new DeckStrategy("bruh strategy");
         deckStrategy.addStrategy("bruh");
         System.out.println(deckStrategy.getStrategies().get(0).getName());
         deckStrategy.getStrategies().get(0).pushFront(new StrategyNode());
@@ -74,5 +87,13 @@ public class DeckFileReaderTest {
         deckStrategy.getStrategies().get(0).pushCard(0, new TemplateName("bruhmoment"));
         deckStrategy.getStrategies().get(0).reset();
         System.out.println(((TemplateName)deckStrategy.getStrategies().get(0).next().nextCard()).getName());
+    }
+
+    @Test
+    public void DeckLoggerTest() throws IOException {
+        JsonDeckStrategy jsondeck = new JsonDeckStrategy();
+        DeckStrategy deckstrategy = jsondeck.createDeckStrategy("src\\main\\java\\forge\\game\\research\\decision\\Decks\\MonoRed.json");
+        DeckStrategyLogger dsl = new DeckStrategyLogger("src\\test\\java\\forge\\game\\research\\test\\test.log");
+        dsl.logDeckStrategy(deckstrategy);
     }
 }

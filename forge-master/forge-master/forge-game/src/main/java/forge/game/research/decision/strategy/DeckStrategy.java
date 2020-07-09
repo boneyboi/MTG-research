@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class DeckStrategy {
 
     private ArrayList<Strategy> deckStrategy;
+    private String name;
 
-    public DeckStrategy(){
+    public DeckStrategy(String name){
         this.deckStrategy = new ArrayList<Strategy>();
+        this.name = name;
     }
 
     public void addStrategy(String name){ this.deckStrategy.add(new Strategy(name)); }
@@ -80,5 +82,9 @@ public class DeckStrategy {
      */
     public ArrayList<Strategy> getStrategies(){
         return this.deckStrategy;
+    }
+
+    public String getName(){
+        return this.name;
     }
 }

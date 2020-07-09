@@ -22,7 +22,7 @@ public class DeckStrategies {
     }
 
     public void deckStratInit(){
-        this.lifelinkstrats = new DeckStrategy();
+        this.lifelinkstrats = new DeckStrategy("LifeLink");
         this.lifelinkstrats.addStrategy("Curve");
         this.lifelinkstrats.addNode(new StrategyNode());
         this.lifelinkstrats.addTemplateCard(new TemplatePermanentCMC(1));
@@ -53,7 +53,7 @@ public class DeckStrategies {
         this.lifelinkstrats.addTemplateCard(new TemplateRemoval());
 
 
-        this.monoredStrats = new DeckStrategy();
+        this.monoredStrats = new DeckStrategy("MonoRed");
         this.monoredStrats.addStrategy("Monored");
         this.monoredStrats.addNode(new StrategyNode());
         this.monoredStrats.addTemplateCard(new TemplatePermanentCMC(1));

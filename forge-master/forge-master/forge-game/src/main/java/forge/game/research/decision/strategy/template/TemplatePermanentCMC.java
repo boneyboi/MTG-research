@@ -14,7 +14,7 @@ import forge.game.spellability.SpellPermanent;
 
 public class TemplatePermanentCMC extends CardTemplate {
 
-    int cmc;
+    private int cmc;
     //TODO: Should this template include playing nonpermanent spells?
     //TODO: Make a new template for abilities?
     public TemplatePermanentCMC(int cmc) {
@@ -30,7 +30,7 @@ public class TemplatePermanentCMC extends CardTemplate {
     @Override
     public boolean matches(SpellAbility sa){
         if (sa instanceof SpellPermanent){
-            return (sa.getPayCosts().getTotalMana().getCMC() == cmc);
+            return (sa.getPayCosts().getTotalMana().getCMC() == this.cmc);
         }
         return false;
     }
