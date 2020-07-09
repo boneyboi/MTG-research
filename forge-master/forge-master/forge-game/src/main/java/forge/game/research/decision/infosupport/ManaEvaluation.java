@@ -51,8 +51,14 @@ public class ManaEvaluation {
         getMana();
     }
 
+
     public ArrayList<Integer> getManaFromHand() {
         getMana(ZoneType.Hand);
+        return getManaCurrent();
+    }
+
+    public ArrayList<Integer> getManaFromCards(ArrayList<Card> cards) {
+        getManaFromSet(cards);
         return getManaCurrent();
     }
 
@@ -163,6 +169,49 @@ public class ManaEvaluation {
         plainsNum = 0;
 
         for (Card c: controller.getZone(zone)) {
+            if (!c.isTapped()) {
+                for (SpellAbility sa : c.getManaAbilities()) {
+                    String type = sa.getMapParams().get("Produced");
+                    if (type.contains(RED)) {
+                        mountainNum += 1;
+                        manaPool += 1;
+                    }
+                    if (type.contains(BLACK)) {
+                        swampNum += 1;
+                        manaPool += 1;
+                    }
+                    if (type.contains(BLUE)) {
+                        islandNum += 1;
+                        manaPool += 1;
+                    }
+                    if (type.contains(GREEN)) {
+                        forestNum += 1;
+                        manaPool += 1;
+                    }
+                    if (type.contains(WHITE)) {
+                        plainsNum += 1;
+                        manaPool += 1;
+                    }
+
+                }
+                //Accounts for cards with multiple mana abiities, but can only use one per turn
+                if (!c.getManaAbilities().isEmpty()) {
+                    manaPool += 1 - c.getManaAbilities().size();
+                }
+            }
+        }
+
+    }
+
+    private void getManaFromSet(ArrayList<Card> cards) {
+        manaPool = 0;
+        mountainNum = 0;
+        swampNum = 0;
+        islandNum = 0;
+        forestNum = 0;
+        plainsNum = 0;
+
+        for (Card c: cards) {
             if (!c.isTapped()) {
                 for (SpellAbility sa : c.getManaAbilities()) {
                     String type = sa.getMapParams().get("Produced");

@@ -93,6 +93,7 @@ public class BallotBox {
             }
             System.out.println('|');
         }
+        System.out.println();
     }
 
     /**

@@ -78,9 +78,9 @@ public class ViablePlays {
      * This is for mulliganing purposes
      * @return
      */
-    public ArrayList<SpellAbility> getPossibilities() {
+    public ArrayList<SpellAbility> getPossibilities(ArrayList<Card> cards) {
         emptyOptions();
-        buildPossibleOptions();
+        buildPossibleOptions(cards);
         return plays;
     }
 
@@ -114,6 +114,17 @@ public class ViablePlays {
                         sa.canPlay() &&
                         areColorsAvaliable(sa) &&
                         canTarget(sa)) {
+                    plays.add(sa);
+                }
+            }
+        }
+    }
+
+    private void addCardOptions(ArrayList<Card> cards) {
+        for (Card c: cards) {
+            for (SpellAbility sa: c.getNonManaAbilities()) {
+                if (sa.getPayCosts().getTotalMana().getCMC() <= (int) manapool.get(0) &&
+                        areColorsAvaliable(sa)) {
                     plays.add(sa);
                 }
             }
@@ -176,15 +187,15 @@ public class ViablePlays {
         addZoneOptions(ZoneType.Exile);
     }
 
-    private void buildPossibleOptions() {
+    private void buildPossibleOptions(ArrayList<Card> cards) {
         ManaEvaluation manaOptions = new ManaEvaluation(controller);
-        manapool = manaOptions.getManaFromHand();
+        manapool = manaOptions.getManaFromCards(cards);
         whiteMana = manapool.get(1);
         blueMana = manapool.get(2);
         blackMana = manapool.get(3);
         redMana = manapool.get(4);
         greenMana = manapool.get(5);
-        addZoneOptions(ZoneType.Hand);
+        addCardOptions(cards);
     }
 
     public void setManaAfter(ArrayList<SpellAbility> sa) {

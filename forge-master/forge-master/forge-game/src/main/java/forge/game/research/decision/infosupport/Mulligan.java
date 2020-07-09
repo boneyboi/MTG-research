@@ -15,6 +15,8 @@ import forge.game.research.zone.DeckEval;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
+import java.util.ArrayList;
+
 public class Mulligan {
 
     Player controller;
@@ -39,13 +41,21 @@ public class Mulligan {
      */
     public CardCollection returnCards(Player mullingPlayer, int cardsNeeded) {
         CardCollection returning = new CardCollection();
-        CardCollection hand = new CardCollection();
+        ArrayList<Card> hand = new ArrayList<>();
+        ArrayList<Card> keeping = new ArrayList<>();
+        ArrayList<Card> compare = new ArrayList<>();
         for (Card c: mullingPlayer.getZone(ZoneType.Hand)) {
             hand.add(c);
         }
-        for (int count=0; count<cardsNeeded; count++) {
-            //TODO: Find our worst card.
-            returning.add(hand.remove(0));
+        //TODO:Create Keeping
+        for (int i = 0; i<(STARTINGHANDSIZE - cardsNeeded); i++) {
+            keeping.add(hand.get(i));
+        }
+
+        for (Card c: hand) {
+            if (!keeping.contains(c)) {
+                returning.add(c);
+            }
         }
         return returning;
     }
@@ -57,25 +67,13 @@ public class Mulligan {
      */
     public boolean shouldMull (Player player) {
         //controls the max number of times Ai should mulligan
-        if(timeMull == STOPMULL){return false;}
-
-        timeMull++;
-        
-        int lands = 0;
-
-        for(Card c : player.getCardsIn(ZoneType.Hand)){
-            if(c.isLand()){lands++;}
-        }
-        if (doesNotHaveLands(player)) {
+        HandAssessment decider = new HandAssessment(player, player.getFacade().getPlan());
+        if(timeMull == STOPMULL) {
             return false;
+        } else {
+            timeMull++;
+            return !(decider.judgeHand());
         }
-        DeckEval deckeval = new DeckEval(player);
-        //take the average mana cost-1 and decide whether or not to mull if we dont have at least that many lands
-        if(lands < deckeval.averageManaCost()-1 || lands > (STARTINGHANDSIZE - timeMull) - NONLANDSNEEDED){
-            return true;
-        }
-        //should Ai mull?
-        return false;
     }
 
     /**

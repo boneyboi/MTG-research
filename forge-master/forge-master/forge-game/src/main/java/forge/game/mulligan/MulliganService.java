@@ -74,6 +74,9 @@ public class MulliganService {
                     continue;
                 }
                 Player p = mulligan.getPlayer();
+                if (p.getFacade() != null) {
+                    p.getFacade().initalizeStrat();
+                }
 
                 //research code if/else
                 if (p.getFacade()!= null) {

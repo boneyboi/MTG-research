@@ -38,6 +38,10 @@ public class Facade {
         System.out.println(plan.getName());
     }
 
+    public DeckStrategy getPlan() {
+        return plan;
+    }
+
 
     /**
      * Use this constructor only for testing reasons really.
