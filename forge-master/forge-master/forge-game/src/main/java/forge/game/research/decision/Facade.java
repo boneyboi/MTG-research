@@ -31,7 +31,7 @@ public class Facade {
     public Facade(Player p) {
         controller = p;
         trial = new DeckStrategies();
-        plan = trial.getDecks().get(0);
+        plan = getDeckStrat(trial.getDecks());
         System.out.println(plan.getName());
     }
 
@@ -154,7 +154,7 @@ public class Facade {
      * Method gets the name of a deck.
      * @return String, name of Ai's deck
      */
-     public String getNameStrategy () {
+     private String getNameDeckAi () {
 
          String deckName = this.controller.getRegisteredPlayer().getDeck().getName();
 
@@ -166,16 +166,22 @@ public class Facade {
      * Method gets the name of a strategy based on name of a deck
      * @return Strategy
      */
-    /**
-    public DeckStrategy getDeckStrat() {
+    public DeckStrategy getDeckStrat(ArrayList<DeckStrategy> deckStrategyList) {
         DeckStrategy ds = null;
-        String deckName = getNameStrategy();
-        ArrayList<Strategy> allDS = getStrategies();
+        String deckName = getNameDeckAi();
+        ArrayList<DeckStrategy> allDS = deckStrategyList;
 
-        for
+        for (DeckStrategy strat : allDS) {
+            if (deckName.equalsIgnoreCase(strat.getName())) {
+                ds = strat;
+            }
+        }
+
+        if (ds == null) {
+            ds = allDS.get(0);
+        }
 
         return ds;
     }
-    */
 
 }
