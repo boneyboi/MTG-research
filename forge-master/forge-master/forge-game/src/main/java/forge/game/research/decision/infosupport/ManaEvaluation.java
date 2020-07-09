@@ -64,19 +64,22 @@ public class ManaEvaluation {
     public ArrayList<Integer> getManaRemaining(ArrayList<SpellAbility> plays) {
         checkForPlayingLands(plays);
         if (plainsAvaliable) {
-            plainsNum += 1;
+            plainsNum ++;
         }
         if (islandAvaliable) {
-            islandNum += 1;
+            islandNum ++;
         }
         if (swampAvaliable) {
-            swampNum += 1;
+            swampNum ++;
         }
         if (mountainAvaliable) {
-            mountainNum += 1;
+            mountainNum ++;
         }
         if (forestAvaliable) {
-            forestNum += 1;
+            forestNum ++;
+        }
+        if (manaAvaliable) {
+            manaPool ++;
         }
         for (SpellAbility sa: plays) {
             if (sa instanceof LandAbility){
@@ -215,9 +218,7 @@ public class ManaEvaluation {
                 && controller.getLandsPlayedThisTurn() == 0) {
             for (Card c : controller.getZone(ZoneType.Hand)) {
                 if (c.isLand()
-                        && !c.hasKeyword("ETBReplacement:Other:LandTapped")
-                        && !c.hasKeyword("CARDNAME enters the battlefield tapped.")
-                        && !c.hasKeyword("ETBReplacement:Other:DBTap")) {
+                        && !c.entersTapped()) {
                     for (SpellAbility sa : c.getManaAbilities()) {
                         String type = sa.getMapParams().get("Produced");
                         if (type.contains(RED)) {
@@ -244,20 +245,10 @@ public class ManaEvaluation {
                     }
                 }
             }
-            if (manaAvaliable) {
-                manaPool += 1;
-            }
         }
     }
 
     public void checkForPlayingLands(ArrayList<SpellAbility> spellList) {
-        mountainAvaliable = false;
-        swampAvaliable = false;
-        forestAvaliable = false;
-        plainsAvaliable = false;
-        islandAvaliable = false;
-        manaAvaliable = false;
-
         ArrayList<Card> lands = new ArrayList<Card>();
         for (SpellAbility spell: spellList) {
             if (spell instanceof LandAbility) {
@@ -267,9 +258,7 @@ public class ManaEvaluation {
 
         for (Card c : lands) {
             if (c.isLand()
-                    && !c.hasKeyword("ETBReplacement:Other:LandTapped")
-                    && !c.hasKeyword("CARDNAME enters the battlefield tapped.")
-                    && !c.hasKeyword("ETBReplacement:Other:DBTap")) {
+                    && !c.entersTapped()) {
                 for (SpellAbility sa : c.getManaAbilities()) {
                     String type = sa.getMapParams().get("Produced");
                     if (type.contains(RED)) {
@@ -292,12 +281,8 @@ public class ManaEvaluation {
                         plainsAvaliable = true;
                         manaAvaliable = true;
                     }
-
                 }
             }
-        }
-        if (manaAvaliable) {
-            manaPool += 1;
         }
     }
 

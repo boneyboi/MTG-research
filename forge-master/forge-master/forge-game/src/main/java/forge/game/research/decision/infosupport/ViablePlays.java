@@ -11,6 +11,8 @@ package forge.game.research.decision.infosupport;
 import forge.card.mana.ManaCostShard;
 import forge.game.card.Card;
 import forge.game.player.Player;
+import forge.game.research.decision.infosupport.removal.RemovalChecker;
+import forge.game.research.decision.infosupport.removal.RemovalList;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -110,7 +112,8 @@ public class ViablePlays {
             for (SpellAbility sa: c.getNonManaAbilities()) {
                 if (sa.getPayCosts().getTotalMana().getCMC() <= (int) manapool.get(0) &&
                         sa.canPlay() &&
-                        areColorsAvaliable(sa)) {
+                        areColorsAvaliable(sa) &&
+                        canTarget(sa)) {
                     plays.add(sa);
                 }
             }
@@ -126,6 +129,35 @@ public class ViablePlays {
                 lands.add(c);
             }
         }
+    }
+
+    private boolean canTarget(SpellAbility sa) {
+        RemovalChecker rc = new RemovalChecker();
+        ArrayList<Card> options = new ArrayList<>();
+        RemovalList list = new RemovalList();
+
+        if (!sa.isTargetNumberValid()) {
+            for (Player p: controller.getGame().getPlayers()) {
+                if (sa.canTarget(p)) {
+                    return true;
+                }
+            }
+            if (!rc.shouldTargetOthers(sa.getHostCard())){
+                for (Card c: controller.getZone(ZoneType.Battlefield)) {
+                    options.add(c);
+                }
+            } else {
+                for (Card c: controller.getOpponents().get(0).getZone(ZoneType.Battlefield)) {
+                    options.add(c);
+                }
+            }
+            Card chosen = list.getBiggestThreat(options);
+            if(sa.canTarget(chosen)) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     /**

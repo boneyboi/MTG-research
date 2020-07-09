@@ -18,6 +18,7 @@ import forge.game.research.decision.infosupport.BallotBox;
 import forge.game.research.decision.infosupport.PayForCosts;
 import forge.game.research.decision.strategy.DeckStrategies;
 import forge.game.research.decision.strategy.DeckStrategy;
+import forge.game.research.decision.strategy.Strategy;
 import forge.game.spellability.SpellAbility;
 
 public class Facade {
@@ -150,5 +151,22 @@ public class Facade {
 
          return deckName;
      }
+
+     //TODO: Finish this when we can obtain a list of deck strategy
+    /**
+     * Method gets the name of a strategy based on name of a deck
+     * @return Strategy
+     */
+    /**
+    public DeckStrategy getDeckStrat() {
+        DeckStrategy ds = null;
+        String deckName = getNameStrategy();
+        ArrayList<Strategy> allDS = getStrategies();
+
+        for
+
+        return ds;
+    }
+    */
 
 }
