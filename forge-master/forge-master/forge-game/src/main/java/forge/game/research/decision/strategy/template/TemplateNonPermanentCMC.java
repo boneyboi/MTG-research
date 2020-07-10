@@ -30,7 +30,7 @@ public class TemplateNonPermanentCMC extends CardTemplate {
      */
     @Override
     public boolean matches(SpellAbility sa){
-        if (sa instanceof SpellApiBased){
+        if (!(sa instanceof SpellPermanent)){
             return (sa.getPayCosts().getTotalMana().getCMC() == cmc);
         }
         return false;

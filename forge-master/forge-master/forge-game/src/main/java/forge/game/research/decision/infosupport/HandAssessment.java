@@ -16,8 +16,8 @@ public class HandAssessment {
 
     public Player controller;
     public DeckStrategy strategy;
-    private static final double WIDTHREQ = .15;
-    private static final double DEPTHREQ = .15;
+    private static final double WIDTHREQ = .3;
+    private static final double DEPTHREQ = .3;
 
     public HandAssessment(Player player, DeckStrategy strats) {
         controller = player;

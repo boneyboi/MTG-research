@@ -16,6 +16,7 @@ import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Mulligan {
 
@@ -44,12 +45,20 @@ public class Mulligan {
         ArrayList<Card> hand = new ArrayList<>();
         ArrayList<Card> keeping = new ArrayList<>();
         ArrayList<Card> compare = new ArrayList<>();
+        HandAssessment decider = new HandAssessment(mullingPlayer, mullingPlayer.getFacade().getPlan());
         for (Card c: mullingPlayer.getZone(ZoneType.Hand)) {
             hand.add(c);
         }
-        //TODO:Create Keeping
-        for (int i = 0; i<(STARTINGHANDSIZE - cardsNeeded); i++) {
-            keeping.add(hand.get(i));
+        for (List<Card> temp : new CombinationIterable<>(hand))  {
+            if (temp.size() == (STARTINGHANDSIZE - cardsNeeded)) {
+                ArrayList<Card> combination = new ArrayList<>();
+                combination.addAll(temp);
+                if (keeping.isEmpty()) {
+                    keeping = combination;
+                } else {
+                    keeping = decider.compareHands(keeping, combination);
+                }
+            }
         }
 
         for (Card c: hand) {
@@ -57,6 +66,7 @@ public class Mulligan {
                 returning.add(c);
             }
         }
+        System.out.print(returning);
         return returning;
     }
 

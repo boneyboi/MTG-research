@@ -75,11 +75,11 @@ public class JsonDeckStrategy {
         while(!gsonreader.peek().equals(JsonToken.END_DOCUMENT)){
             JsonToken data = gsonreader.peek();
             if(data.equals(JsonToken.BEGIN_ARRAY)){
-                System.out.println();
+                //System.out.println();
                 gsonreader.beginArray();
             }
             else if (data.equals(JsonToken.BEGIN_OBJECT)){
-                System.out.println();
+                //System.out.println();
                 gsonreader.beginObject();
                 if(layer==0){
                     inParameters = !inParameters;
@@ -89,13 +89,13 @@ public class JsonDeckStrategy {
                         String name = gsonreader.nextName();
                         deckStrategyResult.addStrategy(name);
                         stratindex++;
-                        System.out.println(name);
+                        //System.out.println(name);
                     }
                 }
                 layer++;
             }
             else if(data.equals(JsonToken.NAME)){
-                System.out.println(data);
+                //System.out.println(data);
                 String name = gsonreader.nextName();
                 if(layer==2){
                     if(inParameters) {
@@ -185,31 +185,31 @@ public class JsonDeckStrategy {
                 }
             }
             else if(data.equals(JsonToken.STRING)){
-                System.out.println(data);
+               // System.out.println(data);
                 gsonreader.skipValue();
                 //deckStrategyResult.addTemplateCard(stratindex, new TemplateName(gsonreader.nextString()));
                 //cardindex++;
             }
             else if(data.equals(JsonToken.NUMBER)){
-                System.out.println(data);
+                //System.out.println(data);
                 gsonreader.skipValue();
                 //cardindex++;
             }
             else if(data.equals(JsonToken.END_OBJECT)){
-                System.out.println();
+                //System.out.println();
                 gsonreader.endObject();
                 cardindex=0;
                 layer--;
             }
             else if(data.equals(JsonToken.END_ARRAY)){
-                System.out.println();
+                //System.out.println();
                 gsonreader.endArray();
             }
             else if(data.equals(JsonToken.END_DOCUMENT)){
                 gsonreader.skipValue();
             }
 
-            System.out.println();
+            //System.out.println();
 
         }
         gsonreader.close();
