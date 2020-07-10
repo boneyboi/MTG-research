@@ -36,7 +36,7 @@ public class RemovalChecker {
      * @param spellability -
      * @return
      */
-    private boolean isRemoval(SpellAbility spellability) {
+    public boolean isRemoval(SpellAbility spellability) {
         boolean targetOthers = false;
 
         SpellAbility sa = spellability;
