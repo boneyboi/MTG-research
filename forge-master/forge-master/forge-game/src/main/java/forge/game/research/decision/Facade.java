@@ -45,11 +45,6 @@ public class Facade {
         return plan;
     }
 
-
-    /**
-     * Use this constructor only for testing reasons really.
-     */
-
     /**
      * Used when deciding attackers
      * @param possAttackers : list
@@ -90,7 +85,7 @@ public class Facade {
 
     /**
      *
-     * @return
+     * @return spellability - what is to be played
      */
     public ArrayList<SpellAbility> getNextPlay(){
         if (plays.isEmpty() || !plays.get(0).canPlay())
