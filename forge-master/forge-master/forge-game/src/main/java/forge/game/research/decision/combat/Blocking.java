@@ -12,18 +12,36 @@ public class Blocking {
     }
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> attackers, ArrayList<Card> blockers) {
-        return getBlocksThird(getBlocksSecond(getBlocksFirst(attackers, blockers)));
+        return getChumpBlocks(removeExcessBlockers(knapsacking(attackers, blockers)));
     }
 
-    public Map<Card, ArrayList<Card>> getBlocksFirst(ArrayList<Card> attackers, ArrayList<Card> blockers) {
+    /**
+     * Runs knapsack with lethality:
+     *
+     * @param attackers
+     * @param blockers
+     * @return
+     */
+    public Map<Card, ArrayList<Card>> knapsacking(ArrayList<Card> attackers, ArrayList<Card> blockers) {
 
     }
 
-    public Map<Card, ArrayList<Card>> getBlocksSecond(Map<Card, ArrayList<Card>> list) {
+    /**
+     * Checks to see if attacking creature doesn't die, remove all blockers except for
+     * weakest creature
+     * @param list
+     * @return
+     */
+    public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
 
     }
 
-    public Map<Card, ArrayList<Card>> getBlocksThird(Map<Card, ArrayList<Card>> list) {
+    /**
+     * Reassigns blockers if we have any excess blockers
+     * @param list
+     * @return
+     */
+    public Map<Card, ArrayList<Card>> getChumpBlocks (Map<Card, ArrayList<Card>> list) {
 
     }
 }

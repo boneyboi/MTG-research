@@ -28,7 +28,7 @@ public class RemovalChecker {
     }
 
     /**
-     * Helper method, checks to see if a spell ability of a card constitutes as removal:
+     * Checks to see if a spell ability of a card constitutes as removal:
      * exiling a card/all cards
      * destroying a card/all cards
      * prohibits a card from doing certain actions (i.e. Pacifism)
