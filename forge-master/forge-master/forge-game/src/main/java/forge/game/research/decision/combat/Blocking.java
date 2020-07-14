@@ -1,14 +1,18 @@
 package forge.game.research.decision.combat;
 
 import forge.game.card.Card;
+import forge.game.combat.Combat;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Blocking {
 
-    public void Blocking(){
+    private Map<ArrayList, Integer> cache;
+    private Combat combat;
 
+    public void Blocking(Combat inCombat){
+        this.combat = inCombat;
     }
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> attackers, ArrayList<Card> blockers) {
