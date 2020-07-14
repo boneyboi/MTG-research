@@ -7,12 +7,14 @@ import java.util.Map;
 
 public class Blocking {
 
+    private final int REALLYHIGHVALUE = 50000;
+
     public void Blocking(){
 
     }
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> attackers, ArrayList<Card> blockers) {
-        return getChumpBlocks(removeExcessBlockers(knapsacking(attackers, blockers)));
+        return getChumpBlocks(removeExcessBlockers(knapsacking(attackers, blockers)), blockers);
     }
 
     /**
@@ -41,7 +43,15 @@ public class Blocking {
      * @param list
      * @return
      */
-    public Map<Card, ArrayList<Card>> getChumpBlocks (Map<Card, ArrayList<Card>> list) {
+    public Map<Card, ArrayList<Card>> getChumpBlocks (Map<Card, ArrayList<Card>> list, ArrayList<Card> blockers) {
 
+        return list;
+    }
+
+    public int targetHealthVal(int life, int damage) {
+        if( damage> life) {
+            return REALLYHIGHVALUE;
+        }
+        return damage;
     }
 }
