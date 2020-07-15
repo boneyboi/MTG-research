@@ -945,12 +945,8 @@ public class AiBlockController {
             Blocking blocks = new Blocking(ai, combat);
             ArrayList<Card> tempAttackers = new ArrayList<>();
             ArrayList<Card> tempBlockers = new ArrayList<>();
-            for (Card c: possibleBlockers) {
-                tempBlockers.add(c);
-            }
-            for (Card c: attackers) {
-                tempAttackers.add(c);
-            }
+            tempBlockers.addAll(possibleBlockers);
+            tempAttackers.addAll(attackers);
             blocks.getBlocks(tempAttackers, tempBlockers);
         } else {
 
