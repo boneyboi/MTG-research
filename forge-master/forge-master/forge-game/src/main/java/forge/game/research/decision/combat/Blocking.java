@@ -18,6 +18,7 @@ public class Blocking {
     private final int REALLYHIGHVALUE = 50000;
     private ArrayList<Card> attackers;
     private ArrayList<Card> blockers;
+    private HashMap<ArrayList<Object>, Double> memo = new HashMap();
 
     public void Blocking() {
     }
@@ -64,6 +65,15 @@ public class Blocking {
         return list;
     }
     public double knapsacking(int attackerToughness, Card attacker, ArrayList<Card> blockers) {
+        ArrayList<Object> temp = new ArrayList<>();
+        temp.add(attackerToughness);
+        temp.add(attacker);
+        temp.add(blockers);
+        if (memo.containsKey(temp)) {
+            return memo.get(temp);
+        }
+
+
         if(blockers.size()==0 || attackerToughness<=0){
             return 0;
         }
@@ -74,12 +84,14 @@ public class Blocking {
             return knapsacking(attackerToughness, attacker, blockers);
         }
         else{
-            return max(
+            double toSave = max(
                     knapsacking(attackerToughness, attacker,
                             (ArrayList<Card>)blockers.subList(0, blockers.size()-1)),
                     knapsacking(attackerToughness - blockers.get(blockers.size()-1).getNetPower(),
                             attacker, (ArrayList<Card>)blockers.subList(0, blockers.size()-1))+evaluateBlock(combatlist)
             );
+            memo.put(temp, toSave);
+            return toSave;
         }
 
     }
