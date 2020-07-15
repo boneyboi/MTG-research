@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Double.POSITIVE_INFINITY;
+import static java.lang.Double.max;
 
 public class Blocking {
 
@@ -62,7 +63,26 @@ public class Blocking {
         }
         return list;
     }
+    public double knapsacking(int attackerToughness, Card attacker, ArrayList<Card> blockers) {
+        if(blockers.size()==0 || attackerToughness<=0){
+            return 0;
+        }
+        ArrayList<Card> combatlist = new ArrayList<Card>();
+        combatlist.add(attacker);
+        combatlist.add(blockers.get(blockers.size() - 1));
+        if(evaluateBlock(combatlist) <= 0){
+            return knapsacking(attackerToughness, attacker, blockers);
+        }
+        else{
+            return max(
+                    knapsacking(attackerToughness, attacker,
+                            (ArrayList<Card>)blockers.subList(0, blockers.size()-1)),
+                    knapsacking(attackerToughness - blockers.get(blockers.size()-1).getNetPower(),
+                            attacker, (ArrayList<Card>)blockers.subList(0, blockers.size()-1))+evaluateBlock(combatlist)
+            );
+        }
 
+    }
     /**
      * Checks to see if attacking creature doesn't die, remove all blockers except for
      * weakest creature
