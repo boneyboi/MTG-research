@@ -128,13 +128,17 @@ public class Blocking {
 
         //Save the player first
         for (int i = 0; i == ableBlockers.size(); i++) {
+            //Blockers are ordered weakest first, so we will block weakest to strongest
             Card blocker = ableBlockers.get(i);
             int max = 0;
             Card attacker = null;
+
+            //Find the strongest damage we can block
             for (Card card: attackers) {
                 if (list.get(card).isEmpty()) {
                     int priority = 0;
                     if (defender == combat.getDefenderByAttacker(card)) {
+                        //TODO: Account for trample here.
                         priority = targetHealthVal(defender, card.getCurrentPower());
                     }
                     if (priority> max) {
@@ -151,6 +155,9 @@ public class Blocking {
                 list.replace(attacker, temp);
             }
         }
+        //TODO: chump block for planeswalkers
+
+
         return list;
     }
 
