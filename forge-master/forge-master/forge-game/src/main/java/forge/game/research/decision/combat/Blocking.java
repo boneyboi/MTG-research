@@ -35,8 +35,6 @@ public class Blocking {
     }
 
     public void getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
-
-    public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
         Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
