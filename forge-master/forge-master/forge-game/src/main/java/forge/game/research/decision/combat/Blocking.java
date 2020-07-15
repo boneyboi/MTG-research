@@ -26,7 +26,7 @@ public class Blocking {
     private Player defender;
 
 
-    public void Blocking(Player player, Combat inCombat){
+    public Blocking(Player player, Combat inCombat){
         this.combat = inCombat;
         front = new Front();
         defender = player;
@@ -36,7 +36,7 @@ public class Blocking {
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
-        return getChumpBlocks(removeExcessBlockers(knapsacking(attackers, blockers)));
+        return getChumpBlocks((knapsacking(attackers, blockers)));
     }
      */
 
