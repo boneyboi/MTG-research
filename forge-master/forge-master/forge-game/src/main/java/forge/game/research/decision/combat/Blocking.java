@@ -7,9 +7,11 @@ import forge.game.player.Player;
 import forge.game.research.card.Front;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Double.POSITIVE_INFINITY;
+import static java.lang.Double.max;
 
 public class Blocking {
 
@@ -32,11 +34,21 @@ public class Blocking {
         defender = player;
     }
 
+    public void getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
-        return getChumpBlocks((knapsacking(attackers, blockers)));
+        Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
+        AssignBlocks(combatMap);
+    }
+
+    public void AssignBlocks(Map<Card, ArrayList<Card>> list){
+        for (Card attacker: combat.getAttackers()) {
+            for (Card blocker: list.get(attacker)){
+                combat.addBlocker(attacker, blocker);
+            }
+        }
     }
 
 
@@ -48,9 +60,32 @@ public class Blocking {
      * @return
      */
     public Map<Card, ArrayList<Card>> knapsacking(ArrayList<Card> attackers, ArrayList<Card> blockers) {
-        return null;
+        Map<Card, ArrayList<Card>> list = new HashMap<>();
+        for (Card card: attackers) {
+            list.put(card, new ArrayList<>());
+        }
+        return list;
     }
+    public double knapsacking(int attackerToughness, Card attacker, ArrayList<Card> blockers) {
+        if(blockers.size()==0 || attackerToughness<=0){
+            return 0;
+        }
+        ArrayList<Card> combatlist = new ArrayList<Card>();
+        combatlist.add(attacker);
+        combatlist.add(blockers.get(blockers.size() - 1));
+        if(evaluateBlock(combatlist) <= 0){
+            return knapsacking(attackerToughness, attacker, blockers);
+        }
+        else{
+            return max(
+                    knapsacking(attackerToughness, attacker,
+                            (ArrayList<Card>)blockers.subList(0, blockers.size()-1)),
+                    knapsacking(attackerToughness - blockers.get(blockers.size()-1).getNetPower(),
+                            attacker, (ArrayList<Card>)blockers.subList(0, blockers.size()-1))+evaluateBlock(combatlist)
+            );
+        }
 
+    }
     /**
      * Checks to see if attacking creature doesn't die, remove all blockers except for
      * weakest creature
@@ -110,7 +145,7 @@ public class Blocking {
         ableBlockers = getSortedList(ableBlockers);
 
         //Save the player first
-        for (int i = 0; i == ableBlockers.size(); i++) {
+        for (int i = 0; i < ableBlockers.size(); i++) {
             //Blockers are ordered weakest first, so we will block weakest to strongest
             Card blocker = ableBlockers.get(i);
             int max = 0;
