@@ -21,11 +21,14 @@ public class Blocking {
     private Combat combat;
     private int excessBlockers;
     private Front front;
+    private Player defender;
 
 
-    public void Blocking(Combat inCombat){
+
+    public void Blocking(Combat inCombat, Player defendingPlayer){
         this.combat = inCombat;
         front = new Front();
+        defender = defendingPlayer;
     }
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
@@ -82,12 +85,8 @@ public class Blocking {
                 for (Card card: attackers) {
                     if (list.get(card).isEmpty()) {
                         int priority = 0;
-                        GameEntity target = combat.getDefenderByAttacker(card);
-                        if (target instanceof Card) {
-                            //TODO: Does current power adjust for counters?
-                            priority = targetHealthVal(((Card) target).getCurrentLoyalty(), card.getCurrentPower());
-                        } else if (target instanceof Player) {
-                            priority = targetHealthVal(((Player) target).getLife(), card.getCurrentPower());
+                        if (defender == combat.getDefenderByAttacker(card)) {
+                            priority = targetHealthVal(defender, card.getCurrentPower());
                         }
                         if (priority> max) {
                             max = priority;
@@ -96,7 +95,7 @@ public class Blocking {
                     }
                 }
             }
-            if (max>=front.chooser(c) || isLethal(list, combat.getDefenderByAttacker(attacker))) {
+            if (max>=front.chooser(c) || isLethal(list, defender)) {
                 ArrayList<Card> temp = new ArrayList<>();
                 temp.add(c);
                 list.replace(attacker, temp);
@@ -128,7 +127,15 @@ public class Blocking {
         return damage;
     }
 
-    public int targetHealthVal(int life, int damage) {
+    public int targetHealthVal(GameEntity target, int damage) {
+        int life = 0;
+        if (target instanceof Card) {
+            life = ((Card) target).getCurrentLoyalty();
+        } else if (target instanceof Player) {
+            life = ((Player) target).getLife();
+        } else {
+            System.out.print("The defending unit is not a planeswalker or player");
+        }
         if( damage> life) {
             return REALLYHIGHVALUE;
         }
