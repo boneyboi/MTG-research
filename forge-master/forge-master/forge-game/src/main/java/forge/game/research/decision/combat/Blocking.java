@@ -9,6 +9,8 @@ import forge.game.research.card.Front;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static java.lang.Double.POSITIVE_INFINITY;
+
 public class Blocking {
 
     private final int REALLYHIGHVALUE = 50000;
@@ -24,11 +26,10 @@ public class Blocking {
     private Player defender;
 
 
-
-    public void Blocking(Combat inCombat, Player defendingPlayer){
+    public void Blocking(Player player, Combat inCombat){
         this.combat = inCombat;
         front = new Front();
-        defender = defendingPlayer;
+        defender = player;
     }
 
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
@@ -57,7 +58,50 @@ public class Blocking {
     public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
         Map<Card, ArrayList<Card>> editedMap = list;
 
+        for (Card key : list.keySet()) {
+
+            if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))) {
+                if (list.get(key).size() > 1) {
+                }
+            }
+
+        }
+
         return editedMap;
+    }
+
+    /**
+     *
+     * @param list
+     * @return
+     */
+    private Card lowestValueCard (ArrayList<Card> list) {
+        Card lowValCard = null;
+        double minVal = POSITIVE_INFINITY;
+
+        for (Card card : list) {
+            if (front.chooser(card) < minVal) {
+                lowValCard = card;
+                minVal = front.chooser(card);
+            }
+        }
+
+        return lowValCard;
+    }
+
+    /**
+     *
+     * @param list
+     * @return
+     */
+    private int totalPowerOfBlock(ArrayList<Card> list) {
+        int totalPower = 0;
+
+        for (Card card : list) {
+            totalPower += card.getCurrentToughness();
+        }
+
+        return totalPower;
     }
 
     /**
