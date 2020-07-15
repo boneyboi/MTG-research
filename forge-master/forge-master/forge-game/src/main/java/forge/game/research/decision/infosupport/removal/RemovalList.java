@@ -36,7 +36,7 @@ public class RemovalList {
 
             //sorting algorithm
             do {
-                //asures that we initially always have a min
+                //assures that we initially always have a min
                 double minVal = POSITIVE_INFINITY;
                 Card cardToAdd = null;
 
