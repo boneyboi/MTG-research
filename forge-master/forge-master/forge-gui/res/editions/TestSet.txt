@@ -1,0 +1,12 @@
+[metadata]
+Code=TS
+Date=2020-07-15
+Name=Test Set
+Code2=TS
+MciCode=ts
+Type=Core
+BoosterCovers=5
+Booster=10 Common, 3 Uncommon, 1 Rare, 1 BasicLand
+
+[cards]
+1 M Test Card

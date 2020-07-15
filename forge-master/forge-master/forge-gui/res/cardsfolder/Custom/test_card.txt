@@ -1,0 +1,10 @@
+Name:Test Card
+ManaCost:0
+Types:Creature
+PT:0/0
+K:A deck can have any number of cards named CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSearch | TriggerDescription$ W
+SVar:TrigSearch:DB$ ChangeZone | Optional$ True | Origin$ Library | Destination$ Battlefield | ChangeType$ Creature | DefinedPlayer$ Player | ChangeNum$ 20 | Shuffle$ True | SubAbility$ TrigPumpAll
+SVar:TrigPumpAll:DB$PumpAll | ValidCards$ Creature.Other+YouCtrl | KW$ Haste
+SVar:PlayMain1:TRUE
+Oracle:This is a test card
