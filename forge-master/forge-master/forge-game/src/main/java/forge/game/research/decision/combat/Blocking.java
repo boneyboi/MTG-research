@@ -32,11 +32,13 @@ public class Blocking {
         defender = player;
     }
 
+    /**
     public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
         return getChumpBlocks(removeExcessBlockers(knapsacking(attackers, blockers)));
     }
+     */
 
     /**
      * Runs knapsack with lethality:
