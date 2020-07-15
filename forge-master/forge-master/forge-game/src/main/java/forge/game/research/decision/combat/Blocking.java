@@ -50,6 +50,7 @@ public class Blocking {
         }
     }
 
+
     /**
      * Runs knapsack with lethality:
      *
@@ -120,6 +121,7 @@ public class Blocking {
     }
      */
 
+
     /**
      *
      * @param list
@@ -141,22 +143,6 @@ public class Blocking {
     }
      */
 
-    /**
-     *
-     * @param list
-     * @return
-     */
-    /**
-    private int totalPowerOfBlock(ArrayList<Card> list) {
-        int totalPower = 0;
-
-        for (Card card : list) {
-            totalPower += card.getCurrentPower();
-        }
-
-        return totalPower;
-    }
-     */
 
     /**
      * Reassigns blockers if we have any excess blockers
@@ -289,5 +275,56 @@ public class Blocking {
         }
 
         return returnList;
+    }
+
+    /**
+     * @param list - first card is attacker, rest of the cards are blockers
+     * - creature value of Ai  control dies
+     * + creature value of opponent dies
+     * + damage prevented
+     */
+    public double evaluateBlock (ArrayList<Card> list) {
+        //attacker related variables
+        Card attacker = list.get(0);
+        double attackerCurrentPower = attacker.getCurrentPower();
+        double attackerCurrentHealth = attacker.getCurrentToughness();
+
+        double blockVal = 0.0;
+        ArrayList<Card> defenderList = getDefenderList(list);
+
+        if (defenderList != null) {
+            for (Card defender : defenderList) {
+                attackerCurrentPower -= defender.getCurrentToughness();
+                attackerCurrentHealth -= defender.getCurrentPower();
+
+                if (defender.getCurrentToughness() < attackerCurrentPower) {
+                    blockVal -= front.chooser(defender);
+                } else if (defender.getCurrentPower() > attackerCurrentHealth) {
+                    blockVal += front.chooser(attacker);
+                    blockVal += attacker.getCurrentPower();
+                }
+            }
+        }
+
+
+        return blockVal;
+    }
+
+    private ArrayList<Card> getDefenderList (ArrayList<Card> list) {
+        Card opponentCrea = list.get(0);
+        ArrayList<Card> defenderL = new ArrayList<>();
+
+        if (list.size() > 1) {
+            for (Card defender : list) {
+                if (defender != opponentCrea) {
+                    defenderL.add(defender);
+                }
+            }
+        }
+        else {
+            defenderL = null;
+        }
+
+        return defenderL;
     }
 }
