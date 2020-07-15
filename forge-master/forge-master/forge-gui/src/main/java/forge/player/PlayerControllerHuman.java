@@ -39,6 +39,7 @@ import forge.game.mana.ManaConversionMatrix;
 import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementLayer;
+import forge.game.research.decision.combat.Blocking;
 import forge.game.research.decision.infosupport.Mulligan;
 import forge.game.spellability.*;
 import forge.game.trigger.Trigger;
@@ -1275,11 +1276,24 @@ PlayerControllerHuman extends PlayerController implements IGameController {
 
     @Override
     public void declareBlockers(final Player defender, final Combat combat) {
-        // This input should not modify combat object itself, but should return
-        // user choice
-        final InputBlock inpBlock = new InputBlock(this, defender, combat);
-        inpBlock.showAndWait();
-        getGui().updateAutoPassPrompt();
+        if (defender.getFacade() != null) {
+            Blocking blocks = new Blocking(defender, combat);
+            ArrayList<Card> tempAttackers = new ArrayList<>();
+            ArrayList<Card> tempBlockers = new ArrayList<>();
+            for (Card c: defender.getCreaturesInPlay()) {
+                tempBlockers.add(c);
+            }
+            for (Card c: combat.getAttackers()) {
+                tempAttackers.add(c);
+            }
+            blocks.getBlocks(tempAttackers, tempBlockers);
+        } else {
+            // This input should not modify combat object itself, but should return
+            // user choice
+            final InputBlock inpBlock = new InputBlock(this, defender, combat);
+            inpBlock.showAndWait();
+            getGui().updateAutoPassPrompt();
+        }
     }
 
     @Override
