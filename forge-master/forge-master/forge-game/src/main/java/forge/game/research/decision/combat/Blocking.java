@@ -7,10 +7,10 @@ import forge.game.player.Player;
 import forge.game.research.card.Front;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Double.POSITIVE_INFINITY;
-import static java.lang.Double.max;
 
 public class Blocking {
 
@@ -33,10 +33,19 @@ public class Blocking {
         defender = player;
     }
 
-    public Map<Card, ArrayList<Card>> getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
+    public void getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
-        return getChumpBlocks((knapsacking(attackers, blockers)));
+        Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
+        AssignBlocks(combatMap);
+    }
+
+    public void AssignBlocks(Map<Card, ArrayList<Card>> list){
+        for (Card attacker: combat.getAttackers()) {
+            for (Card blocker: list.get(attacker)){
+                combat.addBlocker(attacker, blocker);
+            }
+        }
     }
 
     /**
@@ -46,7 +55,13 @@ public class Blocking {
      * @param blockers
      * @return
      */
-
+    public Map<Card, ArrayList<Card>> knapsacking(ArrayList<Card> attackers, ArrayList<Card> blockers) {
+        Map<Card, ArrayList<Card>> list = new HashMap<>();
+        for (Card card: attackers) {
+            list.put(card, new ArrayList<>());
+        }
+        return list;
+    }
 
     /**
      * Checks to see if attacking creature doesn't die, remove all blockers except for
@@ -122,7 +137,7 @@ public class Blocking {
         ableBlockers = getSortedList(ableBlockers);
 
         //Save the player first
-        for (int i = 0; i == ableBlockers.size(); i++) {
+        for (int i = 0; i < ableBlockers.size(); i++) {
             //Blockers are ordered weakest first, so we will block weakest to strongest
             Card blocker = ableBlockers.get(i);
             int max = 0;

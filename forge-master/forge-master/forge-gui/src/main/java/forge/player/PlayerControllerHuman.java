@@ -1280,12 +1280,8 @@ PlayerControllerHuman extends PlayerController implements IGameController {
             Blocking blocks = new Blocking(defender, combat);
             ArrayList<Card> tempAttackers = new ArrayList<>();
             ArrayList<Card> tempBlockers = new ArrayList<>();
-            for (Card c: defender.getCreaturesInPlay()) {
-                tempBlockers.add(c);
-            }
-            for (Card c: combat.getAttackers()) {
-                tempAttackers.add(c);
-            }
+            tempBlockers.addAll(defender.getCreaturesInPlay());
+            tempAttackers.addAll(combat.getAttackers());
             blocks.getBlocks(tempAttackers, tempBlockers);
         } else {
             // This input should not modify combat object itself, but should return
