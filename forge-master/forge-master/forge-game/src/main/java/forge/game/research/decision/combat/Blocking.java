@@ -4,6 +4,7 @@ import forge.game.GameEntity;
 import forge.game.card.Card;
 import forge.game.combat.Combat;
 import forge.game.player.Player;
+import forge.game.research.card.Front;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -67,12 +68,20 @@ public class Blocking {
         return editedMap;
     }
 
+    /**
+     *
+     * @param list
+     * @return
+     */
     private Card lowestValueCard (ArrayList<Card> list) {
         Card lowValCard = null;
         double minVal = POSITIVE_INFINITY;
 
         for (Card card : list) {
-            if ()
+            if (front.chooser(card) < minVal) {
+                lowValCard = card;
+                minVal = front.chooser(card);
+            }
         }
 
         return lowValCard;
