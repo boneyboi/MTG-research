@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import static java.lang.Double.POSITIVE_INFINITY;
+import static java.lang.Double.max;
 
 public class Blocking {
 
@@ -45,9 +46,7 @@ public class Blocking {
      * @param blockers
      * @return
      */
-    public Map<Card, ArrayList<Card>> knapsacking(ArrayList<Card> attackers, ArrayList<Card> blockers) {
-        return null;
-    }
+
 
     /**
      * Checks to see if attacking creature doesn't die, remove all blockers except for
