@@ -239,26 +239,25 @@ public class Blocking {
      * + damage prevented
      */
     public double evaluateBlock (ArrayList<Card> list) {
+        //attacker related variables
         Card attacker = list.get(0);
-        double attackerVal = front.chooser(attacker);
         double attackerCurrentPower = attacker.getCurrentPower();
-        double attackerCurrentHealth = attacker.getCurrentPower();
+        double attackerCurrentHealth = attacker.getCurrentToughness();
 
-        double damagePrevented = 0.0;
         double blockVal = 0.0;
         ArrayList<Card> defenderList = getDefenderList(list);
 
+        if (defenderList != null) {
+            for (Card defender : defenderList) {
+                attackerCurrentPower -= defender.getCurrentToughness();
+                attackerCurrentHealth -= defender.getCurrentPower();
 
-        for (Card defender : defenderList) {
-            attackerCurrentPower -= defender.getCurrentToughness();
-            attackerCurrentHealth -= defender.getCurrentPower();
-
-            if (defender.getCurrentToughness() < attackerCurrentPower) {
-                blockVal -= front.chooser(defender);
-            }
-            else if (defender.getCurrentPower() > attackerCurrentHealth) {
-                blockVal += front.chooser(attacker);
-                damagePrevented += attacker.getCurrentPower();
+                if (defender.getCurrentToughness() < attackerCurrentPower) {
+                    blockVal -= front.chooser(defender);
+                } else if (defender.getCurrentPower() > attackerCurrentHealth) {
+                    blockVal += front.chooser(attacker);
+                    blockVal += attacker.getCurrentPower();
+                }
             }
         }
 
@@ -270,10 +269,15 @@ public class Blocking {
         Card opponentCrea = list.get(0);
         ArrayList<Card> defenderL = new ArrayList<>();
 
-        for (Card defender : list) {
-            if (defender != opponentCrea) {
-                defenderL.add(defender);
+        if (list.size() > 1) {
+            for (Card defender : list) {
+                if (defender != opponentCrea) {
+                    defenderL.add(defender);
+                }
             }
+        }
+        else {
+            defenderL = null;
         }
 
         return defenderL;
