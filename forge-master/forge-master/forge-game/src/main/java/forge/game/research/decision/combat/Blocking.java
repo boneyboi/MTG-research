@@ -2,9 +2,12 @@ package forge.game.research.decision.combat;
 
 import forge.game.card.Card;
 import forge.game.combat.Combat;
+import forge.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import static java.lang.Double.POSITIVE_INFINITY;
 
 public class Blocking {
 
@@ -12,7 +15,7 @@ public class Blocking {
     private Combat combat;
     private int excessBlockers;
 
-    public void Blocking(Combat inCombat){
+    public void Blocking(Player player, Combat inCombat){
         this.combat = inCombat;
     }
 
@@ -40,7 +43,42 @@ public class Blocking {
     public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
         Map<Card, ArrayList<Card>> editedMap = list;
 
+        for (Card key : list.keySet()) {
+
+            if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))) {
+                if (list.get(key).size() > 1) {
+                }
+            }
+
+        }
+
         return editedMap;
+    }
+
+    private Card lowestValueCard (ArrayList<Card> list) {
+        Card lowValCard = null;
+        double minVal = POSITIVE_INFINITY;
+
+        for (Card card : list) {
+            if ()
+        }
+
+        return lowValCard;
+    }
+
+    /**
+     *
+     * @param list
+     * @return
+     */
+    private int totalPowerOfBlock(ArrayList<Card> list) {
+        int totalPower = 0;
+
+        for (Card card : list) {
+            totalPower += card.getCurrentToughness();
+        }
+
+        return totalPower;
     }
 
     /**
