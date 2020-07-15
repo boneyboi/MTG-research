@@ -55,26 +55,31 @@ public class Blocking {
      * @param list
      * @return
      */
+    /**
     public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
         Map<Card, ArrayList<Card>> editedMap = list;
+        ArrayList<Card> toReplace = new ArrayList<Card>();
 
         for (Card key : list.keySet()) {
 
-            if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))) {
-                if (list.get(key).size() > 1) {
+            if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))
+                && list.get(key).size() > 1) {
+                    toReplace.add(lowestValueCard(list.get(key)));
+                    editedMap.put(key, toReplace);
                 }
             }
 
-        }
 
         return editedMap;
     }
+     */
 
     /**
      *
      * @param list
      * @return
      */
+    /**
     private Card lowestValueCard (ArrayList<Card> list) {
         Card lowValCard = null;
         double minVal = POSITIVE_INFINITY;
@@ -88,33 +93,24 @@ public class Blocking {
 
         return lowValCard;
     }
+     */
 
     /**
      *
      * @param list
      * @return
      */
+    /**
     private int totalPowerOfBlock(ArrayList<Card> list) {
         int totalPower = 0;
 
         for (Card card : list) {
-            totalPower += card.getCurrentToughness();
+            totalPower += card.getCurrentPower();
         }
 
         return totalPower;
     }
-
-    /**
-     * Returns whether or not there is excess blockers
-     * @return
      */
-    private boolean areExcessBlockers() {
-
-        if (excessBlockers > 0) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Reassigns blockers if we have any excess blockers
