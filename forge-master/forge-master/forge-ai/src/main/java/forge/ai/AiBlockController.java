@@ -27,6 +27,7 @@ import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.keyword.Keyword;
 import forge.game.player.Player;
+import forge.game.research.decision.combat.Blocking;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
@@ -939,7 +940,22 @@ public class AiBlockController {
     public void assignBlockersForCombat(final Combat combat) {
         List<Card> possibleBlockers = ai.getCreaturesInPlay();
         attackers = sortPotentialAttackers(combat);
-        assignBlockers(combat, possibleBlockers);
+        //This is our code
+        if (ai.getFacade() != null) {
+            Blocking blocks = new Blocking(ai, combat);
+            ArrayList<Card> tempAttackers = new ArrayList<>();
+            ArrayList<Card> tempBlockers = new ArrayList<>();
+            for (Card c: possibleBlockers) {
+                tempBlockers.add(c);
+            }
+            for (Card c: attackers) {
+                tempAttackers.add(c);
+            }
+            blocks.getBlocks(tempAttackers, tempBlockers);
+        } else {
+
+            assignBlockers(combat, possibleBlockers);
+        }
     }
 
     /**
