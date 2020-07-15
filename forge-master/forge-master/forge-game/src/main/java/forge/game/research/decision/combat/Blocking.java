@@ -122,30 +122,46 @@ public class Blocking {
      * @return
      */
     public Map<Card, ArrayList<Card>> getChumpBlocks (Map<Card, ArrayList<Card>> list) {
-        for (Card c: blockers) {
+
+        ArrayList<Card> ableBlockers = getAbleBlockers(list);
+        ableBlockers = getSortedList(ableBlockers);
+
+        //Save the player first
+        for (int i = 0; i == ableBlockers.size(); i++) {
+            Card blocker = ableBlockers.get(i);
             int max = 0;
             Card attacker = null;
-            if (!list.containsValue(c)) {
-                for (Card card: attackers) {
-                    if (list.get(card).isEmpty()) {
-                        int priority = 0;
-                        if (defender == combat.getDefenderByAttacker(card)) {
-                            priority = targetHealthVal(defender, card.getCurrentPower());
-                        }
-                        if (priority> max) {
-                            max = priority;
-                            attacker = card;
-                        }
+            for (Card card: attackers) {
+                if (list.get(card).isEmpty()) {
+                    int priority = 0;
+                    if (defender == combat.getDefenderByAttacker(card)) {
+                        priority = targetHealthVal(defender, card.getCurrentPower());
+                    }
+                    if (priority> max) {
+                        max = priority;
+                        attacker = card;
                     }
                 }
             }
-            if (max>=front.chooser(c) || isLethal(list, defender)) {
+            //The second condition is not redundant because it evaluates all damage we are taking
+            //not just the damage from that one attacker.
+            if (max>=front.chooser(blocker) || isLethal(list, defender)) {
                 ArrayList<Card> temp = new ArrayList<>();
-                temp.add(c);
+                temp.add(blocker);
                 list.replace(attacker, temp);
             }
         }
         return list;
+    }
+
+    public ArrayList<Card> getAbleBlockers(Map<Card, ArrayList<Card>> list) {
+        ArrayList<Card> returning = new ArrayList<>();
+        for (Card card: blockers) {
+            if (!list.containsValue(card)) {
+                returning.add(card);
+            }
+        }
+        return returning;
     }
 
     public boolean isLethal(Map<Card, ArrayList<Card>> list, GameEntity target) {
@@ -178,11 +194,51 @@ public class Blocking {
         } else if (target instanceof Player) {
             life = ((Player) target).getLife();
         } else {
+            //We should never reach this case
             System.out.print("The defending unit is not a planeswalker or player");
         }
         if( damage> life) {
             return REALLYHIGHVALUE;
         }
         return damage;
+    }
+
+    /**
+     * Sorts the incoming battlefield list into a list that is organized from minimum value to max value
+     * @param list - list of cards on the opponent's battlefield
+     * @return removalList
+     */
+    public ArrayList<Card> getSortedList(ArrayList<Card> list) {
+        ArrayList<Card> returnList = new ArrayList<>();
+        int count = 0;
+
+        //battlefield list is not empty/there is something on your opponent's side of the field
+        if (list.size() > 0) {
+
+            //sorting algorithm
+            do {
+                //assures that we initially always have a min
+                double minVal = POSITIVE_INFINITY;
+                Card cardToAdd = null;
+
+                for (Card card : list) {
+                    //iterates and find a card with the least value, which is added first
+                    //makes sure duplicates cannot be added
+                    if (front.chooser(card) <= minVal && !returnList.contains(card)) {
+                        cardToAdd = card;
+                        minVal = front.chooser(card);
+                    }
+                }
+                //may remove this clause since 0 is protected against
+                if (cardToAdd != null) {
+                    returnList.add(cardToAdd);
+                }
+                count++;
+
+                //as many times as there are cards
+            } while (count < list.size());
+        }
+
+        return returnList;
     }
 }
