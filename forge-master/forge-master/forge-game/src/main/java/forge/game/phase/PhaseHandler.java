@@ -17,6 +17,8 @@
  */
 package forge.game.phase;
 
+import forge.game.research.card.CreatureEval;
+import forge.game.research.card.Front;
 import forge.game.research.decision.infosupport.removal.RemovalChecker;
 
 import forge.game.research.PlayCards;

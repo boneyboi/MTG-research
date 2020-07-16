@@ -12,6 +12,9 @@ import forge.game.card.Card;
 import forge.game.card.CounterType;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
+import forge.game.spellability.Spell;
+import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbility;
 
 public class CreatureEval extends CardEvaluator {
 
@@ -28,7 +31,7 @@ public class CreatureEval extends CardEvaluator {
     public static final double FIRSTSTRIKEVAL = 5.3;
     public static final double DEATHTOUCHVAL = 5;
     public static final double PROWESSVAL = 4.5;
-    public static final double FLASHVAL = 44.5;
+    public static final double FLASHVAL = 4.5;
     public static final double VIGILIANCEVAL = 3.8;
     public static final double TRAMPLEVAL = 3.5;
     public static final double LIFELINKVAL = 3;
@@ -63,8 +66,10 @@ public class CreatureEval extends CardEvaluator {
         double totalStats = getStatTotal(card);
         double keyword = getKeywordValue(card);
         double counters = getCounters(card);
-        double Cardvalue = (BASE + totalStats + keyword + counters);
+        double abilities = calculateAbilityVal(card);
+        double Cardvalue = (BASE + totalStats + keyword + counters + abilities);
         double value = (Cardvalue) * KeywordsMul;
+
         return value;
     }
 
@@ -155,5 +160,56 @@ public class CreatureEval extends CardEvaluator {
         //double testMul = numKeywordsMul;
         return keyValue;
     }
+
+    public double calculateAbilityVal (Card card) {
+        double abilityVal = 0.0;
+
+        abilityVal += hasPassiveAbility(card) + hasTriggerAbility(card) + hasActivateAbility(card);
+
+        return abilityVal;
+    }
+
+    private double hasTriggerAbility (Card card) {
+        double trigVal = 0;
+
+        //5.3
+        trigVal += card.getTriggers().size() * FIRSTSTRIKEVAL;
+
+        return trigVal;
+    }
+
+    private double hasPassiveAbility (Card card) {
+        int numPass = 0;
+        double passVal= 0.0;
+
+
+        for (StaticAbility sa : card.getStaticAbilities()) {
+            if (sa.hasParam("Mode") && sa.getParam("Mode").equals("Continuous")) {
+                numPass += 1;
+            }
+        }
+
+        //7.5
+        passVal += (numPass * DOUBLESTRIKEVAL);
+
+        return passVal;
+    }
+
+    private double hasActivateAbility (Card card) {
+        int numActi = 0;
+        double actiVal = 0.0;
+
+        for (SpellAbility sa : card.getSpellAbilities()) {
+            if (sa.hasParam("Cost")) {
+                numActi += 1;
+            }
+        }
+
+        //3.5
+        actiVal += (numActi * TRAMPLEVAL);
+
+        return actiVal;
+    }
+
 
 }

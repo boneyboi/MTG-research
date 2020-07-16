@@ -1,3 +1,11 @@
+/**
+ * Decision making class for how Ai is supposed to block
+ * @author Michael Bowlin
+ * @author Shaelyn Rivers
+ * @author Deric Siglin
+ * @since July 16, 2020
+ */
+
 package forge.game.research.decision.combat;
 
 import forge.game.GameEntity;
