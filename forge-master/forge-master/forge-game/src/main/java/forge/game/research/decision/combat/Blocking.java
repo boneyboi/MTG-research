@@ -295,12 +295,14 @@ public class Blocking {
 
         if (defenderList != null) {
             for (Card defender : defenderList) {
-                if (defender.getCurrentToughness() <= attackerCurrentPower) {
+
+                if (defender.getCurrentToughness() < attackerCurrentPower) {
                     blockVal -= front.chooser(defender);
-                } else if (defender.getCurrentPower() >= attackerCurrentHealth) {
+                } else if (defender.getCurrentPower() > attackerCurrentHealth) {
                     blockVal += front.chooser(attacker);
                     blockVal += attacker.getCurrentPower();
                 }
+
                 attackerCurrentPower -= defender.getCurrentToughness();
                 attackerCurrentHealth -= defender.getCurrentPower();
             }
