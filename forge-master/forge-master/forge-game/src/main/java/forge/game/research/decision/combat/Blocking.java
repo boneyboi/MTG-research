@@ -84,53 +84,6 @@ public class Blocking {
         }
 
     }
-    /**
-     * Checks to see if attacking creature doesn't die, remove all blockers except for
-     * weakest creature
-     * @param list
-     * @return
-     */
-    /**
-    public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
-        Map<Card, ArrayList<Card>> editedMap = list;
-        ArrayList<Card> toReplace = new ArrayList<Card>();
-
-        for (Card key : list.keySet()) {
-
-            if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))
-                && list.get(key).size() > 1) {
-                    toReplace.add(lowestValueCard(list.get(key)));
-                    editedMap.put(key, toReplace);
-                }
-            }
-
-
-        return editedMap;
-    }
-     */
-
-
-    /**
-     *
-     * @param list
-     * @return
-     */
-    /**
-    private Card lowestValueCard (ArrayList<Card> list) {
-        Card lowValCard = null;
-        double minVal = POSITIVE_INFINITY;
-
-        for (Card card : list) {
-            if (front.chooser(card) < minVal) {
-                lowValCard = card;
-                minVal = front.chooser(card);
-            }
-        }
-
-        return lowValCard;
-    }
-     */
-
 
     /**
      * Reassigns blockers if we have any excess blockers
@@ -266,10 +219,12 @@ public class Blocking {
     }
 
     /**
-     * @param list - first card is attacker, rest of the cards are blockers
+     * Calculates the value or 'goodness' of a block with the following:
      * - creature value of Ai  control dies
      * + creature value of opponent dies
      * + damage prevented
+     * @param list : first card is attacker, rest of the cards are blockers
+     * @return the 'goodnesss' of the block
      */
     public double evaluateBlock (ArrayList<Card> list) {
         //attacker related variables
@@ -283,9 +238,10 @@ public class Blocking {
         if (defenderList != null) {
             for (Card defender : defenderList) {
 
-                if (defender.getCurrentToughness() < attackerCurrentPower) {
+                if (defender.getCurrentToughness() <= attackerCurrentPower) {
                     blockVal -= front.chooser(defender);
-                } else if (defender.getCurrentPower() > attackerCurrentHealth) {
+                }
+                if (defender.getCurrentPower() >= attackerCurrentHealth) {
                     blockVal += front.chooser(attacker);
                     blockVal += attacker.getCurrentPower();
                 }
@@ -299,6 +255,11 @@ public class Blocking {
         return blockVal;
     }
 
+    /**
+     * Creates a list of blockers to be used with evaluateBlock
+     * @param list
+     * @return
+     */
     private ArrayList<Card> getDefenderList (ArrayList<Card> list) {
         Card opponentCrea = list.get(0);
         ArrayList<Card> defenderL = new ArrayList<>();
@@ -316,4 +277,51 @@ public class Blocking {
 
         return defenderL;
     }
+
+    //obsolete - to be deleted later if it is determined we do not need these methods
+    /**
+     * Checks to see if attacking creature doesn't die, remove all blockers except for
+     * weakest creature
+     * @param list
+     * @return
+     */
+    /**
+     public Map<Card, ArrayList<Card>> removeExcessBlockers(Map<Card, ArrayList<Card>> list) {
+     Map<Card, ArrayList<Card>> editedMap = list;
+     ArrayList<Card> toReplace = new ArrayList<Card>();
+
+     for (Card key : list.keySet()) {
+
+     if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))
+     && list.get(key).size() > 1) {
+     toReplace.add(lowestValueCard(list.get(key)));
+     editedMap.put(key, toReplace);
+     }
+     }
+
+
+     return editedMap;
+     }
+     */
+
+    /**
+     *
+     * @param list
+     * @return
+     */
+    /**
+     private Card lowestValueCard (ArrayList<Card> list) {
+     Card lowValCard = null;
+     double minVal = POSITIVE_INFINITY;
+
+     for (Card card : list) {
+     if (front.chooser(card) < minVal) {
+     lowValCard = card;
+     minVal = front.chooser(card);
+     }
+     }
+
+     return lowValCard;
+     }
+     */
 }
