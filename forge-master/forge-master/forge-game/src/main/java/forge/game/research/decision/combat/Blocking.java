@@ -28,13 +28,12 @@ public class Blocking {
     private ArrayList<Card> blockers;
     private int sack = 0;
     private int timeSave = 0;
+    private final int LETHALAVOIDER = -50;
     private HashMap<ArrayList<Object>, Double> memo = new HashMap();
 
     public void Blocking() {
     }
-    private Map<ArrayList, Integer> cache;
     private Combat combat;
-    private int excessBlockers;
     private Front front;
     private Player defender;
 
@@ -50,8 +49,17 @@ public class Blocking {
         blockers = bList;
         Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
         //AssignBlocks(combatMap);
+        System.out.println("Blockers are valued:");
+        for (Card card: bList) {
+            System.out.println(card.getName() + " " + front.chooser(card));
+        }
+        System.out.println("");
+        System.out.println("and Attackers are worth:");
+        for (Card card: aList) {
+            System.out.println(card.getName() + " " + front.chooser(card));
+        }
+
         startSacking(bList.size(), bList, aList);
-        System.out.println("Hello");
     }
 
     public void AssignBlocks(Map<Card, ArrayList<Card>> list){
@@ -199,7 +207,7 @@ public class Blocking {
             //We should never reach this case
             System.out.print("The defending unit is not a planeswalker or player");
         }
-        if( damage> life) {
+        if( damage>= life) {
             return REALLYHIGHVALUE;
         }
         return damage;
@@ -394,11 +402,11 @@ public class Blocking {
         for (Attacker card: atks) {
             card.addDamage(bList.get(blockNum-1).getNetPower());
             considering.add(multiSack(blockNum - 1, bList, atks)
-                    + getBlockValue(bList.get(blockNum-1), card));
+                    + getBlockValue(bList.get(blockNum-1), card, atks));
             card.subDamage(bList.get(blockNum-1).getNetPower());
         }
 
-        considering.add(multiSack(blockNum - 1, bList, atks));
+        considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
 
         int toSave = getMax(considering);
         memo.put(temp, ((double) toSave));
@@ -406,7 +414,7 @@ public class Blocking {
     }
 
     public void sackWrap(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
-        for (int i = 0; i<blockNum; i++) {
+        for (int i = 0; i<bList.size(); i++) {
 
             ArrayList<Attacker> atks = new ArrayList<>();
             ArrayList<Integer> considering = new ArrayList<>();
@@ -422,18 +430,35 @@ public class Blocking {
             }
 
             for (Attacker card : atks) {
-                card.addDamage(bList.get(blockNum - 1 - i).getNetPower());
-                considering.add(multiSack(blockNum - 1 - i, bList, atks)
-                        + getBlockValue(bList.get(blockNum - 1 - i), card));
-                card.subDamage(bList.get(blockNum - 1 - i).getNetPower());
+                card.addDamage(bList.get(blockNum - 1).getNetPower());
+                considering.add(multiSack(blockNum - 1, bList, atks)
+                        + getBlockValue(bList.get(blockNum - 1), card, atks));
+                card.subDamage(bList.get(blockNum - 1).getNetPower());
             }
 
-            considering.add(multiSack(blockNum - 1 - i, bList, atks));
+            considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
             int toSave = getMaxIndex(considering);
             if (!(toSave == atks.size())) {
-                combat.addBlocker(atks.get(toSave).getSelf(), bList.get(blockNum - 1 - i));
-                atks.get(toSave).addDamage(bList.get(blockNum - 1 - i).getNetPower());
+                combat.addBlocker(atks.get(toSave).getSelf(), bList.get(blockNum - 1));
+                atks.get(toSave).addDamage(bList.get(blockNum - 1).getNetPower());
             }
+            blockNum -= 1;
+        }
+    }
+
+    public int lethalCheck(ArrayList<Attacker> atks) {
+        int damage = 0;
+        for (Attacker selected: atks) {
+            //TODO improve blocking check
+            if (selected.getDamage() == 0) {
+                damage += selected.getSelf().getNetPower();
+            }
+        }
+
+        if (damage>=defender.getLife()) {
+            return LETHALAVOIDER;
+        } else {
+            return 0;
         }
     }
 
@@ -469,7 +494,7 @@ public class Blocking {
         return index;
     }
 
-    public int getBlockValue(Card block, Attacker atk) {
+    public int getBlockValue(Card block, Attacker atk, ArrayList<Attacker> atks) {
         //We should use doubles if this is inaccurate, but this does save space
         int blockVal = 0;
         if (atk.getHealthRemaining() + block.getNetPower() < 0) {
@@ -488,6 +513,8 @@ public class Blocking {
                     atk.getSelf().getNetPower());
         }
 
+        blockVal+= lethalCheck(atks);
+
         return blockVal;
     }
 
@@ -503,6 +530,14 @@ public class Blocking {
 
         public boolean isDead() {
             return (health <= damage);
+        }
+
+        public int getDamage() {
+            return damage;
+        }
+
+        public int getHealth() {
+            return health;
         }
 
         public int getHealthRemaining() {
