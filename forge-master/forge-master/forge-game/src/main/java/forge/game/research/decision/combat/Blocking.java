@@ -65,6 +65,7 @@ public class Blocking {
         }
         return list;
     }
+
     public double knapsacking(int attackerToughness, Card attacker, ArrayList<Card> blockers) {
         ArrayList<Object> temp = new ArrayList<>();
         temp.add(attackerToughness);
@@ -294,15 +295,14 @@ public class Blocking {
 
         if (defenderList != null) {
             for (Card defender : defenderList) {
-                attackerCurrentPower -= defender.getCurrentToughness();
-                attackerCurrentHealth -= defender.getCurrentPower();
-
-                if (defender.getCurrentToughness() < attackerCurrentPower) {
+                if (defender.getCurrentToughness() <= attackerCurrentPower) {
                     blockVal -= front.chooser(defender);
-                } else if (defender.getCurrentPower() > attackerCurrentHealth) {
+                } else if (defender.getCurrentPower() >= attackerCurrentHealth) {
                     blockVal += front.chooser(attacker);
                     blockVal += attacker.getCurrentPower();
                 }
+                attackerCurrentPower -= defender.getCurrentToughness();
+                attackerCurrentHealth -= defender.getCurrentPower();
             }
         }
 
