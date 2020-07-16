@@ -245,25 +245,40 @@ public class Blocking {
      * @return the 'goodnesss' of the block
      */
     public double evaluateBlock (ArrayList<Card> list) {
-        //attacker related variables
+        //attacker related variables - who the attacker is (first card), the power and toughness of the attacker
         Card attacker = list.get(0);
         double attackerCurrentPower = attacker.getCurrentPower();
         double attackerCurrentHealth = attacker.getCurrentToughness();
 
+        //inital value of a block is 0
         double blockVal = 0.0;
         ArrayList<Card> defenderList = getDefenderList(list);
 
+        //checks to see if defender list is empty, if so, that attacker is not blocked, and the value of the block 0
         if (defenderList != null) {
+
+            //seperate if statements are necessary, a creature whose equal to the remaining power/toughness
+            //of the attacker can die (lose value) and kill the attacker (gain value). With multi blocks, happens
+            //with the last creature usually
             for (Card defender : defenderList) {
 
+                //if a defender's health is equal to or less than attacker (i.e. 2/2, 2/1, 3/2 vs a 2/2), that
+                // creature 'dies'
+                //value of a block decreases by the value of the defender we lose
                 if (defender.getCurrentToughness() <= attackerCurrentPower) {
                     blockVal -= front.chooser(defender);
                 }
+
+                //if a defender's power is equal to or greater than attacker's health (i.e. 2/2, 3/2, 3/3 vs a 2/2),
+                // that attacker 'dies'
+                //value of a block increases by the value of the defender we lose
+                //value of a block increases by the attack prevented
                 if (defender.getCurrentPower() >= attackerCurrentHealth) {
                     blockVal += front.chooser(attacker);
                     blockVal += attacker.getCurrentPower();
                 }
 
+                //decreases the power, toughness that the attacker 'spends' to get through a block
                 attackerCurrentPower -= defender.getCurrentToughness();
                 attackerCurrentHealth -= defender.getCurrentPower();
             }
@@ -282,6 +297,7 @@ public class Blocking {
         Card opponentCrea = list.get(0);
         ArrayList<Card> defenderL = new ArrayList<>();
 
+        //checks to make sure there are defenders to be had, if not the defender list will be empty, or 'null'
         if (list.size() > 1) {
             for (Card defender : list) {
                 if (defender != opponentCrea) {
