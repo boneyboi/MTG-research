@@ -18,6 +18,8 @@ public class Blocking {
     private final int REALLYHIGHVALUE = 50000;
     private ArrayList<Card> attackers;
     private ArrayList<Card> blockers;
+    private int sack = 0;
+    private int timeSave = 0;
     private HashMap<ArrayList<Object>, Double> memo = new HashMap();
 
     public void Blocking() {
@@ -39,7 +41,9 @@ public class Blocking {
         attackers = aList;
         blockers = bList;
         Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
-        AssignBlocks(combatMap);
+        //AssignBlocks(combatMap);
+        startSacking(bList.size(), bList, aList);
+        System.out.println("Hello");
     }
 
     public void AssignBlocks(Map<Card, ArrayList<Card>> list){
@@ -65,6 +69,7 @@ public class Blocking {
         }
         return list;
     }
+
 
     public double knapsacking(int attackerToughness, Card attacker, ArrayList<Card> blockers) {
         ArrayList<Object> temp = new ArrayList<>();
@@ -337,4 +342,160 @@ public class Blocking {
      return lowValCard;
      }
      */
+    private int multiSack(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
+        sack += 1;
+
+        ArrayList<Object> temp = new ArrayList<>();
+        temp.add(blockNum);
+        temp.add(bList);
+        temp.add(aList);
+        if (memo.containsKey(temp)) {
+            timeSave += 1;
+            return memo.get(temp).intValue();
+        }
+
+        ArrayList<Attacker> atks = new ArrayList<>();
+        ArrayList<Integer> considering = new ArrayList<>();
+        for (Attacker card: aList) {
+            if (!card.isDead()) {
+                atks.add(card);
+            }
+        }
+
+
+        if (blockNum == 0 || atks.isEmpty()){
+            return 0;
+        }
+
+        for (Attacker card: atks) {
+            card.addDamage(bList.get(blockNum-1).getNetPower());
+            considering.add(multiSack(blockNum - 1, bList, atks)
+                    + getBlockValue(bList.get(blockNum-1), card));
+            card.subDamage(bList.get(blockNum-1).getNetPower());
+        }
+
+        considering.add(multiSack(blockNum - 1, bList, atks));
+
+        int toSave = getMax(considering);
+        memo.put(temp, ((double) toSave));
+        return toSave;
+    }
+
+    public void sackWrap(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
+        for (int i = 0; i<blockNum; i++) {
+
+            ArrayList<Attacker> atks = new ArrayList<>();
+            ArrayList<Integer> considering = new ArrayList<>();
+            for (Attacker card : aList) {
+                if (!card.isDead()) {
+                    atks.add(card);
+                }
+            }
+
+
+            if (blockNum == 0 || atks.isEmpty()) {
+                return;
+            }
+
+            for (Attacker card : atks) {
+                card.addDamage(bList.get(blockNum - 1 - i).getNetPower());
+                considering.add(multiSack(blockNum - 1 - i, bList, atks)
+                        + getBlockValue(bList.get(blockNum - 1 - i), card));
+                card.subDamage(bList.get(blockNum - 1 - i).getNetPower());
+            }
+
+            considering.add(multiSack(blockNum - 1 - i, bList, atks));
+            int toSave = getMaxIndex(considering);
+            if (!(toSave == atks.size())) {
+                combat.addBlocker(atks.get(toSave).getSelf(), bList.get(blockNum - 1 - i));
+                atks.get(toSave).addDamage(bList.get(blockNum - 1 - i).getNetPower());
+            }
+        }
+    }
+
+    public void startSacking(int size, ArrayList<Card> blocks, ArrayList<Card> attacks) {
+        ArrayList<Attacker> atks = new ArrayList<>();
+        for (Card card: attacks) {
+            atks.add(new Attacker(card));
+        }
+        sackWrap(size, blocks, atks);
+    }
+
+    public int getMax(ArrayList<Integer> ints) {
+        int max = ints.get(0);
+        int index = 0;
+        for (int i = 0; i<ints.size(); i++) {
+            if (ints.get(i)>max) {
+                max = ints.get(i);
+                index = i;
+            }
+        }
+        return max;
+    }
+
+    public int getMaxIndex(ArrayList<Integer> ints) {
+        int max = ints.get(0);
+        int index = 0;
+        for (int i = 0; i<ints.size(); i++) {
+            if (ints.get(i)>max) {
+                max = ints.get(i);
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public int getBlockValue(Card block, Attacker atk) {
+        //We should use doubles if this is inaccurate, but this does save space
+        int blockVal = 0;
+        if (atk.getHealthRemaining() + block.getNetPower() < 0) {
+        } else if (atk.isDead()) {
+            blockVal += front.chooser(atk.getSelf());
+        }
+        //TODO: Checks if the attacker could kill this creature, but doesn't account for
+        //other targets of the damage
+        if (atk.getSelf().getNetPower() >= block.getNetToughness()) {
+            blockVal -= front.chooser(block);
+        }
+
+        //TODO: Checks if we are the only blocker, but doesn't account for walls
+        if (atk.damage == block.getNetPower()) {
+            blockVal += targetHealthVal(combat.getDefenderByAttacker(atk.getSelf()),
+                    atk.getSelf().getNetPower());
+        }
+
+        return blockVal;
+    }
+
+    public class Attacker {
+        int health;
+        int damage;
+        Card self;
+        public Attacker(Card card) {
+            self = card;
+            damage = 0;
+            health = card.getNetToughness();
+        }
+
+        public boolean isDead() {
+            return (health <= damage);
+        }
+
+        public int getHealthRemaining() {
+            return health - damage;
+        }
+
+        public Card getSelf() {
+            return self;
+        }
+
+        public void addDamage(int add) {
+            damage += add;
+        }
+
+        public void subDamage(int add) {
+            damage -= add;
+        }
+    }
+
 }
