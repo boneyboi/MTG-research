@@ -37,6 +37,7 @@ public class Blocking {
     private Combat combat;
     private Front front;
     private Player defender;
+    private CombatUtil combatJudge = new CombatUtil();
 
 
     public Blocking(Player player, Combat inCombat){
@@ -59,8 +60,9 @@ public class Blocking {
         for (Card card: aList) {
             System.out.println(card.getName() + " " + front.chooser(card));
         }
-
-        startSacking(bList.size(), bList, aList);
+        AssignBlocks(checkAllBlocks(aList, bList));
+        //startSacking(bList.size(), bList, aList);
+        System.out.println();
     }
 
     public void AssignBlocks(Map<Card, ArrayList<Card>> list){
@@ -143,7 +145,7 @@ public class Blocking {
                     int priority = 0;
                     if (defender == combat.getDefenderByAttacker(card)) {
                         //TODO: Account for trample here.
-                        priority = targetHealthVal(defender, card.getCurrentPower());
+                        priority = targetHealthVal(defender, card.getNetPower());
                     }
                     if (priority> max) {
                         max = priority;
@@ -192,7 +194,7 @@ public class Blocking {
         int damage = 0;
         for (Card c: list.keySet()) {
             if (list.get(c).isEmpty() && target == combat.getDefenderByAttacker(c)) {
-                damage += c.getCurrentPower();
+                damage += c.getNetPower();
             }
         }
         return damage;
@@ -253,6 +255,13 @@ public class Blocking {
         return returnList;
     }
 
+    public double evaluateBlock(Card atk, ArrayList<Card> block) {
+        ArrayList<Card> temp = new ArrayList<>();
+        temp.add(atk);
+        temp.addAll(block);
+        return evaluateBlock(temp);
+    }
+
     /**
      * Calculates the value or 'goodness' of a block with the following:
      * - creature value of Ai  control dies
@@ -264,8 +273,8 @@ public class Blocking {
     public double evaluateBlock (ArrayList<Card> list) {
         //attacker related variables - who the attacker is (first card), the power and toughness of the attacker
         Card attacker = list.get(0);
-        double attackerCurrentPower = attacker.getCurrentPower();
-        double attackerCurrentHealth = attacker.getCurrentToughness();
+        double attackerCurrentPower = attacker.getNetPower();
+        double attackerCurrentHealth = attacker.getNetToughness();
 
         //initial value of a block is 0
         double blockVal = 0.0;
@@ -282,7 +291,7 @@ public class Blocking {
                 //if a defender's health is equal to or less than attacker (i.e. 2/2, 2/1, 3/2 vs a 2/2), that
                 // creature 'dies'
                 //value of a block decreases by the value of the defender we lose
-                if (defender.getCurrentToughness() <= attackerCurrentPower) {
+                if (defender.getNetToughness() <= attackerCurrentPower) {
                     blockVal -= front.chooser(defender);
                 }
 
@@ -290,16 +299,16 @@ public class Blocking {
                 // that attacker 'dies'
                 //value of a block increases by the value of the defender we lose
                 //value of a block increases by the attack prevented
-                if (defender.getCurrentPower() >= attackerCurrentHealth && attackerCurrentHealth > 0) {
+                if (defender.getNetPower() >= attackerCurrentHealth && attackerCurrentHealth > 0) {
                     blockVal += front.chooser(attacker);
                 }
 
                 //decreases the power, toughness that the attacker 'spends' to get through a block
-                attackerCurrentPower -= defender.getCurrentToughness();
-                attackerCurrentHealth -= defender.getCurrentPower();
+                attackerCurrentPower -= defender.getNetToughness();
+                attackerCurrentHealth -= defender.getNetPower();
             }
 
-            blockVal += attacker.getCurrentPower();
+            blockVal += attacker.getNetPower();
         }
 
 
@@ -344,7 +353,7 @@ public class Blocking {
 
      for (Card key : list.keySet()) {
 
-     if (key.getCurrentToughness() > totalPowerOfBlock(list.get(key))
+     if (key.getNetToughness() > totalPowerOfBlock(list.get(key))
      && list.get(key).size() > 1) {
      toReplace.add(lowestValueCard(list.get(key)));
      editedMap.put(key, toReplace);
@@ -501,6 +510,113 @@ public class Blocking {
             }
         }
         return index;
+    }
+
+    public class Case {
+        int option = 0;
+        Card name;
+        public Case(Card call) {
+            name = call;
+        }
+
+        public Case(Case c) {
+            this.name = c.name;
+            this.option = c.option;
+        }
+
+        public int getOption() {
+            return option;
+        }
+
+        public Card getCard() {
+            return name;
+        }
+
+        public void setOption(int amt) {
+            option = amt;
+        }
+    }
+
+    public Map<Card, ArrayList<Card>> checkAllBlocks(ArrayList<Card> aList, ArrayList<Card> bList){
+        //This one serves as not blocking
+        aList.add(0, null);
+        Map<Card, ArrayList<Card>> choice;
+        //This one serves as a dummy end node
+        aList.add(null);
+        int loops = 0;
+        ArrayList<Case> blocks = new ArrayList<>();
+        for (Card card: bList) {
+            blocks.add(new Case(card));
+        }
+        int max = assessBlockScheme(aList, blocks);
+        choice = buildMap(aList, blocks);
+        Case selected;
+        boolean done;
+        while (blocks.get(blocks.size()-1).getOption() != (aList.size() - 1)) {
+            loops++;
+            int get = 0;
+            done = false;
+
+            while (!done) {
+                selected = blocks.get(get);
+                selected.setOption(selected.getOption() + 1);
+                if (selected.getOption() == (aList.size() - 1)) {
+                    if (selected != blocks.get(blocks.size() - 1)) {
+                        selected.setOption(0);
+                        get += 1;
+                    } else {
+                        done = true;
+                    }
+                } else {
+                    done = true;
+                }
+            }
+            int hold = assessBlockScheme(aList, blocks);
+            if(hold>max) {
+                max = hold;
+                choice = buildMap(aList, blocks);
+            }
+        }
+        return choice;
+    }
+
+    public int assessBlockScheme(ArrayList<Card> atks, ArrayList<Case> block) {
+        Map<Card, ArrayList<Card>> list = buildMap(atks, block);
+        int val = 0;
+        for (Card card: atks) {
+            if (card != null) {
+                for (Card def: list.get(card)) {
+                    if (!combatJudge.canBlock(card, def, combat)) {
+                        //This is not possible, so it should always value
+                        //this lower than not blocking
+                        return LETHALAVOIDER;
+                    }
+                }
+            }
+        }
+
+        for (Card card: atks) {
+            if (card != null && !(list.get(card).isEmpty())) {
+                val += evaluateBlock(card, list.get(card));
+            }
+        }
+        return val;
+    }
+
+    public Map<Card, ArrayList<Card>> buildMap(ArrayList<Card> atks, ArrayList<Case> block) {
+        Map<Card, ArrayList<Card>> list = new HashMap<>();
+        for (Card chosen: atks) {
+            if (chosen != null) {
+                ArrayList<Card> toAdd = new ArrayList<>();
+                for (Case card: block) {
+                    if (chosen == atks.get(card.getOption())) {
+                        toAdd.add(card.getCard());
+                    }
+                }
+                list.put(chosen, toAdd);
+            }
+        }
+        return list;
     }
 
     public int getBlockValue(Card block, Attacker atk, ArrayList<Attacker> atks) {
