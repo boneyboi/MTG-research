@@ -130,7 +130,7 @@ public abstract class CardEvaluator {
     public double getColorValue (Card card){
 
         //number of colors * COLORVALUE + how many colored mana symbols does a card have * SHARDVALUE
-        return getNumColors(card) * COLORVALUE + getShardCount(card) * SHARDVALUE;
+        return (getNumColors(card) * COLORVALUE )+( getShardCount(card) * SHARDVALUE);
     }
 
 }

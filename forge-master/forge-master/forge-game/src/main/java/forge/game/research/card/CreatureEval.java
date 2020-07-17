@@ -22,6 +22,8 @@ public class CreatureEval extends CardEvaluator {
     private double KeywordsMul = 1.0;
 
     //constants for keywords
+    public static final double ADJUSTMENT = 0.47;
+
     public static final double INDESTRUCTIBLEVAL = 10;
     public static final double PROTECITONVAL = 9.5;
     public static final double HEXPROOFVAL = 9;
@@ -157,10 +159,17 @@ public class CreatureEval extends CardEvaluator {
             }
         }
 
+        keyValue *= ADJUSTMENT;
+
         //double testMul = numKeywordsMul;
         return keyValue;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     public double calculateAbilityVal (Card card) {
         double abilityVal = 0.0;
 
@@ -169,15 +178,26 @@ public class CreatureEval extends CardEvaluator {
         return abilityVal;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     private double hasTriggerAbility (Card card) {
         double trigVal = 0;
 
-        //5.3
-        trigVal += card.getTriggers().size() * FIRSTSTRIKEVAL;
+        //3.8
+        trigVal += card.getTriggers().size() * VIGILIANCEVAL;
+        trigVal *= ADJUSTMENT;
 
         return trigVal;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     private double hasPassiveAbility (Card card) {
         int numPass = 0;
         double passVal= 0.0;
@@ -189,12 +209,18 @@ public class CreatureEval extends CardEvaluator {
             }
         }
 
-        //7.5
-        passVal += (numPass * DOUBLESTRIKEVAL);
+        //5
+        passVal += (numPass * DEATHTOUCHVAL);
+        passVal *= ADJUSTMENT;
 
         return passVal;
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
     private double hasActivateAbility (Card card) {
         int numActi = 0;
         double actiVal = 0.0;
@@ -205,8 +231,9 @@ public class CreatureEval extends CardEvaluator {
             }
         }
 
-        //3.5
-        actiVal += (numActi * TRAMPLEVAL);
+        //2
+        actiVal += (numActi * MENACEVAL);
+        actiVal *= ADJUSTMENT;
 
         return actiVal;
     }

@@ -3,7 +3,7 @@
  * @author Michael Bowlin
  * @author Shaelyn Rivers
  * @author Deric Siglin
- * @since July 16, 2020
+ * @since July 17, 2020
  */
 
 package forge.game.research.decision.combat;
@@ -11,6 +11,7 @@ package forge.game.research.decision.combat;
 import forge.game.GameEntity;
 import forge.game.card.Card;
 import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.player.Player;
 import forge.game.research.card.Front;
 
@@ -266,7 +267,7 @@ public class Blocking {
         double attackerCurrentPower = attacker.getCurrentPower();
         double attackerCurrentHealth = attacker.getCurrentToughness();
 
-        //inital value of a block is 0
+        //initial value of a block is 0
         double blockVal = 0.0;
         ArrayList<Card> defenderList = getDefenderList(list);
 
@@ -289,15 +290,16 @@ public class Blocking {
                 // that attacker 'dies'
                 //value of a block increases by the value of the defender we lose
                 //value of a block increases by the attack prevented
-                if (defender.getCurrentPower() >= attackerCurrentHealth) {
+                if (defender.getCurrentPower() >= attackerCurrentHealth && attackerCurrentHealth > 0) {
                     blockVal += front.chooser(attacker);
-                    blockVal += attacker.getCurrentPower();
                 }
 
                 //decreases the power, toughness that the attacker 'spends' to get through a block
                 attackerCurrentPower -= defender.getCurrentToughness();
                 attackerCurrentHealth -= defender.getCurrentPower();
             }
+
+            blockVal += attacker.getCurrentPower();
         }
 
 
@@ -374,6 +376,8 @@ public class Blocking {
      return lowValCard;
      }
      */
+
+
     private int multiSack(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
         sack += 1;
 
@@ -446,6 +450,11 @@ public class Blocking {
         }
     }
 
+    /**
+     * Checks to see if incoming damage is lethal
+     * @param atks - attackers
+     * @return
+     */
     public int lethalCheck(ArrayList<Attacker> atks) {
         int damage = 0;
         for (Attacker selected: atks) {
