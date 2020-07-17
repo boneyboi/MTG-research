@@ -37,6 +37,10 @@ public class Blocking {
     private Combat combat;
     private Front front;
     private Player defender;
+    //Before adding keyword clauses, our exhaustive algorithm finds and evaluates
+    //about 230,000 options a minute. So with less than 200000 options, we should complete
+    //the eval is a relatively quick time.
+    private final int EXHAUSTIVESEARCHTIME = 200000;
     private CombatUtil combatJudge = new CombatUtil();
 
 
@@ -60,8 +64,11 @@ public class Blocking {
         for (Card card: aList) {
             System.out.println(card.getName() + " " + front.chooser(card));
         }
-        AssignBlocks(checkAllBlocks(aList, bList));
-        //startSacking(bList.size(), bList, aList);
+        if (Math.pow(aList.size()+1, bList.size()) < EXHAUSTIVESEARCHTIME) {
+            AssignBlocks(checkAllBlocks(aList, bList));
+        } else {
+            startSacking(bList.size(), bList, aList);
+        }
         System.out.println();
     }
 
