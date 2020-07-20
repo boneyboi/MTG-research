@@ -12,6 +12,7 @@ import forge.game.GameEntity;
 import forge.game.card.Card;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
+import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.research.card.Front;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static forge.game.keyword.Keyword.*;
 import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.Double.max;
 
@@ -64,11 +66,12 @@ public class Blocking {
         for (Card card: aList) {
             System.out.println(card.getName() + " " + front.chooser(card));
         }
-        if (Math.pow(aList.size()+1, bList.size()) < EXHAUSTIVESEARCHTIME) {
+        /**if (Math.pow(aList.size()+1, bList.size()) < EXHAUSTIVESEARCHTIME) {
             AssignBlocks(checkAllBlocks(aList, bList));
         } else {
             startSacking(bList.size(), bList, aList);
-        }
+        }*/
+        startSacking(bList.size(), bList, aList);
         System.out.println();
     }
 
@@ -219,6 +222,8 @@ public class Blocking {
         }
         if( damage>= life) {
             return REALLYHIGHVALUE;
+        } else if (damage<0) {
+            return 0;
         }
         return damage;
     }
@@ -420,13 +425,17 @@ public class Blocking {
         }
 
         for (Attacker card: atks) {
-            card.addDamage(bList.get(blockNum-1).getNetPower());
-            considering.add(multiSack(blockNum - 1, bList, atks)
-                    + getBlockValue(bList.get(blockNum-1), card, atks));
-            card.subDamage(bList.get(blockNum-1).getNetPower());
+            if(combatJudge.canBlock(card.getSelf(), bList.get(blockNum - 1), combat)) {
+                card.addBlocker(bList.get(blockNum - 1));
+                considering.add(multiSack(blockNum - 1, bList, atks)
+                        + getBlockValue(bList.get(blockNum - 1), card, atks));
+                card.removeBlocker(bList.get(blockNum - 1));
+            }
         }
 
-        considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
+        if (!combatJudge.mustBlockAnAttacker(bList.get(blockNum - 1), combat)) {
+            considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
+        }
 
         int toSave = getMax(considering);
         memo.put(temp, ((double) toSave));
@@ -450,15 +459,21 @@ public class Blocking {
             }
 
             for (Attacker card : atks) {
-                card.addDamage(bList.get(blockNum - 1).getNetPower());
-                considering.add(multiSack(blockNum - 1, bList, atks)
-                        + getBlockValue(bList.get(blockNum - 1), card, atks));
-                card.subDamage(bList.get(blockNum - 1).getNetPower());
+                if (combatJudge.canBlock(card.getSelf(), bList.get(blockNum - 1), combat)) {
+                    card.addBlocker(bList.get(blockNum - 1));
+                    considering.add(multiSack(blockNum - 1, bList, atks)
+                            + getBlockValue(bList.get(blockNum - 1), card, atks));
+                    card.removeBlocker(bList.get(blockNum - 1));
+                }
             }
 
-            considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
+            if (!combatJudge.mustBlockAnAttacker(bList.get(blockNum - 1), combat)) {
+                considering.add(multiSack(blockNum - 1, bList, atks) + lethalCheck(atks));
+            }
+
             int toSave = getMaxIndex(considering);
             if (!(toSave == atks.size())) {
+                atks.get(toSave).addBlocker(bList.get(blockNum - 1));
                 combat.addBlocker(atks.get(toSave).getSelf(), bList.get(blockNum - 1));
                 atks.get(toSave).addDamage(bList.get(blockNum - 1).getNetPower());
             }
@@ -475,8 +490,10 @@ public class Blocking {
         int damage = 0;
         for (Attacker selected: atks) {
             //TODO improve blocking check
-            if (selected.getDamage() == 0) {
+            if (selected.getBlockers().isEmpty()) {
                 damage += selected.getSelf().getNetPower();
+            } else if (selected.getSelf().hasKeyword(TRAMPLE)) {
+                damage += selected.getDamage();
             }
         }
 
@@ -629,18 +646,32 @@ public class Blocking {
     public int getBlockValue(Card block, Attacker atk, ArrayList<Attacker> atks) {
         //We should use doubles if this is inaccurate, but this does save space
         int blockVal = 0;
-        if (atk.getHealthRemaining() + block.getNetPower() < 0) {
-        } else if (atk.isDead()) {
+        boolean needed = true;
+        atk.removeBlocker(block);
+        if (atk.isDead()) {
+            needed = false;
+        }
+        atk.addBlocker(block);
+        if ((atk.isDead() && needed) && !(atk.getSelf().hasKeyword(INDESTRUCTIBLE))) {
             blockVal += front.chooser(atk.getSelf());
         }
-        //TODO: Checks if the attacker could kill this creature, but doesn't account for
-        //other targets of the damage
-        if (atk.getSelf().getNetPower() >= block.getNetToughness()) {
+
+        if ((atk.getStrength() >= 0 || atk.getSelf().hasKeyword(DEATHTOUCH))
+            && !(block.hasKeyword(INDESTRUCTIBLE))) {
             blockVal -= front.chooser(block);
         }
 
-        //TODO: Checks if we are the only blocker, but doesn't account for walls
-        if (atk.damage == block.getNetPower()) {
+        if (atk.getSelf().hasKeyword(TRAMPLE)) {
+            int temp = atk.getStrength();
+            if (temp>=0) {
+                blockVal += targetHealthVal(combat.getDefenderByAttacker(atk.getSelf()),
+                        block.getNetToughness());
+            } else {
+                //Our toughness soaks up the rest of the damage
+                blockVal += targetHealthVal(combat.getDefenderByAttacker(atk.getSelf()),
+                        block.getNetToughness() + temp);
+            }
+        } else if (atk.getBlockers().size() == 1) {
             blockVal += targetHealthVal(combat.getDefenderByAttacker(atk.getSelf()),
                     atk.getSelf().getNetPower());
         }
@@ -654,13 +685,53 @@ public class Blocking {
         int health;
         int damage;
         Card self;
+        ArrayList<Card> blockers;
+        int strength;
         public Attacker(Card card) {
             self = card;
             damage = 0;
             health = card.getNetToughness();
+            strength = card.getNetPower();
+            if (card.hasKeyword(DOUBLE_STRIKE)) {
+                strength *= 2;
+            }
+            blockers = new ArrayList<>();
+        }
+
+        public void addBlocker(Card c) {
+            blockers.add(c);
+            this.addDamage(c.getNetPower());
+            this.subStrength(c.getNetToughness());
+        }
+
+        public void removeBlocker(Card c) {
+            blockers.remove(c);
+            this.subDamage(c.getNetPower());
+            this.addStrength(c.getNetToughness());
+        }
+
+        public ArrayList<Card> getBlockers() {
+            return blockers;
+        }
+
+        public void addStrength(int c) {
+            strength += c;
+        }
+
+        public void subStrength(int c) {
+            strength -= c;
+        }
+
+        public int getStrength() {
+            return strength;
         }
 
         public boolean isDead() {
+            for (Card c: blockers) {
+                if (c.hasKeyword(DEATHTOUCH)) {
+                    return true;
+                }
+            }
             return (health <= damage);
         }
 
