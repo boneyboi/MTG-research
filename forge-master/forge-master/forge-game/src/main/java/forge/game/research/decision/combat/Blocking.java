@@ -57,6 +57,7 @@ public class Blocking {
         blockers = bList;
         Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
         //AssignBlocks(combatMap);
+        /**
         System.out.println("Blockers are valued:");
         for (Card card: bList) {
             System.out.println(card.getName() + " " + front.chooser(card));
@@ -66,6 +67,7 @@ public class Blocking {
         for (Card card: aList) {
             System.out.println(card.getName() + " " + front.chooser(card));
         }
+         */ //This ^ is all test printing
         /**if (Math.pow(aList.size()+1, bList.size()) < EXHAUSTIVESEARCHTIME) {
             AssignBlocks(checkAllBlocks(aList, bList));
         } else {

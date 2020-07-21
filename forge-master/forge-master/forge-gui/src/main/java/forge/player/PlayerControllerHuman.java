@@ -665,6 +665,10 @@ PlayerControllerHuman extends PlayerController implements IGameController {
                 prompt = localizer.getMessage("lblYouLostTheLastGame", player.getName());
             }
             prompt += "\n\n" + localizer.getMessage("lblWouldYouLiketoPlayorDraw");
+            //Our Ai always goes first
+            if (this.getPlayer().getFacade() != null) {
+                return this.player;
+            }
             final InputConfirm inp = new InputConfirm(this, prompt, localizer.getMessage("lblPlay"), localizer.getMessage("lblDraw"));
             inp.showAndWait();
             return inp.getResult() ? this.player : this.player.getOpponents().get(0);
@@ -1280,7 +1284,11 @@ PlayerControllerHuman extends PlayerController implements IGameController {
             Blocking blocks = new Blocking(defender, combat);
             ArrayList<Card> tempAttackers = new ArrayList<>();
             ArrayList<Card> tempBlockers = new ArrayList<>();
-            tempBlockers.addAll(defender.getCreaturesInPlay());
+            for (Card c: defender.getCreaturesInPlay()) {
+                if (!c.isTapped()) {
+                    tempBlockers.add(c);
+                }
+            }
             tempAttackers.addAll(combat.getAttackers());
             blocks.getBlocks(tempAttackers, tempBlockers);
         } else {

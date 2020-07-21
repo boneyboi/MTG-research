@@ -938,7 +938,12 @@ public class AiBlockController {
 
     /** Assigns blockers for the provided combat instance (in favor of player passes to ctor) */
     public void assignBlockersForCombat(final Combat combat) {
-        List<Card> possibleBlockers = ai.getCreaturesInPlay();
+        List<Card> possibleBlockers = new ArrayList<>();
+        for (Card c: ai.getCreaturesInPlay()) {
+            if (!c.isTapped()) {
+                possibleBlockers.add(c);
+            }
+        }
         attackers = sortPotentialAttackers(combat);
         //This is our code
         if (ai.getFacade() != null) {

@@ -123,6 +123,12 @@ public class Match {
                 if (p.getPlayer().equals(winner)) {
                     victories[i]++;
                     if (victories[i] >= rules.getGamesToWinMatch()) {
+                        int temp = 0;
+                        for (RegisteredPlayer selected : players) {
+                            System.out.println("Player " + selected + " won " + victories[temp]
+                             + " times.");
+                            temp++;
+                        }
                         return true;
                     }
                 }

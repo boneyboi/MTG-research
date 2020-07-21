@@ -110,7 +110,7 @@ public class Facade {
             }
         } while(chosen!= null);
 
-        printStrategies(plan);
+        //printStrategies(plan);
 
     }
 
