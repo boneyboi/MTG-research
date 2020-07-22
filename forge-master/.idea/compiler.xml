@@ -2,20 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Maven default annotation processors profile">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="forge-gui-mobile" />
-        <module name="forge-gui-desktop" />
         <module name="forge-ai" />
+        <module name="forge-gui-desktop" />
+        <module name="forge-gui" />
         <module name="forge-game" />
-        <module name="forge-gui-mobile-dev" />
         <module name="forge-gui-ios" />
         <module name="forge-core" />
-        <module name="forge-gui" />
+        <module name="forge-gui-mobile-dev" />
         <module name="forge-gui-android" />
       </profile>
+      <profile name="disabled" />
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="forge" target="1.5" />

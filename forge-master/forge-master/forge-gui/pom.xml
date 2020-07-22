@@ -82,6 +82,12 @@
             <artifactId>lz4-java</artifactId>
             <version>1.7.1</version>
         </dependency>
+        <dependency>
+            <groupId>forge</groupId>
+            <artifactId>forge-gui-desktop</artifactId>
+            <version>1.6.35-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
