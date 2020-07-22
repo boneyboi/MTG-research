@@ -60,8 +60,6 @@ public class GameWrapper {
 		}
 		
 		GameRules rules = new GameRules(GameType.Constructed);
-		//TODO: Remove this
-		rules.setGamesPerMatch(300);
 		rules.setPlayForAnte(FModel.getPreferences().getPrefBoolean(FPref.UI_ANTE));
         rules.setMatchAnteRarity(FModel.getPreferences().getPrefBoolean(FPref.UI_ANTE_MATCH_RARITY));
 		rules.setManaBurn(FModel.getPreferences().getPrefBoolean(FPref.UI_MANABURN));

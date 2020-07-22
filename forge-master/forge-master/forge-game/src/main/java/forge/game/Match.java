@@ -36,6 +36,8 @@ public class Match {
         gamesPlayedRo = Collections.unmodifiableList(gamesPlayed);
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;
+        //TODO: Remove this
+        rules.setGamesPerMatch(101);
         this.title = title;
     }
 
@@ -125,8 +127,8 @@ public class Match {
                     if (victories[i] >= rules.getGamesToWinMatch()) {
                         int temp = 0;
                         for (RegisteredPlayer selected : players) {
-                            System.out.println("Player " + selected + " won " + victories[temp]
-                             + " times.");
+                            System.out.println("Player " + selected.getPlayer().getName()
+                                    + " won " + victories[temp] + " times.");
                             temp++;
                         }
                         return true;

@@ -11,13 +11,14 @@ public class InputPlaybackControl extends InputSyncronizedBase {
     final FControlGamePlayback control;
 
     private boolean isPaused = false;
-    private boolean isFast = false;
+    private boolean isFast = true;
 
     private final Game game;
     public InputPlaybackControl(final Game game0, final FControlGamePlayback fControlGamePlayback) {
         super(fControlGamePlayback.getController());
         game = game0;
         control = fControlGamePlayback;
+        control.setSpeed(isFast);
         setPause(false);
     }
 

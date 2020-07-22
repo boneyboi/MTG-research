@@ -1285,7 +1285,7 @@ PlayerControllerHuman extends PlayerController implements IGameController {
             ArrayList<Card> tempAttackers = new ArrayList<>();
             ArrayList<Card> tempBlockers = new ArrayList<>();
             for (Card c: defender.getCreaturesInPlay()) {
-                if (!c.isTapped()) {
+                if (CombatUtil.canBlock(c, combat)) {
                     tempBlockers.add(c);
                 }
             }

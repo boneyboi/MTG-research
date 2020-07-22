@@ -940,7 +940,7 @@ public class AiBlockController {
     public void assignBlockersForCombat(final Combat combat) {
         List<Card> possibleBlockers = new ArrayList<>();
         for (Card c: ai.getCreaturesInPlay()) {
-            if (!c.isTapped()) {
+            if (CombatUtil.canBlock(c, combat)) {
                 possibleBlockers.add(c);
             }
         }

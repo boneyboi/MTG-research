@@ -12,7 +12,6 @@ import forge.game.GameEntity;
 import forge.game.card.Card;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
-import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.research.card.Front;
 
@@ -52,6 +51,7 @@ public class Blocking {
         defender = player;
     }
 
+
     public void getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
@@ -73,11 +73,11 @@ public class Blocking {
         } else {
             startSacking(bList.size(), bList, aList);
         }*/
-        startSacking(bList.size(), bList, aList);
+        assignBlocks(startSacking(bList.size(), bList, aList));
         System.out.println();
     }
 
-    public void AssignBlocks(Map<Card, ArrayList<Card>> list){
+    public void assignBlocks(Map<Card, ArrayList<Card>> list){
         for (Card attacker: combat.getAttackers()) {
             for (Card blocker: list.get(attacker)){
                 combat.addBlocker(attacker, blocker);
@@ -444,7 +444,11 @@ public class Blocking {
         return toSave;
     }
 
-    public void sackWrap(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
+    public Map<Card, ArrayList<Card>> sackWrap(int blockNum, ArrayList<Card> bList, ArrayList<Attacker> aList) {
+        Map<Card, ArrayList<Card>> toReturn = new HashMap<>();
+        for (Attacker atk: aList) {
+            toReturn.put(atk.getSelf(), new ArrayList<>());
+        }
         for (int i = 0; i<bList.size(); i++) {
 
             ArrayList<Attacker> atks = new ArrayList<>();
@@ -457,7 +461,7 @@ public class Blocking {
 
 
             if (blockNum == 0 || atks.isEmpty()) {
-                return;
+                return toReturn;
             }
 
             for (Attacker card : atks) {
@@ -476,11 +480,12 @@ public class Blocking {
             int toSave = getMaxIndex(considering);
             if (!(toSave == atks.size())) {
                 atks.get(toSave).addBlocker(bList.get(blockNum - 1));
-                combat.addBlocker(atks.get(toSave).getSelf(), bList.get(blockNum - 1));
+                toReturn.get(atks.get(toSave).getSelf()).add(bList.get(blockNum - 1));
                 atks.get(toSave).addDamage(bList.get(blockNum - 1).getNetPower());
             }
             blockNum -= 1;
         }
+        return toReturn;
     }
 
     /**
@@ -506,12 +511,12 @@ public class Blocking {
         }
     }
 
-    public void startSacking(int size, ArrayList<Card> blocks, ArrayList<Card> attacks) {
+    public Map<Card, ArrayList<Card>> startSacking(int size, ArrayList<Card> blocks, ArrayList<Card> attacks) {
         ArrayList<Attacker> atks = new ArrayList<>();
         for (Card card: attacks) {
             atks.add(new Attacker(card));
         }
-        sackWrap(size, blocks, atks);
+        return sackWrap(size, blocks, atks);
     }
 
     public int getMax(ArrayList<Integer> ints) {
