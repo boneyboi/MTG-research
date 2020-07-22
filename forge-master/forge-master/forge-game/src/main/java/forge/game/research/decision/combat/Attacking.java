@@ -23,13 +23,21 @@ public class Attacking {
     }
     //return a list of attackers and their respective defenders(face or planesawalker)
 
+    public void declareAttack() {
+
+    }
+
     //prune attacking cards with can attack method
     //
     public HashMap<Card, GameEntity> chooseAttackers(CardCollection attackingCards){
         HashMap<Card, GameEntity> attackers = new HashMap<Card, GameEntity>();
-
-
         return attackers;
+    }
+
+    public void setAttackers(HashMap<Card, GameEntity> map) {
+        for (Card c: map.keySet()) {
+            inCombat.addAttacker(c, map.get(c));
+        }
     }
 
     public static ArrayList<Card> knapsack2(int life, List<Card> arrlist2, List<List<Card>> resultlist, List<Card> resultitems, List<Card> blockers){

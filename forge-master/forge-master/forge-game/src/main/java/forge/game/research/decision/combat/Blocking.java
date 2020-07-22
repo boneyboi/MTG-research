@@ -55,24 +55,6 @@ public class Blocking {
     public void getBlocks(ArrayList<Card> aList, ArrayList<Card> bList) {
         attackers = aList;
         blockers = bList;
-        Map<Card, ArrayList<Card>> combatMap = getChumpBlocks((knapsacking(attackers, blockers)));
-        //AssignBlocks(combatMap);
-        /**
-        System.out.println("Blockers are valued:");
-        for (Card card: bList) {
-            System.out.println(card.getName() + " " + front.chooser(card));
-        }
-        System.out.println("");
-        System.out.println("and Attackers are worth:");
-        for (Card card: aList) {
-            System.out.println(card.getName() + " " + front.chooser(card));
-        }
-         */ //This ^ is all test printing
-        /**if (Math.pow(aList.size()+1, bList.size()) < EXHAUSTIVESEARCHTIME) {
-            AssignBlocks(checkAllBlocks(aList, bList));
-        } else {
-            startSacking(bList.size(), bList, aList);
-        }*/
         assignBlocks(startSacking(bList.size(), bList, aList));
         System.out.println();
     }
@@ -511,12 +493,12 @@ public class Blocking {
         }
     }
 
-    public Map<Card, ArrayList<Card>> startSacking(int size, ArrayList<Card> blocks, ArrayList<Card> attacks) {
+    public Map<Card, ArrayList<Card>> startSacking(int numBlockers, ArrayList<Card> blocks, ArrayList<Card> attacks) {
         ArrayList<Attacker> atks = new ArrayList<>();
         for (Card card: attacks) {
             atks.add(new Attacker(card));
         }
-        return sackWrap(size, blocks, atks);
+        return sackWrap(numBlockers, blocks, atks);
     }
 
     public int getMax(ArrayList<Integer> ints) {

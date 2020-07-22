@@ -33,6 +33,7 @@ import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
+import forge.game.research.decision.combat.Attacking;
 import forge.game.research.decision.infosupport.Mulligan;
 import forge.game.spellability.*;
 import forge.game.trigger.WrappedAbility;
@@ -592,7 +593,12 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public void declareAttackers(Player attacker, Combat combat) {
-        brains.declareAttackers(attacker, combat);
+        if (attacker.getFacade()!= null) {
+            Attacking choice = new Attacking(attacker.getSingleOpponent(), combat);
+            choice.declareAttack();
+        } else {
+            brains.declareAttackers(attacker, combat);
+        }
     }
 
     @Override

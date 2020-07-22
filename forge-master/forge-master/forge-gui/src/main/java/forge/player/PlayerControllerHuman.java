@@ -39,6 +39,7 @@ import forge.game.mana.ManaConversionMatrix;
 import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementLayer;
+import forge.game.research.decision.combat.Attacking;
 import forge.game.research.decision.combat.Blocking;
 import forge.game.research.decision.infosupport.Mulligan;
 import forge.game.spellability.*;
@@ -1262,20 +1263,26 @@ PlayerControllerHuman extends PlayerController implements IGameController {
 
     @Override
     public void declareAttackers(final Player attackingPlayer, final Combat combat) {
-        if (mayAutoPass()) {
-            if (CombatUtil.validateAttackers(combat)) {
-                return; // don't prompt to declare attackers if user chose to
-                        // end the turn and not attacking is legal
-            } else {
-                autoPassCancel(); // otherwise: cancel auto pass because of this
-                                  // unexpected attack
-            }
+        if (attackingPlayer.getFacade()!= null) {
+            Attacking choice = new Attacking(attackingPlayer.getSingleOpponent(), combat);
+            choice.declareAttack();
         }
+        else {
+            if (mayAutoPass()) {
+                if (CombatUtil.validateAttackers(combat)) {
+                    return; // don't prompt to declare attackers if user chose to
+                    // end the turn and not attacking is legal
+                } else {
+                    autoPassCancel(); // otherwise: cancel auto pass because of this
+                    // unexpected attack
+                }
+            }
 
-        // This input should not modify combat object itself, but should return
-        // user choice
-        final InputAttack inpAttack = new InputAttack(this, attackingPlayer, combat);
-        inpAttack.showAndWait();
+            // This input should not modify combat object itself, but should return
+            // user choice
+            final InputAttack inpAttack = new InputAttack(this, attackingPlayer, combat);
+            inpAttack.showAndWait();
+        }
     }
 
     @Override
