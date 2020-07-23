@@ -92,6 +92,7 @@ public class PhaseHandler implements java.io.Serializable {
     private int planarDiceRolledthisTurn = 0;
 
     private transient Player playerTurn = null;
+    private Player firstPlayer = null;
 
     // priority player
 
@@ -1046,8 +1047,13 @@ public class PhaseHandler implements java.io.Serializable {
         startFirstTurn(goesFirst, null);
     }
 
+    public Player getFirstPlayer() {
+        return firstPlayer;
+    }
+
     public void startFirstTurn(Player goesFirst, Runnable startGameHook) {
         StopWatch sw = new StopWatch();
+        firstPlayer = goesFirst;
 
         for (Player p: goesFirst.getGame().getPlayers()) {
             if (p.getFacade() != null)

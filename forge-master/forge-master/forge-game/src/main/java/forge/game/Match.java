@@ -32,12 +32,14 @@ public class Match {
     private final List<GameOutcome> gamesPlayed = new ArrayList<>();
     private final List<GameOutcome> gamesPlayedRo;
 
+    private final List<Integer> numberWins = new ArrayList<>();
+
     public Match(final GameRules rules0, final List<RegisteredPlayer> players0, final String title) {
         gamesPlayedRo = Collections.unmodifiableList(gamesPlayed);
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;
         //TODO: Remove this
-        rules.setGamesPerMatch(101);
+        rules.setGamesPerMatch(5);
         this.title = title;
     }
 
@@ -65,6 +67,16 @@ public class Match {
             throw new IllegalStateException("Game is not over yet.");
         }
         gamesPlayed.add(finished.getOutcome());
+        int temp = finished.getOutcome().getWinningPlayer().getTeamNumber() * 2;
+        if (finished.getOutcome().getWinningPlayer() ==
+                finished.getPhaseHandler().getFirstPlayer().getRegisteredPlayer()) {
+            temp ++;
+        }
+        if (numberWins.get(temp) == null) {
+            numberWins.add(temp, 1);
+        } else {
+            numberWins.add(temp, numberWins.get(temp) + 1);
+        }
     }
 
     public Game createGame() {
@@ -127,8 +139,13 @@ public class Match {
                     if (victories[i] >= rules.getGamesToWinMatch()) {
                         int temp = 0;
                         for (RegisteredPlayer selected : players) {
-                            System.out.println("Player " + selected.getPlayer().getName()
-                                    + " won " + victories[temp] + " times.");
+                            System.out.println("Player "
+                                    + selected.getPlayer().getName()
+                                    + " won "
+                                    + numberWins.get(selected.getTeamNumber())
+                                    + " times on draw and "
+                                    + numberWins.get(selected.getTeamNumber() + 1)
+                                    + " times on play.");
                             temp++;
                         }
                         return true;

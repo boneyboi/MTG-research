@@ -6,8 +6,6 @@ import forge.game.card.CardCollection;
 import forge.game.combat.Combat;
 import forge.game.player.Player;
 import forge.game.research.card.Front;
-import sun.jvm.hotspot.opto.Block;
-import sun.security.provider.NativePRNG;
 
 import java.util.ArrayList;
 import java.util.HashMap;
