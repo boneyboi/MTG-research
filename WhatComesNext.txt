@@ -1,0 +1,15 @@
+Things we would have liked to do.
+
+
+choosing when to defend planeswalkers
+Using activated abilities
+attacking
+look for keywords first strike, double strike in combat
+look for combat tricks in combat
+cast spells at instant speed
+Create a generic strategy list
+Prevent pacifying the same creature twice
+Fixed Light Up the Stage Bug
+Attack with blocking in mind
+Attacking multiple players
+
