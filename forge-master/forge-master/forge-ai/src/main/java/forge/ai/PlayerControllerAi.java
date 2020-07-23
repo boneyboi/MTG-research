@@ -594,7 +594,7 @@ public class PlayerControllerAi extends PlayerController {
     @Override
     public void declareAttackers(Player attacker, Combat combat) {
         if (attacker.getFacade()!= null) {
-            Attacking choice = new Attacking(attacker.getSingleOpponent(), combat);
+            Attacking choice = new Attacking(attacker, attacker.getOpponents().get(0), combat);
             choice.declareAttack();
         } else {
             brains.declareAttackers(attacker, combat);
