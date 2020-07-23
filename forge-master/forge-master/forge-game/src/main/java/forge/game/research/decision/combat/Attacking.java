@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Attacking {
-    private static Front front;
+    private static Front front= new Front();
     private static Blocking blockobj;
     private static Player defender;
     private static Player attacker;
@@ -25,6 +25,7 @@ public class Attacking {
         this.attacker = attacker;
         this.defender = defender;
         blockobj = new Blocking(defender, inCombat);
+        this.inCombat = inCombat;
     }
     //return a list of attackers and their respective defenders(face or planesawalker)
 
@@ -40,18 +41,14 @@ public class Attacking {
         //if(combatutil.canblock(card, combat)
         //if it can add it to blockers
 
-        if(defender.getCreaturesInPlay().equals(null)){
-            for(Card card : defender.getCreaturesInPlay()){
-                if(CombatUtil.canBlock(card, inCombat)){
-                    blockers.add(card);
-                }
+        for(Card card : defender.getCreaturesInPlay()){
+            if(CombatUtil.canBlock(card, inCombat)){
+                blockers.add(card);
             }
         }
-        if(attacker.getCreaturesInPlay().equals(null)){
-            for(Card card : attacker.getCreaturesInPlay()){
-                if(CombatUtil.canBlock(card, inCombat)){
-                    attackers.add(card);
-                }
+        for(Card card : attacker.getCreaturesInPlay()){
+            if(CombatUtil.canAttack(card)){
+                attackers.add(card);
             }
         }
         for(Card card : knapsack2(defender.getLife(), attackers, new ArrayList<List<Card>>(), new ArrayList<Card>(), blockers)){
@@ -65,7 +62,7 @@ public class Attacking {
 
     public void setAttackers(HashMap<Card, GameEntity> map) {
         for (Card c: map.keySet()) {
-            if(!c.equals("")) {
+            if(!c.getName().equals("")) {
                 try{
                     inCombat.addAttacker(c, map.get(c));
                 } catch(NullPointerException e){
@@ -123,7 +120,7 @@ public class Attacking {
             //replace this condition with:
             //if the evaluation of blocking the skip is less than blocking the added attacker
             if(evaluateBlock(null, skip) < evaluateBlock(arrlist2.get(arrlist2.size()-1), take)){
-                take.add(0, arrlist2.get(arrlist2.size()-1));
+                take.add(arrlist2.get(arrlist2.size()-1));
                 resultlist.add(take);
                 return take;
             } else {
@@ -159,7 +156,7 @@ public class Attacking {
     }
 
     public static double evaluateBlock(Card atk, ArrayList<Card> block) {
-        if(atk.equals(null)){
+        if(atk==null){
             return 0;
         }
         ArrayList<Card> temp = new ArrayList<>();

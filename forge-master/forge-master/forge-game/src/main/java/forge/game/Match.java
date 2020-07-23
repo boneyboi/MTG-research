@@ -38,8 +38,12 @@ public class Match {
         gamesPlayedRo = Collections.unmodifiableList(gamesPlayed);
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;
-        //TODO: Remove this
-        rules.setGamesPerMatch(5);
+        //TODO: Remove this. It is only for AI vs AI testing
+        rules.setGamesPerMatch(201);
+        for (RegisteredPlayer p: players) {
+            numberWins.add(p.getTeamNumber()*2, 0);
+            numberWins.add(p.getTeamNumber()*2 + 1, 0);
+        }
         this.title = title;
     }
 
@@ -67,16 +71,15 @@ public class Match {
             throw new IllegalStateException("Game is not over yet.");
         }
         gamesPlayed.add(finished.getOutcome());
-        int temp = finished.getOutcome().getWinningPlayer().getTeamNumber() * 2;
-        if (finished.getOutcome().getWinningPlayer() ==
-                finished.getPhaseHandler().getFirstPlayer().getRegisteredPlayer()) {
-            temp ++;
+        if (finished.getOutcome().getWinningPlayer()!= null) {
+            int temp = finished.getOutcome().getWinningPlayer().getTeamNumber() * 2;
+            if (finished.getOutcome().getWinningPlayer() ==
+                    finished.getPhaseHandler().getFirstPlayer().getRegisteredPlayer()) {
+                temp++;
+            }
+            numberWins.set(temp, (numberWins.get(temp)) + 1);
         }
-        if (numberWins.get(temp) == null) {
-            numberWins.add(temp, 1);
-        } else {
-            numberWins.add(temp, numberWins.get(temp) + 1);
-        }
+
     }
 
     public Game createGame() {
@@ -142,10 +145,10 @@ public class Match {
                             System.out.println("Player "
                                     + selected.getPlayer().getName()
                                     + " won "
-                                    + numberWins.get(selected.getTeamNumber())
-                                    + " times on draw and "
-                                    + numberWins.get(selected.getTeamNumber() + 1)
-                                    + " times on play.");
+                                    + numberWins.get((selected.getTeamNumber()*2) + 1)
+                                    + " times on play and "
+                                    + numberWins.get(selected.getTeamNumber()*2)
+                                    + " times on draw.");
                             temp++;
                         }
                         return true;
