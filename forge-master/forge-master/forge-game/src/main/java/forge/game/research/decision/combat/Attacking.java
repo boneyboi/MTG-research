@@ -96,9 +96,19 @@ public class Attacking {
         }*/
         //we can actually go over in life
         //a condition to consider might be to not attack bc the life they lose is less than the value we lose
-        HashMap<Card, ArrayList<Card>> simblockers = (HashMap<Card, ArrayList<Card>>)blockobj.startSacking(blockers.size(),addLastAttacker(arrlist2.get(arrlist2.size()-1),
-                (ArrayList<Card>)resultlist.get(resultlist.size()-1)),(ArrayList<Card>)blockers);
         int battlesum = 0;
+        HashMap<Card, ArrayList<Card>> simblockers = new HashMap<Card, ArrayList<Card>>();
+        if(resultlist.size()>0){
+            simblockers = (HashMap<Card, ArrayList<Card>>)blockobj.startSacking(blockers.size(),addLastAttacker(arrlist2.get(arrlist2.size()-1),
+                    (ArrayList<Card>)resultlist.get(resultlist.size()-1)),(ArrayList<Card>)blockers);
+        } else {
+            ArrayList<Card> templistcard = new ArrayList<Card>();
+            templistcard.add(arrlist2.get(arrlist2.size()-1));
+            simblockers = (HashMap<Card, ArrayList<Card>>)blockobj.startSacking(
+                            blockers.size(),templistcard,(ArrayList<Card>)blockers);
+        }
+
+
         for(Card card : simblockers.keySet()){
             battlesum += evaluateBlock(card, simblockers.get(card));
         }
