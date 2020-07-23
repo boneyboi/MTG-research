@@ -1,9 +1,11 @@
 package forge.game.research.decision.combat;
 
 import forge.game.GameEntity;
+import forge.game.GameEntityView;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.player.Player;
 import forge.game.research.card.Front;
 import sun.jvm.hotspot.opto.Block;
@@ -17,21 +19,43 @@ public class Attacking {
     private static Front front;
     private static Blocking blockobj;
     private static Player defender;
+    private static Player attacker;
     private static Combat inCombat;
-    public Attacking(Player defender, Combat inCombat){
+    private static ArrayList<Card> blockers = new ArrayList<Card>();
+    private static ArrayList<Card> attackers = new ArrayList<Card>();
+    public Attacking(Player attacker, Player defender, Combat inCombat){
+        this.attacker = attacker;
         blockobj = new Blocking(defender, inCombat);
     }
     //return a list of attackers and their respective defenders(face or planesawalker)
 
     public void declareAttack() {
-
+        setAttackers(chooseAttackers(this.attacker, this.defender));
     }
 
     //prune attacking cards with can attack method
     //
-    public HashMap<Card, GameEntity> chooseAttackers(CardCollection attackingCards){
-        HashMap<Card, GameEntity> attackers = new HashMap<Card, GameEntity>();
-        return attackers;
+    public HashMap<Card, GameEntity> chooseAttackers(Player attacker, Player defender){
+        HashMap<Card, GameEntity> resultattackers = new HashMap<Card, GameEntity>();
+        //for card c in creatures in play
+        //if(combatutil.canblock(card, combat)
+        //if it can add it to blockers
+
+        for(Card card : defender.getCreaturesInPlay()){
+            if(CombatUtil.canBlock(card, inCombat)){
+                blockers.add(card);
+            }
+        }
+        for(Card card : attacker.getCreaturesInPlay()){
+            if(CombatUtil.canBlock(card, inCombat)){
+                attackers.add(card);
+            }
+        }
+        for(Card card : knapsack2(defender.getLife(), attackers, new ArrayList<List<Card>>(), new ArrayList<Card>(), blockers)){
+            resultattackers.put(card, defender);
+        }
+
+        return resultattackers;
     }
 
     public void setAttackers(HashMap<Card, GameEntity> map) {
@@ -161,7 +185,9 @@ public class Attacking {
 
             blockVal += attacker.getNetPower();
         }
-
+        //for(Card card : knapsack2(defender.getLife(), /*get attackers*/, new ArrayList<List<Card>>(), new ArrayList<Card>(), /*get blockers*/){
+        //    attackers.put(card, );
+        //}
 
         return blockVal;
     }
