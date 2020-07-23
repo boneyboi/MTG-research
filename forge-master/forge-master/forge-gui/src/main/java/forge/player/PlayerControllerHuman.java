@@ -1264,7 +1264,7 @@ PlayerControllerHuman extends PlayerController implements IGameController {
     @Override
     public void declareAttackers(final Player attackingPlayer, final Combat combat) {
         if (attackingPlayer.getFacade()!= null) {
-            Attacking choice = new Attacking(attackingPlayer.getSingleOpponent(), combat);
+            Attacking choice = new Attacking(attackingPlayer, attackingPlayer.getOpponents().get(0), combat);
             choice.declareAttack();
         }
         else {
