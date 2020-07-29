@@ -91,6 +91,11 @@ public class ManaEvaluation {
             if (sa instanceof LandAbility){
                 continue;
             }
+            if (sa.getPayCosts()==null
+                    || sa.getPayCosts().getCostMana() == null
+                    || sa.getPayCosts().getCostMana().getMana() == null) {
+                continue;
+            }
             for (ManaCostShard shard: sa.getPayCosts().getCostMana().getMana()) {
                 if (shard.isWhite()) {
                     plainsNum--;
