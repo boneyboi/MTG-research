@@ -29,6 +29,7 @@ public class Facade {
     private DeckStrategy plan;
 
     public Facade(Player p) {
+        System.out.println("Success");
         controller = p;
     }
 

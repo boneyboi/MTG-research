@@ -39,7 +39,7 @@ public class Match {
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;
         //TODO: Remove this. It is only for AI vs AI testing
-        rules.setGamesPerMatch(201);
+        rules.setGamesPerMatch(199);
         for (RegisteredPlayer p: players) {
             numberWins.add(p.getTeamNumber()*2, 0);
             numberWins.add(p.getTeamNumber()*2 + 1, 0);
@@ -73,6 +73,8 @@ public class Match {
         gamesPlayed.add(finished.getOutcome());
         if (finished.getOutcome().getWinningPlayer()!= null) {
             int temp = finished.getOutcome().getWinningPlayer().getTeamNumber() * 2;
+            RegisteredPlayer temp1 = finished.getOutcome().getWinningPlayer();
+            RegisteredPlayer temp2 = finished.getPhaseHandler().getFirstPlayer().getRegisteredPlayer();
             if (finished.getOutcome().getWinningPlayer() ==
                     finished.getPhaseHandler().getFirstPlayer().getRegisteredPlayer()) {
                 temp++;

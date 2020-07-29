@@ -1263,11 +1263,12 @@ PlayerControllerHuman extends PlayerController implements IGameController {
 
     @Override
     public void declareAttackers(final Player attackingPlayer, final Combat combat) {
-        if (attackingPlayer.getFacade()!= null) {
+        /*if (attackingPlayer.getFacade()!= null) {
             Attacking choice = new Attacking(attackingPlayer, attackingPlayer.getOpponents().get(0), combat);
             choice.declareAttack();
         }
         else {
+         */
             if (mayAutoPass()) {
                 if (CombatUtil.validateAttackers(combat)) {
                     return; // don't prompt to declare attackers if user chose to
@@ -1283,7 +1284,6 @@ PlayerControllerHuman extends PlayerController implements IGameController {
             final InputAttack inpAttack = new InputAttack(this, attackingPlayer, combat);
             inpAttack.showAndWait();
         }
-    }
 
     @Override
     public void declareBlockers(final Player defender, final Combat combat) {

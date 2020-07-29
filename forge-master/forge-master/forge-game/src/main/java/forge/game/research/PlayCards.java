@@ -26,7 +26,6 @@ public class PlayCards {
 
     //the player whose turn it is
     private Player controller;
-    private Facade f = new Facade(controller);
     private DeckStrategy plan;
 
     /**

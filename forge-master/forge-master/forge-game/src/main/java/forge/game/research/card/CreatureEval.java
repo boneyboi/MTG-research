@@ -67,9 +67,8 @@ public class CreatureEval extends CardEvaluator {
     public final double evaluate (Card card) {
         double totalStats = getStatTotal(card);
         double keyword = getKeywordValue(card);
-        double counters = getCounters(card);
         double abilities = calculateAbilityVal(card);
-        double Cardvalue = (BASE + totalStats + keyword + counters + abilities);
+        double Cardvalue = (BASE + totalStats + keyword + abilities);
         double value = (Cardvalue) * KeywordsMul;
 
         return value;
@@ -81,7 +80,7 @@ public class CreatureEval extends CardEvaluator {
      * @return
      */
     public double getStatTotal (Card card) {
-        double statTotal = card.getCurrentPower() + card.getCurrentToughness();
+        double statTotal = card.getNetPower() + card.getNetToughness();
 
         return statTotal;
     }
@@ -92,7 +91,7 @@ public class CreatureEval extends CardEvaluator {
      * @param card
      * @return
      */
-    public double getCounters (Card card) {
+    /*public double getCounters (Card card) {
         return  card.getCounters(CounterType.P1P1)*STATBOOST2 +
                 card.getCounters(CounterType.P1P0) +
                 card.getCounters(CounterType.P0P1) +
@@ -107,6 +106,7 @@ public class CreatureEval extends CardEvaluator {
                 card.getCounters(CounterType.M2M2)*STATBOOST4 -
                 card.getCounters(CounterType.M2M1)*STATBOOST3;
     }
+     */
 
     /**
      * Calculates the portion of a card's value that is reliant on keywords,
